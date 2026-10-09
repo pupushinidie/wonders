@@ -6,6 +6,7 @@
  *   s=<场景>        场景名（见下面 SCENES）
  *   viewer=p2       从哪个座位看（默认场景里写的，通常 p1）
  *   anim=1          先渲染上一步、再换成这一步，播一遍这一步的过场（亮牌、传牌、军事横幅）
+ *   seeall=1        房主打开了「观战看手牌」（看牌桌顶栏的提示）
  *   click=a|b       渲染后依次点这些 CSS 选择器（用 | 分隔），比如 click=.wd-hand .wd-card:nth-child(2)
  * 牌桌上的操作（出牌、撤回、挑奇迹……）直接在本地 apply，可以接着点。
  */
@@ -74,6 +75,8 @@ const SCENES: Record<string, Scene> = {
   chain: { note: "Age II：图书馆可以免费链", game: () => scene("chain"), room: { turnRemainingMs: 50000 } },
   tradeBoth: { note: "要向两边买（法庭）", game: () => scene("tradeBoth"), room: { turnRemainingMs: 50000 } },
   tradeDiscount: { note: "要向两边买，有西贸易站 + 市场折扣", game: () => scene("tradeBoth", { discount: true }), room: { turnRemainingMs: 50000 } },
+  wonderStageB4: { note: "金字塔 B 已建 3 层、要建第 4 层（4 层奇迹板）", game: () => scene("wonderStage", { wonder: "giza", side: "B", stage: 4 }), room: { turnRemainingMs: 50000 } },
+  ephesusB: { note: "以弗所 B 建满 3 层（看自己奇迹板的阶段格）", game: () => scene("wonderStage", { wonder: "ephesus", side: "B", stage: 3 }), room: { turnRemainingMs: 50000 } },
   wonderStage: { note: "能建奇迹下一层", game: () => scene("wonderStage", { wonder: "giza", side: "B", stage: 2 }), room: { turnRemainingMs: 50000 } },
   seventh: { note: "巴比伦 B 打第 7 张（我）", game: () => scene("babylonSeventh"), room: { turnRemainingMs: 18000 } },
   seventhOther: { note: "别人在打第 7 张", game: () => scene("babylonSeventh"), room: { viewer: "p2" } },
@@ -153,7 +156,9 @@ function Preview({ entry }: { entry: Scene }) {
   if (viewer === "__other__") viewer = initial.players.find((player) => player.id !== chooserId(initial) && !player.wonder)?.id ?? initial.players[0]!.id;
   const spectating = options.spectating === true;
   Object.defineProperty(socket, "id", { get: () => (spectating ? "socket-spectator" : `socket-${viewer}`), configurable: true });
-  const realRoom = previewRoom(state, { ...options, viewer });
+  const baseRoom = previewRoom(state, { ...options, viewer });
+  // seeall=1：房主打开了「观战看手牌」
+  const realRoom = params.get("seeall") === "1" ? { ...baseRoom, access: { ...baseRoom.access, spectatorsSeeAll: true }, spectators: [{ id: "socket-spectator", name: "看客" }] } : baseRoom;
   // anim=1：先给上一步（version − 1、没有事件），再换成这一步，GameBoard 才会播这一步的过场
   const [room, setRoom] = useState<LobbyRoomSnapshot>(() => {
     if (params.get("anim") !== "1") return realRoom;

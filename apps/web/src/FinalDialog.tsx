@@ -137,7 +137,7 @@ export function FinalDialog({ game, room, myId, spectating, nameOf, onRematch, o
             </tbody>
           </table>
           <div className="wd-final-detail" data-tutorial="final-detail">
-            <h3>{nameOf(focused.player)} 的分数怎么来的 <small>点上面任意一行换人</small></h3>
+            <h3>{nameOf(focused.player)}的分数怎么来的 <small>点上面任意一行换人</small></h3>
             <ul>
               {SCORE_ITEMS.map((item) => (
                 <li key={item.key} data-tutorial={`final-item-${item.key}`}>

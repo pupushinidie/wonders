@@ -179,9 +179,16 @@ export function describeEvent(event: GameEvent, name: (id: string) => string): s
   }
 }
 
-export function playText(play: { action: string; card: CardId | null; stage?: number; via: PaymentOption["kind"] | null; paidLeft: number; paidRight: number; gained: number }): string {
+export function playText(play: { action: string; card: CardId | null; stage?: number; via: PaymentOption["kind"] | null; paidLeft: number; paidRight: number; paidBank?: number; gained: number; income?: number }, short = false): string {
   const paid = play.paidLeft + play.paidRight;
-  const extra = [paid > 0 ? `买资源 ${paid} 金` : "", play.via === "chain" ? "免费链" : "", play.via === "olympia" ? "奥林匹亚免费" : "", play.gained > 0 ? `+${play.gained} 金` : ""].filter(Boolean).join("，");
+  const extra = [
+    paid > 0 ? `买资源 ${paid} 金` : "",
+    play.paidBank && !short ? `付银行 ${play.paidBank} 金` : "",
+    play.via === "chain" ? "免费链" : "",
+    play.via === "olympia" ? "奥林匹亚免费" : "",
+    play.gained > 0 ? `+${play.gained} 金` : "",
+    play.income && !short ? `卖资源 +${play.income} 金` : "",
+  ].filter(Boolean).join("，");
   const what =
     play.action === "build" ? `建了 ${play.card ? card(play.card).zh : "?"}` :
     play.action === "wonder" ? `建奇迹第 ${play.stage ?? "?"} 层` :

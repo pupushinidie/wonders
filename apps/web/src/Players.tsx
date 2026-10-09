@@ -120,6 +120,11 @@ export function SellList({ me, neighbor, side, s = 2 }: { me: PlayerState; neigh
   );
 }
 
+/** 邻居能卖的资源一共几个图标（多了就用小图标，免得把面板撑出去）。 */
+function sellIcons(player: PlayerState): number {
+  return productionSlots(player).filter((slot) => slot.sellable).reduce((sum, slot) => sum + slot.opts.length, 0);
+}
+
 /** 7 种颜色的卡各几张。 */
 export function ColorCounts({ player, big = false }: { player: PlayerState; big?: boolean }) {
   return (
@@ -150,7 +155,7 @@ export function ScienceCounts({ player }: { player: PlayerState }) {
 
 export function LastPlay({ last, label = "上轮" }: { last: RevealedPlay | undefined; label?: string }) {
   if (!last) return null;
-  return <p className={`wd-last ${last.action}`} title={playText(last)}><em>{label}</em>{playText(last)}</p>;
+  return <p className={`wd-last ${last.action}`} title={playText(last)}><em>{label}</em>{playText(last, true)}</p>;
 }
 
 function Head({ seat, game, children }: { seat: SeatInfo; game: GameState; children?: ReactNode }) {
@@ -190,13 +195,13 @@ export function NeighborPanel({ seat, me, side, game, wonderN, passTo, onOpen, s
       <Head seat={seat} game={game} />
       <PlayerBoard player={player} n={wonderN} {...(shine !== undefined ? { shine } : {})} />
       <StatLine seat={seat} tutorial={tutorial ? `${tutorial}-stats` : undefined} />
+      <LastPlay last={seat.last} />
       <div className="wd-nb-sell" data-tutorial={tutorial ? `${tutorial}-sell` : undefined}>
         <div className="wd-nb-sub"><span>卖给你</span><small>每份几金</small></div>
-        <SellList me={me} neighbor={player} side={side} s={2} />
+        <SellList me={me} neighbor={player} side={side} s={sellIcons(player) > 6 ? 1 : 2} />
       </div>
       <ColorCounts player={player} />
       <ScienceCounts player={player} />
-      <LastPlay last={seat.last} />
     </section>
   );
 }
@@ -212,7 +217,7 @@ export function OtherCard({ seat, game, emblemN, onOpen }: { seat: SeatInfo; gam
         <span className="wd-other-name">
           <strong>{player.name}</strong>
           <PlayerTags member={seat.member} you={false} />
-          {player.wonder && <small className="wd-other-wonder">{WONDER_SHORT[player.wonder]}{player.side === "B" ? " B" : ""} · {player.stages}{stagesTotal ? `/${stagesTotal}` : ""} 层</small>}
+          {player.wonder && <small className="wd-other-wonder" title={`${WONDER_SHORT[player.wonder]}${player.side === "B" ? " B 面" : ""}：建了 ${player.stages}/${stagesTotal} 层`}>{player.side === "B" ? "B · " : ""}{player.stages}/{stagesTotal}层</small>}
         </span>
         <StatLine seat={seat} items={["coin", "shield", "vp"]} />
       </span>
@@ -227,7 +232,10 @@ export function OtherTag({ seat, game, onOpen }: { seat: SeatInfo; game: GameSta
   return (
     <button type="button" className="wd-tagcard wd-seat" style={seatVar(player.wonder)} onClick={onOpen} title={player.name}>
       {player.wonder ? <img className="wd-emblem" src={art.emblem(player.wonder)} alt="" width={32} height={32} /> : <span className="wd-emblem blank" />}
-      <b>{seat.score}</b>
+      <span className="wd-tagcard-main">
+        <span className="wd-tagcard-name"><PlayerTags member={seat.member} you={false} /><span>{player.name}</span></span>
+        <span className="wd-tagcard-vp" title="当前分"><Icon name="vp" s={1} /><b>{seat.score}</b></span>
+      </span>
       <ReadyMark game={game} player={player} />
     </button>
   );
@@ -244,7 +252,8 @@ export function MobileNeighbor({ seat, me, side, game, passTo, onOpen }: { seat:
         <strong>{player.name}</strong>
         <ReadyMark game={game} player={player} />
       </span>
-      <StatLine seat={seat} items={["coin", "shield"]} />
+      <span className="wd-mnb-tags"><PlayerTags member={seat.member} you={false} /></span>
+      <StatLine seat={seat} items={["coin", "shield", "vp"]} />
       <SellList me={me} neighbor={player} side={side} s={1} />
     </button>
   );

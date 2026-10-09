@@ -9,6 +9,8 @@ import {
   CARD_COLORS,
   playOptions,
   scoreBreakdown,
+  wonder as wonderDef,
+  wonderStages,
   type CardId,
   type GameCommand,
   type GameEvent,
@@ -16,7 +18,7 @@ import {
   type PaymentOption,
   type PlayAction,
 } from "@wonders/game";
-import { ActionPanel, commandFor } from "./ActionPanel.js";
+import { ActionPanel, commandFor, whyText } from "./ActionPanel.js";
 import { art, sceneIndex, sceneScale } from "./art.js";
 import { buildStatus, CardFace, CardItem, type CardStatus } from "./Card.js";
 import { ChooseWonderDialog, City, DiscardDialog, PlayerDialog, Production } from "./Dialogs.js";
@@ -138,7 +140,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
     let option: PaymentOption | undefined;
     if (action !== "discard") {
       const info = action === "build" ? entry.build : entry.wonder;
-      if (info.options.length === 0) return;
+      if (info.options.length === 0) { pushToast(`${action === "build" ? "建不了" : "建不了奇迹"}：${/^钱不够/.test(info.reason ?? "") ? "钱不够，" : ""}${whyText(info)}`, 4000); return; }
       option = info.options[Math.min(action === "build" ? choice.build : choice.wonder, info.options.length - 1)];
     }
     onCommand(commandFor(selected, action, option));
@@ -271,6 +273,15 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
   const lastPass = passes[passes.length - 1];
   const lastMilitary = military[military.length - 1]?.value;
 
+  // 房主开关「观战看手牌」：牌桌顶栏常驻提示，开关时记一条
+  const seeAll = room.access.allowSpectators && room.access.spectatorsSeeAll;
+  const lastSeeAll = useRef(seeAll);
+  useEffect(() => {
+    if (lastSeeAll.current === seeAll) return;
+    lastSeeAll.current = seeAll;
+    setLog((previous) => [{ key: `seeall-${Date.now()}`, text: seeAll ? "房主打开了「观战看手牌」：观战的人能看到所有人的手牌" : "房主关掉了「观战看手牌」" }, ...previous].slice(0, 120));
+  }, [seeAll]);
+
   // ---------- 记录 / 聊天 ----------
   const [tab, setTab] = useState<"log" | "chat">("log");
   const [seenChat, setSeenChat] = useState(room.chat.length);
@@ -368,6 +379,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
           </span>
         )}
         {secondsLeft !== null && !finished && <b className={secondsLeft <= 10 ? "wd-timer low" : "wd-timer"} data-tutorial="timer">{secondsLeft}s</b>}
+        {seeAll && !spectating && !layout.mobile && <span className="wd-seeall" title="房主打开了「观战看手牌」：观战的人能看到所有人的手牌和交了没亮的牌">观战能看到手牌</span>}
       </div>
       <div className="wd-topbar-right">
         <button className="quiet-button wd-drawer-toggle" type="button" data-tutorial="log-toggle" aria-expanded={drawer} onClick={() => { setDrawer(!drawer); setMenu(false); }}>
@@ -469,6 +481,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
       <div className="wd-screen mobile">
         {topbar}
         <div className="wd-mtable" style={tableStyle}>
+          {seeAll && !spectating && <p className="wd-seeall">房主开了「观战看手牌」：观战的人能看到你的手牌</p>}
           {otherIndexes.length > 0 && (
             <div className="wd-mothers" data-tutorial="others">
               {otherIndexes.map((index) => <OtherTag key={index} seat={seats[index]!} game={game} onOpen={() => setOpenSeat(game.players[index]!.id)} />)}
@@ -481,6 +494,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
           <button type="button" className="wd-panel wd-mme wd-seat" style={seatVar(me.wonder) as CSSProperties} onClick={() => setOpenSeat(me.id)} data-tutorial="my-board">
             <PlayerBoard player={me} n={1} {...shineProp(me.id)} />
             <span className="wd-mme-side">
+              {me.wonder && <span className="wd-mme-name">{wonderDef(me.wonder).zh} · {me.side} 面 · {me.stages}/{wonderStages(me.wonder, me.side).length} 层</span>}
               <StatLine seat={mine} items={["coin", "shield", "vp"]} tutorial="my-stats" />
               <span data-tutorial="my-city"><ColorCounts player={me} big /></span>
             </span>
@@ -518,7 +532,8 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
     </section>
   );
   // 城池每列能放几条卡名：中栏高 − 奇迹板 − 金币那一行 − 列标题
-  const capacity = Math.max(2, Math.floor((layout.middleH - boardH(layout.myWonderN) - 48 - layout.gap - 28) / layout.stripH));
+  const topH = layout.actInHand ? boardH(layout.myWonderN) + 48 : 236;
+  const capacity = Math.max(2, Math.floor((layout.middleH - topH - layout.gap - 22 - 14 - 2) / (layout.stripH + 2)));
 
   return (
     <div className={`wd-screen ${layout.actInHand ? "act-hand" : "act-center"} ${n === 3 ? "three" : ""}`} style={{ "--top-h": `${layout.topH}px` } as CSSProperties}>

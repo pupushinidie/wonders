@@ -10,3 +10,4 @@
 :root[data-theme="day"] .wd-act.mode-act { box-shadow: 0 0 0 var(--px) var(--edge), inset 0 0 0 calc(var(--px) * 2) #2e6fa8; }
 /* 军事横幅、底部弹出的出牌面板用实色白底 */
 :root[data-theme="day"] :is(.wd-mil, .wd-act.sheet) { background: #ffffff; }
+:root[data-theme="day"] .app-shell .brand-mark i:nth-child(3) { background: #b0bece; }

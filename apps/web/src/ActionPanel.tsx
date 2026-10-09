@@ -40,32 +40,34 @@ function minus(cost: string, ...parts: string[]): string {
   return list.join("");
 }
 
-/** 付不起时：自己最多能产哪几份，剩下的邻居有没有卖。 */
+/** letters 的所有子集（按大小从大到小）。 */
+function subsets(letters: string): string[] {
+  const list = [...letters];
+  const out: string[] = [];
+  for (let mask = 0; mask < 1 << list.length; mask += 1) out.push(list.filter((_, index) => mask & (1 << index)).join(""));
+  return out.sort((x, y) => y.length - x.length);
+}
+
+/**
+ * 付不起时拆给玩家看：自己最多产哪几份、剩下的里两邻一共卖得出几份（按份数算，每份产出只能卖一次），
+ * 剩下的就是「没人卖」。
+ */
 function impossibleParts(game: GameState, meIndex: number, cost: string): PayParts {
   const me = game.players[meIndex]!;
-  const slots = productionSlots(me).map((slot) => slot.opts);
-  const letters = [...cost];
-  let own = "";
-  for (let size = letters.length; size > 0 && !own; size -= 1) {
-    for (let mask = 0; mask < 1 << letters.length; mask += 1) {
-      let bits = 0;
-      for (let m = mask; m; m >>= 1) bits += m & 1;
-      if (bits !== size) continue;
-      const pick = letters.filter((_, index) => mask & (1 << index)).join("");
-      if (canCover(pick, slots)) { own = pick; break; }
-    }
-  }
-  const rest = minus(cost, own);
+  const mySlots = productionSlots(me).map((slot) => slot.opts);
   const n = game.players.length;
   const sellers = [game.players[(meIndex + 1) % n]!, game.players[(meIndex - 1 + n) % n]!];
-  const sold = new Set(sellers.flatMap((player) => productionSlots(player).filter((slot) => slot.sellable).flatMap((slot) => [...slot.opts])));
-  return {
-    own,
-    left: "",
-    right: "",
-    need: [...rest].filter((letter) => sold.has(letter)).join(""),
-    missing: [...rest].filter((letter) => !sold.has(letter)).join(""),
-  };
+  const sellSlots = sellers.flatMap((player) => productionSlots(player).filter((slot) => slot.sellable).map((slot) => slot.opts));
+  let best = { own: "", need: "", score: -1 };
+  for (const own of subsets(cost)) {
+    if (own.length + (cost.length - own.length) <= best.score) break;
+    if (!canCover(own, mySlots)) continue;
+    const rest = minus(cost, own);
+    const need = subsets(rest).find((pick) => canCover(pick, sellSlots)) ?? "";
+    const score = own.length + need.length;
+    if (score > best.score) best = { own, need, score };
+  }
+  return { own: best.own, left: "", right: "", need: best.need, missing: minus(cost, best.own, best.need) };
 }
 
 function partsOf(game: GameState, meIndex: number, cost: string, option: PaymentOption | undefined): PayParts {
@@ -79,14 +81,14 @@ function ResIcons({ letters, s }: { letters: string; s: number }) {
 
 function PayChips({ parts, option, bank, s }: { parts: PayParts; option: PaymentOption | undefined; bank: number; s: number }) {
   return (
-    <span className="wd-chips">
-      {parts.own && <span className="wd-chip own" title={`自己产：${res(parts.own)}`}><ResIcons letters={parts.own} s={s} /><i className="ok">✓</i></span>}
-      {parts.left && <span className="wd-chip buy" title={`向左邻买 ${res(parts.left)}，付 ${option?.leftCost} 金`}><i className="dir">◀</i><ResIcons letters={parts.left} s={s} /><b>{option?.leftCost}</b></span>}
-      {parts.right && <span className="wd-chip buy" title={`向右邻买 ${res(parts.right)}，付 ${option?.rightCost} 金`}><ResIcons letters={parts.right} s={s} /><b>{option?.rightCost}</b><i className="dir">▶</i></span>}
-      {parts.need && <span className="wd-chip need" title={`要向邻居买：${res(parts.need)}（钱不够）`}><ResIcons letters={parts.need} s={s} /><i className="need-mark">买</i></span>}
-      {parts.missing && <span className="wd-chip miss" title={`买不到：${res(parts.missing)}`}><ResIcons letters={parts.missing} s={s} /><i className="no">✗</i></span>}
-      {bank > 0 && <span className="wd-chip bank" title={`付银行 ${bank} 金`}><Icon name="coin" s={s} /><b>{bank}</b></span>}
-    </span>
+    <>
+      {parts.own && <span className="wd-chip own" title={`自己产：${res(parts.own)}`}><i className="lbl">自产</i><ResIcons letters={parts.own} s={s} /><i className="ok">✓</i></span>}
+      {parts.left && <span className="wd-chip buy" title={`向左邻买 ${res(parts.left)}，付 ${option?.leftCost} 金`}><i className="lbl">◀左邻</i><ResIcons letters={parts.left} s={s} /><b>{option?.leftCost}金</b></span>}
+      {parts.right && <span className="wd-chip buy" title={`向右邻买 ${res(parts.right)}，付 ${option?.rightCost} 金`}><i className="lbl">右邻▶</i><ResIcons letters={parts.right} s={s} /><b>{option?.rightCost}金</b></span>}
+      {parts.need && <span className="wd-chip need" title={`这几份要向邻居买：${res(parts.need)}`}><i className="lbl">要买</i><ResIcons letters={parts.need} s={s} /></span>}
+      {parts.missing && <span className="wd-chip miss" title={`这几份自己不产、两邻也卖不出：${res(parts.missing)}`}><i className="lbl">没人卖</i><ResIcons letters={parts.missing} s={s} /><i className="no">✗</i></span>}
+      {bank > 0 && <span className="wd-chip bank" title={`付银行 ${bank} 金`}><i className="lbl">银行</i><b>{bank}金</b></span>}
+    </>
   );
 }
 
@@ -101,7 +103,17 @@ function shortReason(info: PaymentInfo): string {
   if (reason.startsWith("已经建过")) return "已有同名";
   if (reason.startsWith("钱不够")) return "钱不够";
   if (reason.startsWith("奇迹已经建满")) return "已建满";
-  return "凑不齐";
+  return "缺资源";
+}
+
+/** 建不了的原因，一句话（写在付款那一格里，手机上也看得到）。 */
+export function whyText(info: PaymentInfo): string {
+  const reason = info.reason ?? "";
+  const money = /至少要 (\d+) 金，你只有 (\d+) 金/.exec(reason);
+  if (money) return `要 ${money[1]} 金，你只有 ${money[2]} 金`;
+  if (reason.startsWith("已经建过")) return "城里已经有同名的，只能垫奇迹或弃掉";
+  if (reason.startsWith("奇迹已经建满")) return "奇迹建满了";
+  return "资源不够：标红「没人卖」的那几份自己不产、两邻也卖不出";
 }
 
 function ActionRow({ action, label, info, cost, bank, game, meIndex, choice, onChoice, onPlay, disabled, extra, iconS, tutorial }: {
@@ -125,6 +137,7 @@ function ActionRow({ action, label, info, cost, bank, game, meIndex, choice, onC
   const ok = options.length > 0;
   const parts = option?.kind === "chain" || option?.kind === "olympia" ? null : partsOf(game, meIndex, cost, option);
   const total = option?.total ?? 0;
+  const at = Math.min(choice, options.length - 1);
   return (
     <div className={ok ? `wd-act-row ${action}` : `wd-act-row ${action} no`} data-tutorial={tutorial}>
       <button
@@ -142,20 +155,23 @@ function ActionRow({ action, label, info, cost, bank, game, meIndex, choice, onC
           <span className="wd-chip chain"><Icon name="chain" s={iconS} />免费链</span>
         ) : option?.kind === "olympia" ? (
           <span className="wd-chip chain"><Icon name="eff-free-build" s={iconS} />宙斯免费</span>
+        ) : !ok && /^(已经建过|奇迹已经建满)/.test(info.reason ?? "") ? (
+          <span className="wd-act-why">{whyText(info)}</span>
         ) : parts && (cost || bank) ? (
-          <PayChips parts={parts} option={option} bank={bank} s={iconS} />
+          <>
+            <PayChips parts={parts} option={option} bank={bank} s={iconS} />
+            {!ok && /^钱不够/.test(info.reason ?? "") && <span className="wd-act-why">{whyText(info)}</span>}
+          </>
         ) : (
-          <span className="wd-chip own">免费<i className="ok">✓</i></span>
+          <span className="wd-chip own"><i className="lbl">免费</i><i className="ok">✓</i></span>
         )}
       </span>
       <span className="wd-act-total" title={ok ? paymentText(option!) : info.reason ?? ""}>
-        {ok ? (total > 0 ? <><Icon name="coin" s={1} /><b>{total}</b></> : <b className="free">免费</b>) : <em>{shortReason(info)}</em>}
+        {ok ? (total > 0 ? <span className="wd-act-sum"><b>{total}</b><small>金</small></span> : <b className="free">免费</b>) : <em>{shortReason(info)}</em>}
         {options.length > 1 && (
-          <span className="wd-switch">
-            <button type="button" aria-label="上一种付款方案" onClick={() => onChoice((choice + options.length - 1) % options.length)}>‹</button>
-            <small>{Math.min(choice, options.length - 1) + 1}/{options.length}</small>
-            <button type="button" aria-label="下一种付款方案" onClick={() => onChoice((choice + 1) % options.length)}>›</button>
-          </span>
+          <button type="button" className="wd-switch" aria-label="下一种付款方案（换一种买法）" title="换一种买法：比如改向另一边邻居买" onClick={() => onChoice((at + 1) % options.length)}>
+            换买法 {at + 1}/{options.length}
+          </button>
         )}
       </span>
     </div>
@@ -224,8 +240,8 @@ export function ActionPanel(props: ActionPanelProps) {
     body = <button type="button" className={mine ? "primary-button wd-wide" : "quiet-button wd-wide"} onClick={props.onOpenWonders}>{mine ? "挑奇迹" : "看大家挑了什么"}</button>;
   } else if (phase === "discardBuild") {
     const mine = game.pending?.player === me.id;
-    title = mine ? "哈利卡纳苏斯：从弃牌堆免费建一张" : `${pendingName} 正在从弃牌堆挑一张`;
-    sub = mine ? "弃牌堆只有你看得到；同名建过的不能建，也可以放弃。" : "哈利卡纳苏斯的奇迹能力，挑完继续。";
+    title = mine ? "从弃牌堆免费建一张" : `${pendingName} 在挑弃牌`;
+    sub = mine ? "哈利卡纳苏斯的奇迹能力。弃牌堆只有你看得到；同名建过的不能建，也可以放弃。" : `${pendingName} 用哈利卡纳苏斯的奇迹能力从弃牌堆挑一张，挑完继续。`;
     if (mine) body = <button type="button" className="primary-button wd-wide" onClick={props.onOpenDiscard}>打开弃牌堆</button>;
   } else if (phase === "seventh" && game.pending?.player !== me.id) {
     title = `${pendingName} 正在打第 7 张`;
@@ -258,7 +274,7 @@ export function ActionPanel(props: ActionPanelProps) {
       onSelect(null);
     };
     title = def.zh;
-    sub = cardText(selected);
+    sub = null;
     body = (
       <div className="wd-act-rows">
         <ActionRow
@@ -283,10 +299,10 @@ export function ActionPanel(props: ActionPanelProps) {
     );
   } else if (myTurnToPlay) {
     title = phase === "seventh" ? "巴比伦：打出第 7 张" : game.round === 6 ? "第 6 轮：选一张打" : "轮到你：选一张手牌";
-    const tail = phase === "seventh" ? "打完结算军事。" : game.round === 6 ? "另一张作废，不给钱。" : `剩下的传给${props.passName}。`;
-    sub = mobile
-      ? `点手牌看三种用法。${game.round === 6 && phase === "play" ? "另一张作废，不给钱。" : "大家都选好后一起亮牌。"}`
-      : `点一张手牌（或按 1–${me.hand.length}）看三种用法。大家都选好后一起亮牌，${tail}`;
+    const keys = mobile ? "" : me.hand.length > 1 ? `（或按 1–${me.hand.length}）` : "（或按 1）";
+    sub = phase === "seventh"
+      ? `奇迹能力：这一步只有你出牌，别人在等。点手牌${keys}看三种用法，打完结算军事。`
+      : `点手牌${keys}看三种用法。${game.round === 6 ? "另一张作废，不给钱。" : mobile ? "大家都选好后一起亮牌。" : `大家都选好后一起亮牌，剩下的传给${props.passName}。`}`;
   } else {
     title = "等一下";
   }
@@ -295,7 +311,7 @@ export function ActionPanel(props: ActionPanelProps) {
     <section className={`wd-panel wd-act mode-${mode} ${props.className ?? ""}`} data-tutorial="action-panel">
       <div className="wd-act-head">
         <div>
-          <h2 data-tutorial="prompt">{title}</h2>
+          <h2 data-tutorial="prompt" title={mode === "act" && selected ? `${title}：${cardText(selected)}` : undefined}>{title}</h2>
           {sub && <p>{sub}</p>}
         </div>
         {mode === "act" && <button type="button" className="quiet-button wd-act-close" onClick={() => onSelect(null)} title="取消选择（Esc）">取消</button>}

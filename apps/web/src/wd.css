@@ -40,7 +40,7 @@
 
 /* 座位色（= 奇迹色）：面板左沿一条色带 */
 .wd-seat { --seat: transparent; }
-.wd-panel.wd-seat::before, .wd-tagcard.wd-seat::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; z-index: 2; width: 6px; background: var(--seat); pointer-events: none; }
+.wd-panel.wd-seat::before, .wd-tagcard.wd-seat::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; z-index: 2; width: 4px; background: var(--seat); pointer-events: none; }
 .wd-panel.wd-seat, .wd-tagcard.wd-seat { padding-left: 14px; }
 .wd-tagcard.wd-seat { position: relative; padding-left: 8px; }
 .wd-final-table td.name.wd-seat { box-shadow: inset 6px 0 0 0 var(--seat); padding-left: 12px; }
@@ -106,7 +106,7 @@
 .act-hand .wd-handrow { justify-content: flex-start; }
 .act-hand .wd-handrow > .wd-act { flex: 1 1 auto; min-width: 0; }
 .act-center .wd-center-top > .wd-act { flex: 1 1 auto; min-width: 0; }
-.act-center .wd-center-top { height: 204px; }
+.act-center .wd-center-top { height: 236px; }
 
 /* ---------- 名牌、标签、状态 ---------- */
 .wd-head { display: flex; align-items: center; gap: 6px; min-width: 0; }
@@ -161,6 +161,7 @@
 
 /* ---------- 左右邻居 ---------- */
 .wd-neighbor { display: flex; flex-direction: column; gap: 6px; min-height: 0; padding: 8px; overflow: hidden; }
+.wd-panel.wd-neighbor.wd-seat { padding-left: 8px; }
 .wd-nb-label { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 12px; }
 .wd-nb-label span { padding: 0 6px; color: #2a1c06; background: var(--gold); line-height: 20px; }
 .wd-nb-label em { color: var(--muted); font-style: normal; }
@@ -171,8 +172,7 @@
 .wd-neighbor.right .wd-nb-label em.from::after { content: " ◀"; }
 .wd-neighbor .wd-stats { flex-wrap: nowrap; justify-content: space-between; gap: 4px; }
 .wd-neighbor .wd-stats .wd-icon { width: 16px; height: 16px; }
-.wd-table.nb-wide .wd-neighbor .wd-stats .wd-icon { width: 32px; height: 32px; }
-.wd-table.compact .wd-neighbor { gap: 4px; padding: 6px 8px; }
+.wd-table.compact .wd-neighbor, .wd-table.nb-wide .wd-neighbor { gap: 4px; padding: 6px 8px; }
 .wd-table.compact .wd-neighbor .wd-last { display: none; }
 .wd-table.compact .wd-neighbor .wd-sell-res .wd-icon { width: 16px; height: 16px; }
 .wd-table.compact .wd-neighbor .wd-sell-price b { line-height: 24px; }
@@ -213,22 +213,25 @@
 .wd-board.small .wd-board-name { left: 4px; top: 4px; padding: 0 4px; font-size: 12px; line-height: 16px; }
 .wd-board-start { position: absolute; right: 6px; top: 6px; display: inline-flex; padding: 2px; background: #ffffff; box-shadow: 0 0 0 1px var(--wd-ink); }
 .wd-board.small .wd-board-start { right: 4px; top: 4px; padding: 1px; }
-.wd-board-b { position: absolute; right: 6px; bottom: 6px; min-width: 24px; color: #2a1c06; background: var(--wd-gold); box-shadow: 0 0 0 1px var(--wd-ink); font-size: 24px; line-height: 24px; text-align: center; }
+.wd-board-b { position: absolute; right: 6px; bottom: 6px; min-width: 24px; padding: 0 2px; color: #2a1c06; background: var(--wd-gold); box-shadow: 0 0 0 1px var(--wd-ink); font-size: 24px; line-height: 24px; text-align: center; }
 .wd-board.small .wd-board-b { right: 4px; bottom: 4px; min-width: 16px; font-size: 12px; line-height: 16px; }
-.wd-stages { display: flex; gap: 2px; height: 38px; margin: 2px 0 0; padding: 0; list-style: none; }
+.wd-board-b.side-A { color: #ffffff; background: var(--wd-sea); }
+.wd-stages { display: flex; gap: 2px; height: 46px; margin: 2px 0 0; padding: 0; list-style: none; }
 .wd-board.small .wd-stages { height: 26px; }
-.wd-stages li { position: relative; display: flex; flex: 1 1 0; align-items: center; justify-content: center; gap: 4px; min-width: 0; overflow: hidden; background: #ffffff; box-shadow: inset 0 0 0 1px #c8d2de; }
+/* 阶段格：大板上下两行（成本或已建勾 / 效果），小板一行 */
+.wd-stages li { position: relative; display: flex; flex: 1 1 0; flex-direction: column; align-items: center; justify-content: flex-start; gap: 2px; padding-top: 2px; box-sizing: border-box; min-width: 0; overflow: hidden; background: #ffffff; box-shadow: inset 0 0 0 1px #c8d2de; }
+.wd-board.small .wd-stages li { flex-direction: row; justify-content: center; padding-top: 0; }
 .wd-stages li.built { background: #edd8a6; box-shadow: inset 0 0 0 1px var(--wd-gold); }
 .wd-stages li.next { box-shadow: inset 0 0 0 2px var(--wd-sea); }
 .wd-stages li.shine { animation: wd-shine 1.2s steps(6, jump-none) 1; }
 @keyframes wd-shine { 0%, 100% { background: #edd8a6; } 50% { background: #fff3cf; } }
-.wd-stage-eff { display: inline-flex; align-items: center; gap: 2px; }
-.wd-stage-eff .wd-num { color: var(--wd-ink-text); font-size: 24px; font-weight: 400; line-height: 1; }
+.wd-stage-eff { display: inline-flex; align-items: center; gap: 2px; height: 24px; overflow: hidden; }
+.wd-stage-eff .wd-num { color: var(--wd-ink-text); font-size: 24px; font-weight: 400; line-height: 24px; }
 .wd-board.small .wd-stage-eff { display: none; }
-.wd-stage-check { position: absolute; top: 1px; right: 1px; }
+.wd-stage-check { flex: 0 0 auto; }
 .wd-board .wd-stages.detail, .wd-board.small .wd-stages.detail { height: auto; }
-.wd-stages.detail li { flex-wrap: wrap; padding: 4px; }
-.wd-stages.detail small { flex: 1 1 100%; color: var(--wd-ink-text); text-align: center; line-height: 1.4; }
+.wd-stages.detail li { flex-direction: column; flex-wrap: nowrap; padding: 4px; }
+.wd-stages.detail small { color: var(--wd-ink-text); text-align: center; line-height: 1.4; }
 
 /* 小点 */
 .wd-pips { display: inline-flex; flex: 0 0 auto; gap: calc(1px * var(--pn)); }
@@ -237,8 +240,8 @@
 .wd-pips.tight img + img { margin-left: calc(-1px * var(--pn)); }
 
 /* ---------- 我的奇迹板和信息 ---------- */
-.wd-mine { display: flex; flex: 0 0 auto; flex-direction: column; gap: 6px; padding: 6px; }
-.wd-mine .wd-stats { justify-content: space-around; min-height: 34px; }
+.wd-mine { display: flex; flex: 0 0 auto; flex-direction: column; gap: 6px; width: min-content; padding: 6px; }
+.wd-mine .wd-stats { justify-content: space-around; min-height: 34px; flex-wrap: wrap; }
 .wd-brazier { position: absolute !important; top: 18px; z-index: 2 !important; }
 .wd-brazier.l { left: -10px; }
 .wd-brazier.r { right: -10px; }
@@ -375,7 +378,7 @@
   align-items: center;
   gap: 6px;
   min-width: 0;
-  height: 56px;
+  height: 60px;
   padding: 4px 6px 4px 4px;
   border: 0;
   border-left: 8px solid var(--band);
@@ -388,9 +391,9 @@
 }
 button.wd-item { cursor: pointer; }
 .wd-item-art { flex: 0 0 auto; width: 56px; height: 44px; box-shadow: 0 0 0 1px var(--wd-ink); }
-.wd-item-text { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
-.wd-item-name { overflow: hidden; font-size: 24px; line-height: 24px; white-space: nowrap; }
-.wd-item-status, .wd-item-sub { align-self: flex-start; padding: 0 4px; font-size: 24px; line-height: 24px; white-space: nowrap; }
+.wd-item-text { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-width: 0; }
+.wd-item-name { overflow: hidden; font-size: 24px; line-height: 26px; white-space: nowrap; }
+.wd-item-status, .wd-item-sub { align-self: flex-start; padding: 0 4px; font-size: 24px; line-height: 26px; white-space: nowrap; }
 .wd-item-sub { padding: 0; color: #5a6e88; font-size: 12px; }
 .wd-item-status.own { color: #ffffff; background: #1f8a45; }
 .wd-item-status.trade { color: #2a1c06; background: #f0be32; }
@@ -402,7 +405,7 @@ button.wd-item { cursor: pointer; }
 .wd-item.selected { box-shadow: 0 0 0 2px var(--wd-ink), 0 0 0 5px var(--wd-sea); }
 
 /* ---------- 出牌面板 ---------- */
-.wd-act { display: flex; flex-direction: column; gap: 6px; min-width: 0; min-height: 0; padding: 8px 10px; overflow: hidden; }
+.wd-act { display: flex; flex-direction: column; gap: 6px; min-width: 0; min-height: 0; padding: 8px 10px; overflow: hidden auto; }
 .wd-act-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; min-width: 0; }
 .wd-act-head > div { min-width: 0; }
 .app-shell .wd-act-head h2 { margin: 0; overflow: hidden; color: var(--gold); font-family: inherit; font-size: 24px; font-weight: 400; line-height: 28px; text-overflow: ellipsis; white-space: nowrap; }
@@ -410,34 +413,39 @@ button.wd-item { cursor: pointer; }
 .wd-act.mode-act .wd-act-head p { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .app-shell .wd-act-close { flex: 0 0 auto; padding: 4px 10px; }
 .wd-act-rows { display: grid; gap: 4px; }
-.wd-act-row { display: grid; grid-template-columns: 136px minmax(0, 1fr) auto; align-items: center; gap: 8px; min-height: 40px; }
-.app-shell .wd-act-btn { display: inline-flex; align-items: center; justify-content: center; gap: 4px; width: 100%; height: 40px; min-height: 40px; margin: 0; padding: 0 6px; font-size: 24px; white-space: nowrap; }
+.wd-act-row { display: grid; grid-template-columns: 124px minmax(0, 1fr) 88px; align-items: center; gap: 6px; min-height: 36px; }
+.app-shell .wd-act-btn { display: inline-flex; align-items: center; justify-content: center; gap: 4px; width: 100%; height: 36px; min-height: 36px; margin: 0; padding: 0 6px; font-size: 24px; white-space: nowrap; }
 .app-shell .wd-act-btn .wd-icon { width: 32px; height: 32px; }
-.wd-act-pay { display: flex; align-items: center; gap: 6px; min-width: 0; overflow: hidden; }
+/* 付款明细：放不下就换行，一块不拆开 */
+.wd-act-pay { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 4px; min-width: 0; }
 .wd-stage-no { flex: 0 0 auto; color: var(--muted); }
-.wd-chips { display: flex; align-items: center; gap: 4px; min-width: 0; }
-.wd-chip { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 2px; height: 36px; padding: 0 4px; box-sizing: border-box; color: var(--text); font-size: 24px; line-height: 1; white-space: nowrap; }
+.wd-act-why { flex: 1 1 100%; color: #ff8a80; font-size: 12px; line-height: 16px; }
+.wd-chip { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 2px; height: 26px; padding: 0 4px; box-sizing: border-box; color: var(--text); font-size: 24px; line-height: 1; white-space: nowrap; }
 .wd-chip i { font-style: normal; }
+.wd-chip .lbl { margin-right: 2px; color: var(--muted); font-size: 12px; }
+.wd-chip .wd-icon { width: 16px; height: 16px; }
 .wd-chip.own { background: rgba(31, 138, 69, 0.28); box-shadow: inset 0 0 0 2px #3fbf6a; }
-.wd-chip .ok { color: #62c97a; }
+.wd-chip .ok { color: #62c97a; font-size: 12px; }
 .wd-chip.buy { background: rgba(240, 190, 50, 0.22); box-shadow: inset 0 0 0 2px #f0be32; }
+.wd-chip.buy .lbl { color: var(--gold); }
 .wd-chip.buy b, .wd-chip.bank b { color: var(--gold); font-weight: 400; }
-.wd-chip .dir { color: var(--gold); font-size: 12px; }
 .wd-chip.need { background: rgba(240, 190, 50, 0.12); box-shadow: inset 0 0 0 2px #a88420; }
-.wd-chip .need-mark { color: var(--gold); font-size: 12px; }
 .wd-chip.miss { background: rgba(200, 58, 48, 0.25); box-shadow: inset 0 0 0 2px #e86a5c; }
-.wd-chip .no { color: #ff8a80; }
+.wd-chip.miss .lbl, .wd-chip .no { color: #ff8a80; }
+.wd-chip .no { font-size: 12px; }
 .wd-chip.bank { background: var(--panel-2); }
-.wd-chip.chain { gap: 4px; color: #2a1c06; background: #f4d66a; }
+.wd-chip.chain { gap: 4px; color: #2a1c06; background: #f4d66a; font-size: 12px; }
 .wd-chip.gain { color: var(--gold); background: var(--panel-2); }
 .wd-chip.gain b { font-weight: 400; }
-.wd-act-total { display: inline-flex; align-items: center; justify-content: flex-end; gap: 4px; min-width: 48px; font-size: 24px; }
+.wd-act-total { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; min-width: 0; font-size: 24px; line-height: 24px; }
+.wd-act-total > :not(.wd-switch) { display: inline-flex; }
 .wd-act-total b { color: var(--gold); font-weight: 400; }
 .wd-act-total b.free { color: #62c97a; }
 .wd-act-total em { color: #ff8a80; font-style: normal; white-space: nowrap; }
-.wd-switch { display: inline-flex; align-items: center; gap: 2px; margin-left: 4px; }
-.wd-switch button { width: 28px; height: 32px; padding: 0; border: 0; color: var(--text); background: var(--panel-2); box-shadow: 0 0 0 var(--px) var(--edge); font: inherit; font-size: 24px; line-height: 1; cursor: pointer; }
-.wd-switch small { min-width: 28px; color: var(--muted); text-align: center; }
+.wd-act-sum { align-items: baseline; gap: 2px; }
+.wd-act-sum small { color: var(--gold); }
+.wd-switch { padding: 2px 4px; border: 0; color: var(--text); background: var(--panel-2); box-shadow: 0 0 0 var(--px) var(--edge), inset 0 0 0 1px var(--gold); font: inherit; font-size: 12px; line-height: 16px; white-space: nowrap; cursor: pointer; }
+.wd-switch:hover { filter: brightness(1.2); }
 .wd-sent { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }
 .wd-sent-what { display: flex; flex-direction: column; gap: 2px; min-width: 0; margin: 0; }
 .wd-sent-what b { overflow: hidden; color: var(--text); font-size: 24px; font-weight: 400; text-overflow: ellipsis; white-space: nowrap; }
@@ -454,7 +462,7 @@ button.wd-item { cursor: pointer; }
 .wd-act .spectate-bar { padding: 6px 8px; }
 
 /* 1024 一类的窄桌面：出牌面板在中栏，按钮收窄 */
-.act-center .wd-act-row { grid-template-columns: 112px minmax(0, 1fr) auto; gap: 6px; }
+.act-center .wd-act-row { grid-template-columns: 96px minmax(0, 1fr) 72px; gap: 4px; }
 .app-shell .act-center .wd-act-btn .wd-icon { display: none; }
 
 /* ---------- 传牌、军事、特效 ---------- */
@@ -612,8 +620,13 @@ button.wd-item { cursor: pointer; }
   background: linear-gradient(var(--veil), var(--veil)), var(--scene) center top / var(--scene-size) no-repeat, #1b2935;
 }
 .wd-mothers { display: flex; gap: 6px; }
-.wd-tagcard { display: flex; flex: 1 1 0; align-items: center; justify-content: space-between; gap: 2px; min-width: 0; height: 40px; padding: 2px 4px; border: 0; color: var(--text); background: var(--wd-panel); box-shadow: 0 0 0 var(--px) var(--edge); font: inherit; cursor: pointer; }
-.wd-tagcard b { color: var(--gold); font-size: 24px; font-weight: 400; }
+.wd-tagcard { display: flex; flex: 1 1 0; align-items: center; justify-content: space-between; gap: 2px; min-width: 0; height: 48px; padding: 2px 4px; border: 0; color: var(--text); background: var(--wd-panel); box-shadow: 0 0 0 var(--px) var(--edge); font: inherit; cursor: pointer; }
+.wd-tagcard-main { display: flex; flex: 1 1 auto; flex-direction: column; align-items: flex-start; min-width: 0; text-align: left; }
+.wd-tagcard-name { display: flex; align-items: center; gap: 2px; max-width: 100%; overflow: hidden; font-size: 12px; line-height: 16px; white-space: nowrap; }
+.wd-tagcard-name .wd-tag { padding: 0 2px; line-height: 16px; }
+.wd-tagcard-name > span:last-child { min-width: 0; overflow: hidden; text-overflow: clip; }
+.wd-tagcard-vp { display: inline-flex; align-items: center; gap: 2px; }
+.wd-tagcard b { color: var(--gold); font-size: 24px; font-weight: 400; line-height: 24px; }
 .wd-tagcard .wd-ready img { width: 16px; height: 16px; }
 .wd-tagcard .wd-busy-dot { width: 10px; height: 10px; }
 .wd-mnbs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; }
@@ -626,6 +639,8 @@ button.wd-item { cursor: pointer; }
 .wd-mnb-head .wd-ready { margin-left: auto; }
 .wd-mnb-head .wd-ready img { width: 16px; height: 16px; }
 .wd-mnb .wd-stats { gap: 8px; }
+.wd-mnb-tags { display: flex; gap: 4px; }
+.wd-mnb-tags:empty { display: none; }
 .wd-mnb .wd-stats .wd-icon { width: 16px; height: 16px; }
 .wd-mnb .wd-sell-price { min-width: 0; }
 .wd-mnb .wd-sell-price b { line-height: 24px; }
@@ -633,7 +648,9 @@ button.wd-item { cursor: pointer; }
 .wd-mme-side { display: flex; flex: 1 1 auto; flex-direction: column; gap: 6px; min-width: 0; }
 .wd-mme .wd-stats { gap: 8px; }
 .wd-mme .wd-stats .wd-icon { width: 16px; height: 16px; }
+.wd-mme .wd-colors.big { display: grid; grid-template-columns: repeat(4, max-content); gap: 2px 6px; }
 .wd-mme .wd-colors.big > span { min-width: 0; font-size: 24px; }
+.wd-mme-name { overflow: hidden; color: var(--text); font-size: 12px; white-space: nowrap; }
 .wd-mme .wd-colors.big > span i { width: 8px; }
 .mobile .wd-hand { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
 .mobile .wd-hand-empty { grid-column: 1 / -1; font-size: 12px; }
@@ -642,10 +659,8 @@ button.wd-item { cursor: pointer; }
 .app-shell .mobile .wd-act-head h2 { white-space: normal; }
 .mobile .wd-act-foot small { display: none; }
 .wd-act.sheet { background: var(--panel); position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; max-height: 75dvh; padding: 10px 10px 14px; overflow-y: auto; box-shadow: 0 0 0 var(--px) var(--edge), inset 0 calc(var(--px) * 2) 0 0 var(--wd-sea), 0 -8px 0 0 rgba(0, 0, 0, 0.35); }
-.mobile .wd-act-row { grid-template-columns: 96px minmax(0, 1fr) auto; gap: 6px; }
+.mobile .wd-act-row { grid-template-columns: 96px minmax(0, 1fr) 72px; gap: 4px; }
 .app-shell .mobile .wd-act-btn .wd-icon { display: none; }
-.mobile .wd-chip { height: 32px; padding: 0 3px; }
-.mobile .wd-chip .wd-icon { width: 16px; height: 16px; }
 .mobile .wd-drawer { position: fixed; top: 40px; right: 0; bottom: 0; left: 0; z-index: 45; width: auto; }
 .mobile .wd-board.small .wd-board-name { display: none; }
 
@@ -656,11 +671,15 @@ button.wd-item { cursor: pointer; }
   .wd-choose-list button { min-width: 0; font-size: 12px; }
   .wd-choose-list button small { display: none; }
   .wd-rules-grid { grid-template-columns: 1fr; }
-  .wd-final-table { font-size: 12px; }
+  .wd-final-table { font-size: 24px; border-spacing: 0 2px; }
+  .wd-final-table th { padding: 0; font-size: 12px; white-space: nowrap; }
   .wd-final-table th small { display: none; }
-  .wd-final-table td { padding: 2px; line-height: 28px; }
-  .wd-final-table td.name strong { display: none; }
-  .wd-final-table :is(td.total, td.rank) { font-size: 24px; }
+  .wd-final-table td { padding: 0 1px; line-height: 32px; letter-spacing: -1px; }
+  .wd-final-table td.rank { width: 24px; }
+  .wd-final-table td.rank img { width: 24px; height: 16px; }
+  .wd-final-table td.name img { display: none; }
+  .wd-final-table td.name.wd-seat { padding-left: 8px; }
+  .wd-final-table td.name strong { display: inline-block; max-width: 4em; margin-left: 0; overflow: hidden; font-size: 12px; letter-spacing: 0; text-overflow: clip; white-space: nowrap; vertical-align: middle; }
   .wd-final-table th .wd-icon { width: 16px; height: 16px; }
   .wd-final-detail li { grid-template-columns: 16px 28px 32px minmax(0, 1fr); gap: 4px; }
   .wd-dialog .wd-city { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -802,4 +821,85 @@ button.wd-item { cursor: pointer; }
   .wd-sprite, .wd-timer.low, .wd-ready.waiting img, .wd-busy-dot, .wd-card-chain.on, .wd-strip.fresh, .wd-stages li.shine,
   .wd-hand.enter-right > *, .wd-hand.enter-left > *, .wd-mil, .wd-mil-token, .wd-passfly img { animation: none; }
   .wd-passfly { display: none; }
+}
+
+/* ---------- 首发验收第 1 轮修正 ---------- */
+/* 等候房间：开房变体写清开 / 关，小方块不被挤扁（I41） */
+.app-shell .room-setting i { flex: 0 0 auto; }
+.wd-onoff { flex: 0 0 auto; padding: 0 6px; color: var(--muted); background: var(--bg); font-size: 12px; font-style: normal; line-height: 20px; box-shadow: 0 0 0 1px var(--rim); }
+.room-setting.on .wd-onoff { color: #2a1c06; background: var(--gold); box-shadow: none; }
+/* 新手教程入口：桌面在标题旁，手机放到玩家列表后面，「开始对局」留在第一屏（I24） */
+.wd-tut-bottom { display: none; }
+@media (max-width: 759px) {
+  .wd-room .wd-tut-top { display: none; }
+  .wd-room .wd-tut-bottom { display: block; order: 2; }
+  .wd-room .room-code-panel { order: 3; }
+  .wd-room .wd-room-chat { order: 4; }
+  .wd-room .player-panel > .field-hint { display: none; }
+  .wd-room .room-heading { margin-bottom: 8px; }
+  .app-shell.wd-room .room-heading h1 { margin: 4px 0 0; }
+  .wd-room .room-heading .eyebrow { display: none; }
+}
+/* 首页手机：教程入口紧凑地放在标题下、建房表单上面（I16） */
+@media (max-width: 899px) {
+  .wd-home .tut-invite, .wd-home .tut-again { order: 0; }
+  .wd-home .tut-invite { flex-wrap: nowrap; gap: 8px; padding: 8px; }
+  .wd-home .tut-invite img { width: 32px; height: 32px; }
+  .wd-home .tut-invite-copy span { display: none; }
+  .app-shell.wd-home .tut-invite .tut-invite-go { width: auto; padding: 6px 10px; }
+  .app-shell.wd-home .tut-again { margin-top: 0; }
+  .wd-home .topbar .brand { margin-right: 12px; }
+}
+/* 手机牌桌背景像素图（I27） */
+.wd-mtable { image-rendering: pixelated; }
+/* 手机首页封面：原尺寸裁切，不缩放（I28） */
+@media (max-width: 420px) {
+  .wd-hero { width: 100%; height: 192px; aspect-ratio: auto; object-fit: cover; object-position: center; }
+}
+/* 1024 菜单弹层按钮一样宽（I37） */
+.wd-menu-pop .game-room-menu, .wd-menu-pop .game-room-menu > .quiet-button { width: 100%; }
+.wd-menu-pop .spectator-count { text-align: center; }
+/* 1024：军事横幅放到城池上，不盖出牌面板（I35） */
+.act-center .wd-mil { top: 50%; }
+/* 观战能看到手牌的提示（I9） */
+p.wd-seeall { margin: 0; white-space: normal; }
+.wd-seeall { padding: 2px 6px; color: #2a1c06; background: #f2a03d; font-size: 12px; box-shadow: 0 0 0 var(--px) var(--edge); white-space: nowrap; }
+/* 弹窗底部固定按钮（I25） */
+.wd-dialog-foot { display: flex; flex: 0 0 auto; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 10px; padding-top: 8px; border-top: var(--px) solid var(--panel-2); }
+.app-shell .wd-dialog-foot .primary-button { width: auto; margin: 0; min-height: 44px; padding: 0 20px; font-size: 24px; }
+.app-shell .wd-dialog-foot .quiet-button { min-height: 44px; font-size: 24px; }
+/* 自选奇迹（手机）：A / B 面切换，一次看一面（I34） */
+.wd-side-tabs { display: flex; align-self: stretch; gap: 6px; }
+.wd-side-tabs button { white-space: nowrap; }
+.wd-choose-body .wd-choose-side .primary-button, .wd-stage-list { align-self: stretch; }
+.wd-side-tabs button { flex: 1 1 0; min-height: 36px; border: 0; color: var(--text); background: var(--panel-2); font: inherit; font-size: 24px; cursor: pointer; box-shadow: 0 0 0 var(--px) var(--edge); }
+.wd-side-tabs button.on { color: #2a1c06; background: var(--gold); }
+.wd-stage-list { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; font-size: 12px; line-height: 1.5; }
+.wd-stage-list li { padding: 4px 6px; background: var(--panel-2); }
+.wd-stage-list b { color: var(--gold); font-weight: 400; }
+/* 首页：在线牌桌放左栏占满剩下的高度，封面挪到右栏表单下面（I36） */
+.wd-home-rooms { display: flex; min-height: 0; flex-direction: column; }
+@media (min-width: 900px) {
+  .wd-home .welcome-copy { display: flex; max-height: 100%; min-height: 0; flex-direction: column; align-self: stretch; justify-content: center; }
+  .wd-home .welcome-copy > * { flex: 0 0 auto; }
+  .wd-home .wd-home-rooms { flex: 0 1 auto; margin-top: 16px; }
+  .app-shell.wd-home .wd-home-rooms .online-rooms { flex: 1 1 auto; min-height: 0; }
+  .app-shell.wd-home .wd-home-rooms .online-rooms .online-rooms-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wd-home .wd-home-points { display: none; }
+  .wd-home .wd-home-side .wd-hero { align-self: center; margin-top: 0; }
+}
+@media (min-width: 900px) and (max-height: 900px) {
+  .wd-home .wd-home-side .wd-hero { display: none; }
+}
+@media (max-width: 899px) {
+  .wd-home .wd-home-rooms { order: 5; }
+}
+/* 手机首页、等候房间顶栏：品牌、返回大厅、按钮各占一块不折行（I49） */
+@media (max-width: 520px) {
+  .app-shell:is(.wd-home, .wd-room) .topbar { gap: 8px; }
+  .app-shell:is(.wd-home, .wd-room) .topbar :is(.brand-name, .center-link, .quiet-button) { white-space: nowrap; }
+  .app-shell:is(.wd-home, .wd-room) .topbar .brand-name > span { display: none; }
+  .app-shell:is(.wd-home, .wd-room) .topbar .connection-text { display: none; }
+  .app-shell:is(.wd-home, .wd-room) .topbar-right { gap: 6px; }
+  .app-shell.wd-home .center-link { padding-left: 8px; border-left: var(--px) solid var(--rim); }
 }

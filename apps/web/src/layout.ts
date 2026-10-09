@@ -43,7 +43,7 @@ export interface Layout {
 
 export const ACT_MIN = 420;
 /** 奇迹板：插图 192×72 ×N + 阶段格 + 框。 */
-export const stageRowH = (n: 1 | 2) => (n === 2 ? 40 : 28);
+export const stageRowH = (n: 1 | 2) => (n === 2 ? 48 : 28);
 export const boardH = (n: 1 | 2) => 72 * n + stageRowH(n) + 8;
 export const boardW = (n: 1 | 2) => 192 * n + 8;
 
@@ -74,7 +74,7 @@ export function computeLayout(width: number, height: number, players: number): L
   if (hand.n === 3 && hand.middleH < 420) hand = tryHand(2);
   const actRoom = width - 2 * pad - hand.handW - gap;
   const actInHand = actRoom >= ACT_MIN;
-  const nbW = big && width >= 1800 ? 400 : width >= 1300 ? 216 : 200;
+  const nbW = big && width >= 1800 ? 408 : 216;
   const nbWonderN: 1 | 2 = nbW >= 400 ? 2 : 1;
   const centerW = width - 2 * pad - 2 * nbW - 2 * gap;
   const middleH = hand.middleH;

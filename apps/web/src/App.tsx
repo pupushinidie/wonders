@@ -17,6 +17,8 @@ import { GAME_ID } from "./tutorial/tutorialGame.js";
 
 type EntryMode = "create" | "join";
 
+const NAME_KEY = "wd-name";
+
 const validRoomCode = /^[A-HJ-NP-Z2-9]{6}$/;
 
 // 线上游戏中心在站点根路径；本地开发时跑在 5175 端口。
@@ -28,7 +30,14 @@ function normalizeRoomCode(value: string): string {
 
 function App() {
   const [mode, setMode] = useState<EntryMode>("create");
-  const [name, setName] = useState("");
+  // 昵称记在本机（刷新、重开页面不用再填）
+  const [name, setNameState] = useState(() => {
+    try { return window.localStorage.getItem(NAME_KEY) ?? ""; } catch { return ""; }
+  });
+  const setName = (value: string) => {
+    setNameState(value);
+    try { window.localStorage.setItem(NAME_KEY, value); } catch { /* 存不了就只在本页有效 */ }
+  };
   const [capacity, setCapacity] = useState<Capacity>(4);
   const [confirmAction, confirmDialog] = useConfirm();
   // 白天 / 夜间画面：首页、等候房间、牌桌共用，顶栏按钮随时切换；和游戏中心、其他游戏共用同一个选择。
@@ -339,7 +348,7 @@ function App() {
             again="再看一遍新手教程"
             onOpen={() => setTutorialOpen(true)}
           />
-          <img className="wd-hero" src={art.cover} alt="" width={384} height={192} />
+          <div className="wd-home-rooms"><OnlineRooms rooms={lobbyRooms} connected={connected} busy={busy} onJoin={joinListed} /></div>
           <ul className="wd-home-points">
             <li><b>挑</b>同时选牌，剩下的传给邻居</li>
             <li><b>建</b>建筑、奇迹，缺资源向两邻买</li>
@@ -438,7 +447,7 @@ function App() {
             </form>
             <div className="entry-footnote"><span className="lock-icon">◇</span> 默认邀请制 · 房主可以设为公开</div>
           </section>
-          <OnlineRooms rooms={lobbyRooms} connected={connected} busy={busy} onJoin={joinListed} />
+          <img className="wd-hero" src={art.cover} alt="" width={384} height={192} />
         </div>
       </section>
     </main>
@@ -503,7 +512,7 @@ function RoomView({
           <p>{spectating ? "等房主开始对局；有空座位时可以坐下一起玩。" : "把房间码分享给朋友，等大家就位后开始；空座位可以加人机。"}</p>
         </div>
         <div className="room-heading-actions">
-          {!spectating && room.status === "waiting" && tutorial}
+          {!spectating && room.status === "waiting" && <span className="wd-tut-top">{tutorial}</span>}
           {isHost && <button className="quiet-button danger" type="button" onClick={onDissolve} disabled={busy}>解散房间</button>}
           <button className="quiet-button" type="button" onClick={onLeave} disabled={busy || (room.status === "playing" && !spectating)}>
             {spectating ? "离开观战" : "离开房间"}
@@ -570,6 +579,7 @@ function RoomView({
               {isHost && room.members.length < 3 && <p className="field-hint centered">还需要至少 {3 - room.members.length} 位玩家加入，也可以点空座位上的「加人机」。</p>}
             </div>
           </section>
+          {!spectating && <div className="wd-tut-bottom">{tutorial}</div>}
           <div className="wd-room-chat">{chat}</div>
         </div>
       ) : null}
@@ -605,7 +615,7 @@ function OptionsPanel({ room }: { room: LobbyRoomSnapshot }) {
           onClick={() => change({ [item.key]: !room.options[item.key] } as Partial<GameOptions>)}
         >
           <i aria-hidden="true" />
-          <span><b>{item.title}</b><small>{item.note}</small></span>
+          <span><b>{item.title}</b><em className="wd-onoff">{room.options[item.key] && !item.disabled ? "已开" : "关"}</em><small>{item.note}</small></span>
         </button>
       ))}
       {error && <p className="feedback feedback-error" role="alert">{error}</p>}

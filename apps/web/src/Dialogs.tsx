@@ -11,6 +11,7 @@ import {
   scoreBreakdown,
   WONDER_KEYS,
   wonder as wonderDef,
+  wonderStages,
   type CardColor,
   type CardId,
   type GameCommand,
@@ -25,13 +26,15 @@ import {
 import { art } from "./art.js";
 import { CardItem, CityStrip, Icon } from "./Card.js";
 import { ColorCounts, PlayerTags, ScienceCounts, StatLine, type SeatInfo } from "./Players.js";
-import { COLOR_HEX } from "./text.js";
+import { COLOR_HEX, effectText, resCount } from "./text.js";
 import { PlayerBoard, WonderBoard } from "./Wonder.js";
 
-export function Modal({ title, onClose, children, className = "", wide = false, tutorial }: {
+export function Modal({ title, onClose, children, className = "", wide = false, tutorial, footer }: {
   title: ReactNode;
   onClose?: () => void;
   children: ReactNode;
+  /** 固定在弹窗底部的按钮（列表再长也看得见）。 */
+  footer?: ReactNode;
   className?: string;
   wide?: boolean;
   tutorial?: string;
@@ -50,6 +53,7 @@ export function Modal({ title, onClose, children, className = "", wide = false, 
           {onClose && <button type="button" className="quiet-button" onClick={onClose}>关闭</button>}
         </header>
         <div className="wd-dialog-body">{children}</div>
+        {footer && <footer className="wd-dialog-foot">{footer}</footer>}
       </section>
     </div>
   );
@@ -176,6 +180,8 @@ export function ChooseWonderDialog({ game, me, members, nameOf, onCommand, onClo
   const mine = chooser?.id === me;
   void members;
   const big = window.innerWidth >= 1200 && window.innerHeight >= 700;
+  const narrow = window.innerWidth < 720;
+  const [showSide, setShowSide] = useState<WonderSide>("A");
   const choose = (side: WonderSide) => onCommand({ type: "CHOOSE_WONDER", wonder: pick, side });
   const taken = takenBy.get(pick);
   return (
@@ -195,6 +201,22 @@ export function ChooseWonderDialog({ game, me, members, nameOf, onCommand, onClo
             );
           })}
         </ol>
+        {narrow ? (
+          <div className="wd-choose-side">
+            <div className="wd-side-tabs" role="tablist">
+              {(["A", "B"] as const).map((side) => (
+                <button key={side} type="button" role="tab" aria-selected={showSide === side} className={showSide === side ? "on" : ""} onClick={() => setShowSide(side)}>{side} 面</button>
+              ))}
+            </div>
+            <WonderBoard wonder={pick} side={showSide} stages={0} n={1} />
+            <ol className="wd-stage-list">
+              {wonderStages(pick, showSide).map((stage, index) => (
+                <li key={index}><b>第 {index + 1} 层</b> {resCount(stage.cost)} → {stage.effects.map(effectText).join("，")}</li>
+              ))}
+            </ol>
+            {mine && <button type="button" className="primary-button" disabled={busy || Boolean(taken)} onClick={() => choose(showSide)}>{taken ? "已被挑走" : `选 ${showSide} 面`}</button>}
+          </div>
+        ) : (
         <div className="wd-choose-sides">
           {(["A", "B"] as const).map((side) => (
             <div key={side} className="wd-choose-side">
@@ -203,6 +225,7 @@ export function ChooseWonderDialog({ game, me, members, nameOf, onCommand, onClo
             </div>
           ))}
         </div>
+        )}
       </div>
       <p className="wd-muted">A 面简单（推荐新手），B 面花样多。奇迹板左上角的资源是起始资源，开局就有，邻居也能买。</p>
     </Modal>
@@ -221,7 +244,21 @@ export function DiscardDialog({ game, me, onCommand, onClose, busy }: {
   const [pick, setPick] = useState<CardId | null>(null);
   const list = [...game.discard].sort((a, b) => Number(buildable.has(b)) - Number(buildable.has(a)) || card(a).age - card(b).age);
   return (
-    <Modal title="从弃牌堆免费建一张" onClose={onClose} wide className="wd-discard" tutorial="discard-dialog">
+    <Modal
+      title="从弃牌堆免费建一张"
+      onClose={onClose}
+      wide
+      className="wd-discard"
+      tutorial="discard-dialog"
+      footer={
+        <>
+          <button type="button" className="quiet-button" disabled={busy} onClick={() => onCommand({ type: "DISCARD_BUILD", card: null })}>放弃</button>
+          <button type="button" className="primary-button" disabled={busy || !pick} onClick={() => pick && onCommand({ type: "DISCARD_BUILD", card: pick })}>
+            {pick ? `免费建 ${card(pick).zh}` : "先点一张"}
+          </button>
+        </>
+      }
+    >
       <p className="wd-muted">哈利卡纳苏斯的奇迹能力：挑一张，不付任何费用直接建。灰掉的是你已经有同名的。</p>
       <div className="wd-discard-grid">
         {list.map((id, index) => (
@@ -234,12 +271,6 @@ export function DiscardDialog({ game, me, onCommand, onClose, busy }: {
           />
         ))}
         {list.length === 0 && <p className="wd-muted">弃牌堆是空的。</p>}
-      </div>
-      <div className="gm-panel-actions">
-        <button type="button" className="quiet-button" disabled={busy} onClick={() => onCommand({ type: "DISCARD_BUILD", card: null })}>放弃</button>
-        <button type="button" className="primary-button" disabled={busy || !pick} onClick={() => pick && onCommand({ type: "DISCARD_BUILD", card: pick })}>
-          {pick ? `免费建 ${card(pick).zh}` : "先点一张"}
-        </button>
       </div>
     </Modal>
   );

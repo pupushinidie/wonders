@@ -35,7 +35,7 @@ export function WonderBoard({ wonder, side, stages, n, shine = -1, nameSize = "a
         <img src={art.wonder(wonder, side)} alt={def.zh} width={192 * n} height={72 * n} draggable={false} />
         <span className="wd-board-name">{def.zh}</span>
         <span className="wd-board-start" title={`起始资源：${resCount(def.start)}（邻居能买）`}><Icon name={`res-${def.start}`} s={n === 1 ? 1 : 2} /></span>
-        {side === "B" && <span className="wd-board-b">B</span>}
+        <span className={`wd-board-b side-${side}`} title={side === "A" ? "A 面（简单）" : "B 面（花样多）"}>{side}面</span>
       </div>
       <ol className={detail ? "wd-stages detail" : "wd-stages"} data-tutorial={tutorial ? `${tutorial}-stages` : undefined}>
         {list.map((stage, index) => {
@@ -43,9 +43,9 @@ export function WonderBoard({ wonder, side, stages, n, shine = -1, nameSize = "a
           const text = `第 ${index + 1} 层：${resCount(stage.cost)} → ${stage.effects.map(effectText).join("，")}${built ? "（已建）" : ""}`;
           return (
             <li key={index} className={[built ? "built" : "", index === stages ? "next" : "", index === shine ? "shine" : ""].join(" ")} title={text}>
-              <CostPips cost={stage.cost} n={n === 1 ? 1 : 2} />
+              {/* 已建的层不再显示成本，换成「已建」勾；没建的显示成本。效果（分数等）在下面一行 */}
+              {built ? <img className="wd-stage-check" src={art.icon("stage-built")} alt="已建" width={16} height={16} /> : <CostPips cost={stage.cost} n={n === 1 ? 1 : 2} />}
               {showEffects && <span className="wd-stage-eff">{stage.effects.map((effect, k) => <EffectIcons key={k} effect={effect} s={1} />)}</span>}
-              {built && <img className="wd-stage-check" src={art.icon("stage-built")} alt="已建" width={16} height={16} />}
               {detail && <small>{stage.effects.map(effectText).join("，")}</small>}
             </li>
           );
