@@ -554,6 +554,12 @@ def centered(canvas: Image.Image, parts: list[Image.Image], gap: int = 2, y: int
 RES_ORDER = "WCSOGLP"
 
 
+def slash() -> Image.Image:
+    """代码画的斜杠（「或」）：6×16，墨蓝描边的白色斜线。"""
+    m = mask((6, 16), ("line", [(4, 1), (1, 14)], 2))
+    return shaded(m, P["marble_l"], P["marble_l"], P["marble_d"])
+
+
 def plate(img: Image.Image, x0: int, y0: int, x1: int, y1: int) -> None:
     """浅色大理石小牌（圆角），把小图标托起来。"""
     d = ImageDraw.Draw(img)
@@ -575,16 +581,18 @@ def card_art(card: dict) -> Image.Image:
             centered(img, [big(f"res-{res[0]}"), text_layer(f"×{len(res)}")])
     elif t == "produceChoice":
         opts = eff["options"]
+        # 「几选一」不写字：资源图标之间画像素斜杠，放在一块大理石小牌上
         if len(opts) == 2:
-            plate(img, 6, 8, 49, 29)
-            centered(img, [icon(f"res-{opts[0]}"), text_layer("/"), icon(f"res-{opts[1]}")], gap=2, y=11)
-        elif len(opts) == 3:  # 一排三个 + 「任选」
-            centered(img, [icon(f"res-{k}") for k in opts], gap=3, y=5)
-            centered(img, [text_layer("任选")], y=23)
-        else:  # 四种：左边 2×2，右边「任选」
-            for i, k in enumerate(opts):  # 一排四个，描边互相压 3px
-                img.alpha_composite(icon(f"res-{k}"), (1 + i * 13, 5))
-            centered(img, [text_layer("任选")], y=23)
+            plate(img, 1, 6, 54, 31)
+            centered(img, [icon(f"res-{opts[0]}"), slash(), icon(f"res-{opts[1]}")], gap=3, y=11)
+        else:  # 三四种：方阵摆在小牌上，上排两个中间画斜杠（三种时第三个居中放下排）
+            plate(img, 8, 0, 47, 33)
+            for i, k in enumerate(opts):
+                x = 10 + (i % 2) * 20 if not (len(opts) == 3 and i == 2) else 20
+                img.alpha_composite(icon(f"res-{k}"), (x, 1 + (i // 2) * 16))
+            img.alpha_composite(slash(), (25, 1))
+            if len(opts) == 4:
+                img.alpha_composite(slash(), (25, 17))
     elif t == "vp":
         centered(img, [big("vp"), text_layer(str(eff["n"]), scale=2)])
     elif t == "shields":
