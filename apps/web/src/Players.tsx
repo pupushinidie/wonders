@@ -21,7 +21,7 @@ import {
 import { art } from "./art.js";
 import { Icon } from "./Card.js";
 import { PlayerBoard } from "./Wonder.js";
-import { COLOR_HEX, playText, WONDER_SHORT } from "./text.js";
+import { COLOR_HEX, playText, seatVar, WONDER_SHORT } from "./text.js";
 
 export interface SeatInfo {
   readonly player: PlayerState;
@@ -181,7 +181,7 @@ export function NeighborPanel({ seat, me, side, game, wonderN, passTo, onOpen, s
 }) {
   const { player } = seat;
   return (
-    <section className={`wd-panel wd-neighbor ${side}`} data-tutorial={tutorial}>
+    <section className={`wd-panel wd-neighbor wd-seat ${side}`} style={seatVar(player.wonder)} data-tutorial={tutorial}>
       <button type="button" className="wd-open" onClick={onOpen} aria-label={`看 ${player.name} 的城池`} />
       <div className="wd-nb-label">
         <span>{side === "left" ? "左邻" : "右邻"}</span>
@@ -206,7 +206,7 @@ export function OtherCard({ seat, game, emblemN, onOpen }: { seat: SeatInfo; gam
   const { player } = seat;
   const stagesTotal = player.wonder ? wonderStages(player.wonder, player.side).length : 0;
   return (
-    <button type="button" className="wd-panel wd-other" onClick={onOpen} title={`看 ${player.name} 的城池`}>
+    <button type="button" className="wd-panel wd-other wd-seat" style={seatVar(player.wonder)} onClick={onOpen} title={`看 ${player.name} 的城池`}>
       {player.wonder ? <img className="wd-emblem" src={art.emblem(player.wonder)} alt="" width={32 * emblemN} height={32 * emblemN} /> : <span className="wd-emblem blank" />}
       <span className="wd-other-main">
         <span className="wd-other-name">
@@ -225,7 +225,7 @@ export function OtherCard({ seat, game, emblemN, onOpen }: { seat: SeatInfo; gam
 export function OtherTag({ seat, game, onOpen }: { seat: SeatInfo; game: GameState; onOpen: () => void }) {
   const { player } = seat;
   return (
-    <button type="button" className="wd-tagcard" onClick={onOpen} title={player.name}>
+    <button type="button" className="wd-tagcard wd-seat" style={seatVar(player.wonder)} onClick={onOpen} title={player.name}>
       {player.wonder ? <img className="wd-emblem" src={art.emblem(player.wonder)} alt="" width={32} height={32} /> : <span className="wd-emblem blank" />}
       <b>{seat.score}</b>
       <ReadyMark game={game} player={player} />
@@ -237,7 +237,7 @@ export function OtherTag({ seat, game, onOpen }: { seat: SeatInfo; game: GameSta
 export function MobileNeighbor({ seat, me, side, game, passTo, onOpen }: { seat: SeatInfo; me: PlayerState; side: Side; game: GameState; passTo: boolean; onOpen: () => void }) {
   const { player } = seat;
   return (
-    <button type="button" className={`wd-panel wd-mnb ${side}`} onClick={onOpen}>
+    <button type="button" className={`wd-panel wd-mnb wd-seat ${side}`} style={seatVar(player.wonder)} onClick={onOpen}>
       <span className="wd-mnb-head">
         <em className={passTo ? "to" : "from"}>{side === "left" ? "◀左邻" : "右邻▶"}</em>
         {player.wonder ? <img className="wd-emblem" src={art.emblem(player.wonder)} alt="" width={32} height={32} /> : <span className="wd-emblem blank" />}

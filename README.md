@@ -199,3 +199,13 @@ const room = previewRoom(scene("fullCities", { side: "B" }), { offline: ["p3"], 
 - 人机策略还没换成正式版时，替人出牌用保底动作：能建就建总价最低的那张（同价取手里靠前的，奥林匹亚免费排最后），都建不了就弃第一张换 3 金；哈利卡纳苏斯挑分数最高的蓝卡，没有就挑第一张能建的。
 - 连续超时 2 次转托管（人机替他打，直到他自己动一下或点「取消托管」）；掉线的人先等 3 秒，再由人机代打（不算超时）；用原昵称加房间码回到自己的座位。
 - 测试时 `TURN_MS` 统一缩短所有时限，`BOT_DELAY_SCALE=0` 让人机立刻行动。
+
+## 界面（apps/web）
+
+- 牌桌 `src/GameBoard.tsx`，尺寸 `src/layout.ts`（按可视区域算：手牌 ×2 / ×3、邻居面板宽、奇迹板 ×1 / ×2、出牌面板放手牌右边还是中栏），样式 `src/wd.css`（白天版由 `day-palette.ts` 生成，手调在 `src/theme-day.css`）。
+- 座位圆环：我在下方，左邻画在屏幕左边、右邻在右边，其他人在上排（从左到右 = 左邻的左邻 … 右邻的右邻）；顶栏箭头标本时代传牌方向。
+- 组件：`Card.tsx`（卡面 64×96 ×N、列表项、城池卡名条）、`Wonder.tsx`（奇迹板）、`Players.tsx`（邻居面板、其他人小卡、手机版）、`ActionPanel.tsx`（出牌面板：建造 / 建奇迹 / 弃掉 + 付款方案 + 撤回）、`Dialogs.tsx`（完整城池、自选奇迹、哈利卡纳苏斯挑弃牌）、`FinalDialog.tsx`（七项分数 + 明细）、`Fx.tsx`（帧条、传牌、军事横幅）、`art.ts`（素材地址，和 art/spec.md 同名）、`text.ts`（效果说明、事件记录）。
+- 卡面上行会去掉「行会」二字（紫色本身说明是行会），详情和终局写全名。
+- 键盘：1–7 选牌，B 建造、W 建奇迹、D 弃掉，U 撤回，Esc 取消。
+- **预览页**：`npm run dev` 后打开 `http://localhost:5189/preview.html`（列出全部场景），`?s=<场景>&viewer=p2&anim=1&click=<选择器>|<选择器>`。不连服务器，规则引擎在浏览器里跑，渲染真正的 GameBoard，牌桌上的操作直接本地 apply。场景在 `src/preview.tsx` 的 `SCENES`，教程、验收可以往里加，不要删别人的。生产构建只打包 index.html。
+- 教程锚点 `data-tutorial`：见 `~/projects/pipeline/games/wonders/handoff/ui.md`。

@@ -1,7 +1,12 @@
 /*
- * 白天版手调的部分。大部分白天样式由 day-theme.ts 从 app-pixel.css、kd.css 换色生成，
+ * 白天版手调的部分。大部分白天样式由 day-theme.ts 从 app-pixel.css、wd.css 换色生成，
  * 这里只放机械换色不合适的地方；选择器都以 :root[data-theme="day"] 开头。
  */
 :root[data-theme="day"] { color-scheme: light; }
-:root[data-theme="day"] .app-shell * { scrollbar-color: #c4b090 var(--bg); }
-
+:root[data-theme="day"] .app-shell * { scrollbar-color: #9fb0c4 var(--bg); }
+/* 二选一资源的小框：夜间是白色半透明底 + 亮边，白底上看不见，换成浅墨蓝 */
+:root[data-theme="day"] :is(.wd-res-choice, .wd-prod > span.choice) { background: rgba(30, 52, 84, 0.08); box-shadow: inset 0 0 0 1px #9fb0c4; }
+/* 选中的卡、出牌面板的海蓝边在白底上保持原色 */
+:root[data-theme="day"] .wd-act.mode-act { box-shadow: 0 0 0 var(--px) var(--edge), inset 0 0 0 calc(var(--px) * 2) #2e6fa8; }
+/* 军事横幅、底部弹出的出牌面板用实色白底 */
+:root[data-theme="day"] :is(.wd-mil, .wd-act.sheet) { background: #ffffff; }

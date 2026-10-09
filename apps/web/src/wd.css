@@ -38,6 +38,14 @@
 .wd-neighbor > :not(.wd-open), .wd-mine > :not(.wd-open) { position: relative; z-index: 1; pointer-events: none; }
 .wd-neighbor [title], .wd-mine [title] { pointer-events: auto; }
 
+/* 座位色（= 奇迹色）：面板左沿一条色带 */
+.wd-seat { --seat: transparent; }
+.wd-panel.wd-seat::before, .wd-tagcard.wd-seat::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; z-index: 2; width: 6px; background: var(--seat); pointer-events: none; }
+.wd-panel.wd-seat, .wd-tagcard.wd-seat { padding-left: 14px; }
+.wd-tagcard.wd-seat { position: relative; padding-left: 8px; }
+.wd-final-table td.name.wd-seat { box-shadow: inset 6px 0 0 0 var(--seat); padding-left: 12px; }
+.wd-final-table tr.focus td.name.wd-seat { box-shadow: inset 6px 0 0 0 var(--seat), inset 0 2px 0 0 var(--wd-sea), inset 0 -2px 0 0 var(--wd-sea); }
+
 /* ---------- 整屏 ---------- */
 .app-shell.wd-game { width: 100%; max-width: none; min-height: 0; margin: 0; padding: 0; }
 .wd-screen { display: grid; grid-template-rows: var(--top-h, 40px) minmax(0, 1fr); height: 100vh; height: 100dvh; overflow: hidden; }
@@ -256,7 +264,8 @@
 .wd-strip.more { justify-content: center; color: var(--muted); background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--rim); font-size: 12px; }
 .wd-strip.fresh { animation: wd-fresh 2.4s steps(8, jump-none) 1; }
 @keyframes wd-fresh { 0%, 60% { background: #fff3a8; transform: translateX(0); } 10% { transform: translateX(-4px); } 20% { transform: translateX(0); } 100% { background: #ffffff; } }
-.wd-dialog .wd-city { --strip-h: 28px; --strip-font: 24px; padding: 0; background: transparent; box-shadow: none; }
+.wd-dialog .wd-city { --strip-h: 28px; --strip-font: 24px; flex: 0 0 auto; padding: 0; overflow: visible; background: transparent; box-shadow: none; }
+.wd-dialog-body > * { flex-shrink: 0; }
 
 /* ---------- 手牌（卡面 64×96 × n） ---------- */
 .wd-hand { display: flex; flex: 0 0 auto; align-items: flex-end; gap: var(--card-gap, 8px); min-width: 0; }

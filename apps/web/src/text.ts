@@ -36,6 +36,18 @@ export const WONDER_SHORT: Record<WonderKey, string> = {
   halicarnassus: "陵墓",
 };
 
+/** 座位色（= 奇迹色，Okabe-Ito 色盲安全，art/spec.md §1）：名字牌、小卡、结算表色条。 */
+export const SEAT_HEX: Record<WonderKey, string> = {
+  giza: "#e69f00",
+  rhodes: "#d55e00",
+  alexandria: "#56b4e9",
+  ephesus: "#f0e442",
+  babylon: "#009e73",
+  olympia: "#cc79a7",
+  halicarnassus: "#0072b2",
+};
+export const seatVar = (key: WonderKey | null) => ({ "--seat": key ? SEAT_HEX[key] : "transparent" }) as Record<string, string>;
+
 /** 七种卡色：主色、亮、暗（spec §1）。 */
 export const COLOR_HEX: Record<CardColor, readonly [string, string, string]> = {
   brown: ["#8c582c", "#b07a44", "#5e3a1c"],

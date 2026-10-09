@@ -27,7 +27,7 @@ import { boardH, useLayout } from "./layout.js";
 import { ColorCounts, LastPlay, MobileNeighbor, NeighborPanel, OtherCard, OtherTag, ScienceCounts, StatLine, type SeatInfo } from "./Players.js";
 import { GameRoomMenu, SpectateBar } from "./RoomExtras.js";
 import { socket } from "./socket.js";
-import { describeEvent, ROMAN } from "./text.js";
+import { describeEvent, ROMAN, seatVar } from "./text.js";
 import type { Theme } from "./theme.js";
 import { PlayerBoard } from "./Wonder.js";
 
@@ -402,7 +402,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
             <span data-tutorial="neighbor-left"><MobileNeighbor seat={left} me={me} side="left" game={game} passTo={passTo("left")} onOpen={() => setOpenSeat(left.player.id)} /></span>
             <span data-tutorial="neighbor-right"><MobileNeighbor seat={right} me={me} side="right" game={game} passTo={passTo("right")} onOpen={() => setOpenSeat(right.player.id)} /></span>
           </div>
-          <button type="button" className="wd-panel wd-mme" onClick={() => setOpenSeat(me.id)} data-tutorial="my-board">
+          <button type="button" className="wd-panel wd-mme wd-seat" style={seatVar(me.wonder) as CSSProperties} onClick={() => setOpenSeat(me.id)} data-tutorial="my-board">
             <PlayerBoard player={me} n={1} {...shineProp(me.id)} />
             <span className="wd-mme-side">
               <StatLine seat={mine} items={["coin", "shield", "vp"]} tutorial="my-stats" />
@@ -420,7 +420,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
   }
 
   const myBoard = (
-    <div className="wd-panel wd-mine" data-tutorial="my-board">
+    <div className="wd-panel wd-mine wd-seat" style={seatVar(me.wonder) as CSSProperties} data-tutorial="my-board">
       {theme === "night" && <Sprite name="brazier" s={2} className="wd-brazier l" />}
       <button type="button" className="wd-open" onClick={() => setOpenSeat(me.id)} aria-label="看自己的完整城池" />
       <PlayerBoard player={me} n={layout.myWonderN} {...shineProp(me.id)} tutorial="my-wonder" />

@@ -14,6 +14,7 @@ import {
 import { art } from "./art.js";
 import { Icon } from "./Card.js";
 import { SCORE_ITEMS } from "./Dialogs.js";
+import { seatVar } from "./text.js";
 import { socket } from "./socket.js";
 import { Sprite } from "./Fx.js";
 
@@ -120,7 +121,7 @@ export function FinalDialog({ game, room, myId, spectating, nameOf, onRematch, o
                 return (
                   <tr key={score.player} className={[winner ? "winner" : "", score.player === myId ? "mine" : "", score.player === focus ? "focus" : ""].join(" ")} onClick={() => setFocus(score.player)}>
                     <td className="rank">{winner ? <img src={art.laurel} alt="第一" width={48} height={32} /> : score.rank}</td>
-                    <td className="name">
+                    <td className="name wd-seat" style={seatVar(player.wonder) as CSSProperties}>
                       {player.wonder && <img src={art.emblem(player.wonder)} alt="" width={32} height={32} />}
                       <strong>{nameOf(score.player)}</strong>
                     </td>
