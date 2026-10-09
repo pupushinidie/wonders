@@ -1,0 +1,500 @@
+[
+ {
+  "key": "giza",
+  "name": "Pyramids of Giza",
+  "zh": "金字塔",
+  "start": "S",
+  "sides": {
+   "A": [
+    {
+     "cost": "SS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "WWW",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 5
+      }
+     ]
+    },
+    {
+     "cost": "SSSS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "SSS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 5
+      }
+     ]
+    },
+    {
+     "cost": "CCC",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 5
+      }
+     ]
+    },
+    {
+     "cost": "SSSSP",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "key": "rhodes",
+  "name": "Colossus of Rhodes",
+  "zh": "罗德岛巨像",
+  "start": "O",
+  "sides": {
+   "A": [
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "CCC",
+     "effects": [
+      {
+       "type": "shields",
+       "n": 2
+      }
+     ]
+    },
+    {
+     "cost": "OOOO",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "SSS",
+     "effects": [
+      {
+       "type": "shields",
+       "n": 1
+      },
+      {
+       "type": "coins",
+       "n": 3
+      },
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "OOOO",
+     "effects": [
+      {
+       "type": "shields",
+       "n": 1
+      },
+      {
+       "type": "coins",
+       "n": 4
+      },
+      {
+       "type": "vp",
+       "n": 4
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "key": "alexandria",
+  "name": "Lighthouse of Alexandria",
+  "zh": "亚历山大灯塔",
+  "start": "G",
+  "sides": {
+   "A": [
+    {
+     "cost": "SS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "OO",
+     "effects": [
+      {
+       "type": "produceChoice",
+       "options": "WCSO",
+       "sellable": false
+      }
+     ]
+    },
+    {
+     "cost": "GG",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "CC",
+     "effects": [
+      {
+       "type": "produceChoice",
+       "options": "WCSO",
+       "sellable": false
+      }
+     ]
+    },
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "produceChoice",
+       "options": "GLP",
+       "sellable": false
+      }
+     ]
+    },
+    {
+     "cost": "SSS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "key": "ephesus",
+  "name": "Temple of Artemis in Ephesus",
+  "zh": "以弗所神庙",
+  "start": "P",
+  "sides": {
+   "A": [
+    {
+     "cost": "SS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "coins",
+       "n": 9
+      }
+     ]
+    },
+    {
+     "cost": "PP",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "SS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 2
+      },
+      {
+       "type": "coins",
+       "n": 4
+      }
+     ]
+    },
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      },
+      {
+       "type": "coins",
+       "n": 4
+      }
+     ]
+    },
+    {
+     "cost": "GLP",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 5
+      },
+      {
+       "type": "coins",
+       "n": 4
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "key": "babylon",
+  "name": "Hanging Gardens of Babylon",
+  "zh": "巴比伦空中花园",
+  "start": "C",
+  "sides": {
+   "A": [
+    {
+     "cost": "CC",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "WWW",
+     "effects": [
+      {
+       "type": "science",
+       "symbol": "any"
+      }
+     ]
+    },
+    {
+     "cost": "CCCC",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "CL",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "WWG",
+     "effects": [
+      {
+       "type": "playSeventhCard"
+      }
+     ]
+    },
+    {
+     "cost": "CCCP",
+     "effects": [
+      {
+       "type": "science",
+       "symbol": "any"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "key": "olympia",
+  "name": "Statue of Zeus in Olympia",
+  "zh": "奥林匹亚宙斯像",
+  "start": "W",
+  "sides": {
+   "A": [
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "SS",
+     "effects": [
+      {
+       "type": "freeBuildOncePerAge"
+      }
+     ]
+    },
+    {
+     "cost": "OO",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "tradeDiscount",
+       "res": "WCSO",
+       "from": [
+        "left",
+        "right"
+       ]
+      }
+     ]
+    },
+    {
+     "cost": "SS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 5
+      }
+     ]
+    },
+    {
+     "cost": "OOL",
+     "effects": [
+      {
+       "type": "copyGuild"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "key": "halicarnassus",
+  "name": "Mausoleum of Halicarnassus",
+  "zh": "哈利卡纳苏斯陵墓",
+  "start": "L",
+  "sides": {
+   "A": [
+    {
+     "cost": "CC",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "OOO",
+     "effects": [
+      {
+       "type": "buildFromDiscard"
+      }
+     ]
+    },
+    {
+     "cost": "LL",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "OO",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 2
+      },
+      {
+       "type": "buildFromDiscard"
+      }
+     ]
+    },
+    {
+     "cost": "CCC",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 1
+      },
+      {
+       "type": "buildFromDiscard"
+      }
+     ]
+    },
+    {
+     "cost": "GLP",
+     "effects": [
+      {
+       "type": "buildFromDiscard"
+      }
+     ]
+    }
+   ]
+  }
+ }
+]
