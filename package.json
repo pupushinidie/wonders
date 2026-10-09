@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build:game": "npm run build -w @wonders/game",
     "test": "vitest run",
-    "typecheck": "tsc -b && npm run typecheck -w @wonders/server && npm run typecheck -w @wonders/web",
+    "typecheck": "tsc -b && tsc -p packages/game/tsconfig.test.json && npm run typecheck -w @wonders/server && npm run typecheck -w @wonders/web",
     "predev": "npm run build:game",
     "dev": "concurrently -k -n server,web \"npm:dev:server\" \"npm:dev:web\"",
     "start": "npm run build:game && npm run start -w @wonders/server",

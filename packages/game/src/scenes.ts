@@ -7,7 +7,7 @@
  * - scene(name, opts)：按名字造常见局面，名字和说明见 SCENES。
  * - previewRoom(game, opts)：把局面包成 LobbyRoomSnapshot（指定视角、谁离线 / 托管 / 是人机、倒计时），给预览页渲染整张牌桌。
  */
-import { ageCards, card, CARDS, findCard, GUILDS, wonderStages } from "./cards.js";
+import { ageCards, card, CARDS, findCard, GUILDS, wonder as wonderDef, wonderStages } from "./cards.js";
 import { apply, autoCommand, createGame, defaultConfig, passDirection, pendingActors, ROUNDS_PER_AGE } from "./engine.js";
 import { createRng } from "./rng.js";
 import { redactGameForViewer } from "./redact.js";
@@ -145,7 +145,10 @@ export function buildScene(spec: SceneSpec): GameState {
     : undefined;
   // 没写的手牌：从这个时代、这个人数的牌里没用过的发
   const handSize = phase === "play" ? 8 - round : phase === "seventh" ? 1 : 0;
-  const pool = [...ageCards(age, n).map((entry) => entry.id), ...(age === 3 ? GUILDS.map((entry) => entry.id) : [])].filter((id) => !used.has(id));
+  // 先用这个人数的牌堆里的牌，不够再用这个时代别的人数标记的牌
+  const deckIds = [...ageCards(age, n).map((entry) => entry.id), ...(age === 3 ? GUILDS.map((entry) => entry.id) : [])];
+  const extraIds = CARDS.filter((entry) => entry.age === age && !deckIds.includes(entry.id)).map((entry) => entry.id);
+  const pool = [...deckIds, ...extraIds].filter((id) => !used.has(id));
   spec.players.forEach((entry, index) => {
     if (entry.hand || phase !== "play") return;
     const hand = pool.splice(0, handSize);
@@ -398,21 +401,19 @@ export function scene(name: SceneName, opts: SceneOptions = {}): GameState {
       const side = opts.side ?? "A";
       const stages = wonderStages(wonder, side);
       const stage = Math.min(Math.max(opts.stage ?? 1, 1), stages.length);
-      // 自己产出这一阶段要的资源：用 Age I / II 的单产卡凑
-      const need = stages[stage - 1]!.cost;
-      const producers: Record<string, string[]> = {
-        W: ["Lumber Yard", "Sawmill"],
-        C: ["Clay Pool", "Brickyard"],
-        S: ["Stone Pit", "Quarry"],
-        O: ["Ore Vein", "Foundry"],
-        G: ["Glassworks@1", "Glassworks@2"],
-        L: ["Loom@1", "Loom@2"],
-        P: ["Press@1", "Press@2"],
-      };
+      // 自己产出这一阶段要的资源（起始资源先算上），缺的用 Age I / II 的单产、双产、二选一卡凑
+      const need = [...stages[stage - 1]!.cost];
+      const start = wonderDef(wonder).start;
+      if (need.includes(start)) need.splice(need.indexOf(start), 1);
+      const single: Record<string, string> = { W: "Lumber Yard", C: "Clay Pool", S: "Stone Pit", O: "Ore Vein", G: "Glassworks@1", L: "Loom@1", P: "Press@1" };
+      const double: Record<string, string> = { W: "Sawmill", C: "Brickyard", S: "Quarry", O: "Foundry" };
+      const choice: Record<string, string> = { W: "Forest Cave", C: "Excavation", S: "Timber Yard", O: "Clay Pit" };
       const built: string[] = [];
       for (const letter of new Set(need)) {
-        const count = [...need].filter((entry) => entry === letter).length;
-        built.push(...producers[letter]!.slice(0, count > 1 ? 2 : 1));
+        const count = need.filter((entry) => entry === letter).length;
+        if (count >= 2) built.push(double[letter]!);
+        if (count === 1 || count >= 3) built.push(single[letter]!);
+        if (count >= 4) built.push(choice[letter]!);
       }
       const others = WONDER_KEYS.filter((key) => key !== wonder).slice(0, 3);
       return buildScene({
@@ -527,18 +528,21 @@ export function scene(name: SceneName, opts: SceneOptions = {}): GameState {
     case "fullCities": {
       const side = opts.side ?? "A";
       const taken = new Set<CardId>();
-      // 先发手牌：Age III 每人 2 张
-      const age3 = [...ageCards(3, 7).map((entry) => entry.id), ...GUILDS.map((entry) => entry.id)];
+      // 城里按颜色配额挑（同名不重复，先用 Age I / II 的牌）：灰卡全场只有 12 张，前 5 位 2 张、后 2 位 1 张，少的用黄卡补；
+      // B 面的哈利卡纳苏斯、巴比伦能多建（挑弃牌、第 7 张），多给 1 蓝 1 绿
+      const pool = CARDS.map((entry) => entry.id);
+      const cities = SEVEN.map((key, index) => {
+        const extra = side === "B" && (key === "halicarnassus" || key === "babylon") ? 1 : 0;
+        const gray = index < 5 ? 2 : 1;
+        return fillCity(pool, { brown: 3, gray, blue: 3 + extra, yellow: 4 - gray, red: 2, green: 2 + extra, purple: 1 }, taken);
+      });
+      // 手牌：Age III 剩下的牌每人 2 张
+      const age3 = CARDS.filter((entry) => entry.age === 3).map((entry) => entry.id);
       const hands = SEVEN.map(() => {
         const hand = age3.filter((id) => !taken.has(id)).slice(0, 2);
         hand.forEach((id) => taken.add(id));
         return hand;
       });
-      const pool = CARDS.map((entry) => entry.id);
-      const extra = (key: WonderKey) => (side === "B" && (key === "halicarnassus" || key === "babylon") ? 2 : 0);
-      const cities = SEVEN.map((key) =>
-        fillCity(pool, { brown: 3, gray: 2, blue: 3 + extra(key), yellow: 2, red: 2, green: 2 + extra(key) / 2, purple: 1 }, taken),
-      );
       return buildScene({
         age: 3,
         round: 6,
