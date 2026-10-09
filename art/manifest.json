@@ -1,0 +1,1702 @@
+[
+ {
+  "path": "scene/night-1.png",
+  "w": 512,
+  "h": 288,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "night"
+ },
+ {
+  "path": "scene/night-2.png",
+  "w": 512,
+  "h": 288,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "night"
+ },
+ {
+  "path": "scene/day-1.png",
+  "w": 512,
+  "h": 288,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "day"
+ },
+ {
+  "path": "scene/day-2.png",
+  "w": 512,
+  "h": 288,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "day"
+ },
+ {
+  "path": "cards/art/lumber_yard.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/stone_pit.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/clay_pool.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/ore_vein.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/tree_farm.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/excavation.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/clay_pit.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/timber_yard.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/forest_cave.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/mine.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/loom.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/glassworks.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/press.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/pawnshop.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/baths.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/altar.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/theater.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/tavern.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/east_trading_post.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/west_trading_post.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/marketplace.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/stockade.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/barracks.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/guard_tower.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/apothecary.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/workshop.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/scriptorium.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/sawmill.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/quarry.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/brickyard.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/foundry.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/aqueduct.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/temple.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/statue.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/courthouse.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/forum.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/caravansery.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/vineyard.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/bazar.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/walls.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/training_ground.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/stables.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/archery_range.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/dispensary.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/laboratory.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/library.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/school.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/pantheon.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/gardens.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/town_hall.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/palace.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/senate.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/haven.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/lighthouse.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/chamber_of_commerce.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/arena.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/fortifications.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/circus.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/arsenal.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/siege_workshop.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/lodge.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/observatory.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/university.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/academy.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/study.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/workers_guild.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/craftsmens_guild.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/traders_guild.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/philosophers_guild.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/spies_guild.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/strategists_guild.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/shipowners_guild.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/scientists_guild.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/magistrates_guild.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/art/builders_guild.png",
+  "w": 56,
+  "h": 44,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "cards/back-age1.png",
+  "w": 64,
+  "h": 96,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "cards/back-age2.png",
+  "w": 64,
+  "h": 96,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "cards/back-age3.png",
+  "w": 64,
+  "h": 96,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/giza-a.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/giza-b.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/giza-emblem.png",
+  "w": 32,
+  "h": 32,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/rhodes-a.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/rhodes-b.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/rhodes-emblem.png",
+  "w": 32,
+  "h": 32,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/alexandria-a.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/alexandria-b.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/alexandria-emblem.png",
+  "w": 32,
+  "h": 32,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/ephesus-a.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/ephesus-b.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/ephesus-emblem.png",
+  "w": 32,
+  "h": 32,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/babylon-a.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/babylon-b.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/babylon-emblem.png",
+  "w": 32,
+  "h": 32,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/olympia-a.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/olympia-b.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/olympia-emblem.png",
+  "w": 32,
+  "h": 32,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/halicarnassus-a.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/halicarnassus-b.png",
+  "w": 192,
+  "h": 72,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "wonders/halicarnassus-emblem.png",
+  "w": 32,
+  "h": 32,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/res-W.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/res-C.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/res-S.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/res-O.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/res-G.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/res-L.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/res-P.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/sci-compass.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/sci-gear.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/sci-tablet.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/sci-any.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/shield.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/coin.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/vp.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/chain.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/stage-built.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/stage-open.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/act-build.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/act-wonder.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/act-sell.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/trade.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/trade-left.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/eff-any-raw.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/eff-any-goods.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/eff-free-build.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/eff-discard-build.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/eff-seventh.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/eff-copy-guild.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/ready.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/waiting.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/cat-brown.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/cat-gray.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/cat-blue.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/cat-green.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/cat-yellow.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/cat-red.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "icons/cat-purple.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-W.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-C.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-S.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-O.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-G.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-L.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-P.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-coin.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-shield.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-vp.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-compass.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-gear.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-tablet.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "pips/pip-chain.png",
+  "w": 8,
+  "h": 8,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "tokens/war-win1.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "tokens/war-win3.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "tokens/war-win5.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "tokens/war-loss.png",
+  "w": 16,
+  "h": 16,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "ui/arrow-pass.png",
+  "w": 32,
+  "h": 16,
+  "frames": 4,
+  "ms": 150,
+  "loop": true,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "ui/laurel.png",
+  "w": 48,
+  "h": 32,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "ui/ribbon.png",
+  "w": 160,
+  "h": 24,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "ui/cover.png",
+  "w": 384,
+  "h": 192,
+  "frames": 1,
+  "ms": null,
+  "loop": false,
+  "transparent": false,
+  "theme": "both"
+ },
+ {
+  "path": "fx/pass-trail.png",
+  "w": 48,
+  "h": 16,
+  "frames": 6,
+  "ms": 60,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "fx/clash.png",
+  "w": 32,
+  "h": 32,
+  "frames": 6,
+  "ms": 70,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "fx/token-land.png",
+  "w": 24,
+  "h": 24,
+  "frames": 5,
+  "ms": 60,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "fx/build-dust.png",
+  "w": 48,
+  "h": 24,
+  "frames": 6,
+  "ms": 70,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "fx/stage-shine.png",
+  "w": 32,
+  "h": 32,
+  "frames": 6,
+  "ms": 80,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "fx/coin-spin.png",
+  "w": 16,
+  "h": 16,
+  "frames": 6,
+  "ms": 70,
+  "loop": true,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "fx/fireworks.png",
+  "w": 64,
+  "h": 64,
+  "frames": 8,
+  "ms": 90,
+  "loop": false,
+  "transparent": true,
+  "theme": "both"
+ },
+ {
+  "path": "fx/brazier.png",
+  "w": 16,
+  "h": 24,
+  "frames": 6,
+  "ms": 120,
+  "loop": true,
+  "transparent": true,
+  "theme": "night"
+ }
+]
