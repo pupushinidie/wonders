@@ -507,20 +507,28 @@ function safeBotCommand(game: GameState, playerId: string): GameCommand | null {
   }
 }
 
+/** 人机替某个座位出一步；人机的命令不合法就用保底动作；保底动作也出错只记日志（计时器里抛错会让整个进程退出）。 */
+function robotMove(game: GameState, playerId: string, timedOut: boolean): GameState {
+  const command = safeBotCommand(game, playerId);
+  try {
+    return command && !timedOut ? applyCommand(game, playerId, command) : applyTimeout(game, playerId, command, timedOut);
+  } catch (error) {
+    console.error("人机行动失败，改用保底动作", error);
+    try {
+      return applyTimeout(game, playerId, null, timedOut);
+    } catch (fallbackError) {
+      console.error("保底动作也失败了", fallbackError);
+      return game;
+    }
+  }
+}
+
 function runBot(room: RoomState, playerId: string, key: string): void {
   if (room.botTimers.get(playerId)?.key === key) room.botTimers.delete(playerId);
   const game = room.game;
   if (rooms.get(room.code) !== room || !game || game.phase === "finished" || turnKey(game) !== key) return;
   if (!pendingActors(game).includes(playerId) || !robotSeat(room, playerId)) return;
-  const command = safeBotCommand(game, playerId);
-  let next: GameState;
-  try {
-    next = command ? applyCommand(game, playerId, command) : applyTimeout(game, playerId, null, false);
-  } catch (error) {
-    console.error("人机行动失败，改用保底动作", error);
-    next = applyTimeout(game, playerId, null, false);
-  }
-  room.game = next;
+  room.game = robotMove(game, playerId, false);
   afterGameChange(room);
   emitRoomUpdate(room);
 }
@@ -530,6 +538,8 @@ function expireTurn(room: RoomState): void {
   if (rooms.get(room.code) !== room || !room.game || room.game.phase === "finished") return;
   const key = turnKey(room.game);
   const handled = new Set<string>();
+  // 几个人一起超时：每人一步 apply，事件合在一起发（谁超时了、这一轮怎么结算的都看得到）
+  const events: GameState["events"] = [];
   for (let guard = 0; guard < 16; guard += 1) {
     const game = room.game;
     if (!game || game.phase === "finished" || turnKey(game) !== key) break;
@@ -543,8 +553,10 @@ function expireTurn(room: RoomState): void {
       if (count >= AUTO_AFTER_TIMEOUTS) setAuto(room, playerId, true);
     }
     clearBotTimer(room, playerId);
-    room.game = applyTimeout(game, playerId, safeBotCommand(game, playerId), human);
+    room.game = robotMove(game, playerId, human);
+    if (room.game !== game) events.push(...room.game.events);
   }
+  if (room.game && events.length > 0) room.game = { ...room.game, events };
   afterGameChange(room);
   emitRoomUpdate(room);
 }

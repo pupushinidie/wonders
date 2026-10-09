@@ -46,7 +46,10 @@ export interface ScenePlayerSpec {
   readonly coins?: number;
   /** 军事标记：写数字（1 / 3 / 5 / −1，时代按数值推，方向左右交替）或者完整的 MilitaryToken。 */
   readonly tokens?: readonly (number | MilitaryToken)[];
-  /** 手牌。出牌阶段不写就从这个时代、这个人数的牌堆里没用过的牌自动发（张数 = 8 − 轮数）。 */
+  /**
+   * 手牌。不写就从这个时代、这个人数的牌堆里没用过的牌自动发。张数：出牌阶段 8 − 轮数；seventh 阶段每人 1 张；
+   * discardBuild 阶段第 1–5 轮 7 − 轮数（这一轮出完、还没传）、第 6 轮 0；finished 0。写了张数不对会抛错。
+   */
   readonly hand?: readonly string[];
   /** 奥林匹亚 A 的免费建造这个时代已经用过。 */
   readonly freeBuildUsed?: boolean;
@@ -144,20 +147,22 @@ export function buildScene(spec: SceneSpec): GameState {
     ? (Object.fromEntries(Object.entries(spec.stacked).map(([key, hands]) => [key, hands!.map((hand) => hand.map(take))])) as Partial<Record<Age, CardId[][]>>)
     : undefined;
   // 没写的手牌：从这个时代、这个人数的牌里没用过的发
-  const handSize = phase === "play" ? 8 - round : phase === "seventh" ? 1 : 0;
+  // 每人手里应有几张：出牌阶段 8 − 轮数；巴比伦打第 7 张时大家都还剩 1 张（别人的还没作废）；
+  // 哈利卡纳苏斯挑弃牌：第 1–5 轮是这一轮出完、还没传的 7 − 轮数，第 6 轮已经作废完是 0；终局 0
+  const handSize = phase === "play" ? 8 - round : phase === "seventh" ? 1 : phase === "discardBuild" ? (round < ROUNDS_PER_AGE ? 7 - round : 0) : 0;
   // 先用这个人数的牌堆里的牌，不够再用这个时代别的人数标记的牌
   const deckIds = [...ageCards(age, n).map((entry) => entry.id), ...(age === 3 ? GUILDS.map((entry) => entry.id) : [])];
   const extraIds = CARDS.filter((entry) => entry.age === age && !deckIds.includes(entry.id)).map((entry) => entry.id);
   const pool = [...deckIds, ...extraIds].filter((id) => !used.has(id));
   spec.players.forEach((entry, index) => {
-    if (entry.hand || phase !== "play") return;
+    if (entry.hand || handSize === 0) return;
     const hand = pool.splice(0, handSize);
     if (hand.length < handSize) throw new Error("牌不够自动发手牌了。");
     hand.forEach((id) => used.add(id));
     players[index]!.hand = hand;
   });
-  if (phase === "play" && players.some((player) => player.hand.length !== handSize)) {
-    throw new Error(`第 ${round} 轮每人手里应该是 ${handSize} 张。`);
+  if (players.some((player) => player.hand.length !== handSize)) {
+    throw new Error(`${phase === "play" ? `第 ${round} 轮` : `第 ${round} 轮的 ${phase} 阶段`}每人手里应该是 ${handSize} 张。`);
   }
   // 垫奇迹的牌：没写的从没用过的牌里补
   const leftovers = CARDS.map((entry) => entry.id).filter((id) => !used.has(id));
@@ -436,7 +441,7 @@ export function scene(name: SceneName, opts: SceneOptions = {}): GameState {
           { wonder: "giza", built: ["Stone Pit", "Ore Vein", "Theater", "Stockade"] },
           { wonder: "olympia", built: ["Timber Yard", "Baths", "Barracks", "Tavern"] },
         ],
-        discard: ["Guard Tower", "Workshop"],
+        discard: ["Guard Tower", "Workshop", "Pawnshop"],
       });
     case "halicarnassus":
       return buildScene({
@@ -445,10 +450,10 @@ export function scene(name: SceneName, opts: SceneOptions = {}): GameState {
         phase: "discardBuild",
         pending: 0,
         players: [
-          { wonder: "halicarnassus", stages: 2, built: ["Clay Pool", "Ore Vein", "Loom@1", "Altar", "Glassworks@1"], coins: 2, hand: [] },
-          { wonder: "giza", built: ["Stone Pit", "Lumber Yard"], hand: [] },
-          { wonder: "rhodes", built: ["Clay Pit", "Theater"], hand: [] },
-          { wonder: "olympia", built: ["Timber Yard", "Press@1"], hand: [] },
+          { wonder: "halicarnassus", stages: 2, built: ["Clay Pool", "Ore Vein", "Loom@1", "Altar", "Glassworks@1"], coins: 2 },
+          { wonder: "giza", built: ["Stone Pit", "Lumber Yard"] },
+          { wonder: "rhodes", built: ["Clay Pit", "Theater"] },
+          { wonder: "olympia", built: ["Timber Yard", "Press@1"] },
         ],
         // 玻璃厂 Age II 和自己建过的同名，不能建；其余都能建
         discard: ["Tavern", "Workshop", "Glassworks@2", "Walls", "Temple", "Baths"],

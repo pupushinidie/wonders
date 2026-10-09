@@ -569,6 +569,7 @@ export function autoCommand(state: GameState, playerId: string): GameCommand | n
     const best = [...options].sort((a, b) => vp(b) - vp(a))[0];
     return { type: "DISCARD_BUILD", card: best ?? null };
   }
+  if (me.hand.length === 0) return null;
   let best: { card: CardId; total: number; olympia: boolean; trade: { left: string; right: string } } | null = null;
   for (const id of me.hand) {
     const info = paymentOptions(state, playerId, { card: id });

@@ -125,7 +125,7 @@ describe("第 6 轮的先后和插入选择（U3、U4、U6、U7）", () => {
     expect(state.round).toBe(3);
     expect(state.events.find((event) => event.type === "BuiltFromDiscard")).toMatchObject({ player: "p1", card: null });
 
-    let pass = buildScene({ age: 2, round: 2, phase: "discardBuild", pending: 0, players: [{ wonder: "halicarnassus", stages: 2, hand: [] }, { wonder: "giza", hand: [] }, { wonder: "rhodes", hand: [] }], discard: ["Altar"] });
+    let pass = buildScene({ age: 2, round: 2, phase: "discardBuild", pending: 0, players: [{ wonder: "halicarnassus", stages: 2 }, { wonder: "giza" }, { wonder: "rhodes" }], discard: ["Altar"] });
     expect(() => act(pass, "p1", { type: "DISCARD_BUILD", card: "a1_lumber_yard_3p" })).toThrow(/弃牌堆里没有/);
     pass = act(pass, "p1", { type: "DISCARD_BUILD", card: null });
     expect(pass.discard).toHaveLength(1);
@@ -138,7 +138,7 @@ describe("第 6 轮的先后和插入选择（U3、U4、U6、U7）", () => {
       round: 3,
       phase: "discardBuild",
       pending: 0,
-      players: [{ wonder: "halicarnassus", stages: 2, built: ["Altar"], coins: 1, hand: ["Walls", "School", "Sawmill", "Bazar", "Statue"] }, { wonder: "giza" }, { wonder: "rhodes" }],
+      players: [{ wonder: "halicarnassus", stages: 2, built: ["Altar"], coins: 1, hand: ["Walls", "School", "Sawmill", "Bazar"] }, { wonder: "giza" }, { wonder: "rhodes" }],
       discard: ["Altar", "Tavern"],
     });
     expect(names(discardBuildOptions(state, "p1"))).toEqual(["Tavern"]);
