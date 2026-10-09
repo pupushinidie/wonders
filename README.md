@@ -9,7 +9,7 @@
 ```bash
 npm install
 npm run dev          # 服务端 :3016，网页 :5189（WEB_PORT / SERVER_PORT 可以改，另起一套服务不撞端口）
-npm test             # 规则引擎（规则书和补充文件的用例、每种人数 300 局随机对局、隐藏信息）+ 服务器（房间、计时、观战、挤登录、人机）
+npm test             # 约 260 个测试、20 秒：规则包、服务器、规则核对的验收测试（见下面「测试」）
 npm run typecheck
 BASE_PATH=/wonders/ npm run build
 ```
@@ -17,6 +17,22 @@ BASE_PATH=/wonders/ npm run build
 改了 `data/*.json`（卡表、奇迹板）要跑 `node scripts/gen-data.mjs` 重新生成 `packages/game/src/data.ts`，再 `touch apps/server/src/index.ts`（tsx watch 不会自己重启）。
 
 一个人测试：`node scripts/test-bot.mjs host 3 2` 让机器人建一个 3 人房（自己再拉 1 个机器人）并打印房间码，你在网页里用房间码加入凑满后自动开局；`node scripts/test-bot.mjs host 4 4` 四个机器人自己打完一整局。用法见脚本开头的注释。
+
+## 测试
+
+| 文件 | 内容 |
+|---|---|
+| `packages/game/test/data.test.ts` | 卡表、奇迹板和补充文件一字不差；按人数统计表（§2.3）；勘误 E1–E9、E11–E15 的数据 |
+| `packages/game/test/rules.test.ts` | 规则书 §9 用例（测试名带 `规则书#1`–`#14`）和补充文件新增用例（`补充#E-T1`–`#E-T14`） |
+| `packages/game/test/engine.test.ts` | 规则书没写死的地方按补充 §5 的默认值（U3–U12）、撤回和计时键、纯函数、自选奇迹、超时保底动作 |
+| `packages/game/test/random.test.ts` | 每种人数 300 局随机对局，普通代码查不变量（牌数守恒、金币、同名、军事、分数分项、不卡死、隐藏信息） |
+| `packages/game/test/redact.test.ts` | 各座位视角、观战、观战看全部、哈利卡纳苏斯挑弃牌时的隐藏信息 |
+| `packages/game/test/scenes.test.ts` | 预览局面工厂的每个局面；补充 §4.3 的教程剧本按引擎逐轮走一遍 |
+| `packages/game/test/acceptance/` | **规则核对 agent 背靠背写的验收测试，引擎不改** |
+| `apps/server/test/rounds.test.ts`、`timers.test.ts` | 同时出牌的房间流程、计时（别人交牌不重置）、超时人机代出、插入选择、重连、整局抓包、默认时限 |
+| `apps/server/test/bots.test.ts`、`spectate.test.ts`、`kickSession.test.ts` | 继承的人机 / 托管、观战、挤登录 |
+
+抓包（连真实服务器）：`npm run dev` 之后 `node scripts/spy.mjs 4`，两个真实 socket 加陪玩机器人打完一整局，查发给对方的数据里没有自己的暗牌，有泄露退出码 1。
 
 ## 目录
 
