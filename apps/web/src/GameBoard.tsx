@@ -2,7 +2,7 @@
  * 调试牌桌（引擎阶段联调用，正式界面由界面阶段替换）：把当前状态列出来，每个合法行动一个按钮。
  * 观战时按 watchId 那位玩家的座位看，什么都不能点。
  */
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   card,
   COLOR_NAMES,
@@ -160,12 +160,16 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
   const canAct = !spectating && !autoPlaying && waiting.includes(myId);
 
   const [log, setLog] = useState<{ key: string; text: string }[]>([]);
+  // 同一个 version 只记一次（聊天也会推房间状态；开发模式下 effect 会跑两遍）
+  const loggedVersion = useRef(-1);
   useEffect(() => {
+    if (loggedVersion.current === game.version) return;
+    loggedVersion.current = game.version;
     const lines = game.events.flatMap((event, index) => {
       const text = eventText(event, nameOf);
       return text ? [{ key: `${game.version}-${index}`, text }] : [];
     });
-    if (lines.length) setLog((previous) => [...lines.reverse(), ...previous].slice(0, 60));
+    if (lines.length) setLog((previous) => [...lines.reverse(), ...previous.filter((line) => !line.key.startsWith(`${game.version}-`))].slice(0, 60));
   }, [game.version]);
 
   const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
