@@ -140,7 +140,7 @@ export function FinalDialog({ game, room, myId, spectating, nameOf, onRematch, o
             <h3>{nameOf(focused.player)} 的分数怎么来的 <small>点上面任意一行换人</small></h3>
             <ul>
               {SCORE_ITEMS.map((item) => (
-                <li key={item.key}>
+                <li key={item.key} data-tutorial={`final-item-${item.key}`}>
                   <Icon name={item.icon} s={1} /><em>{item.label}</em><b>{focused[item.key]}</b><span>{explain(game, focused, item.key)}</span>
                 </li>
               ))}

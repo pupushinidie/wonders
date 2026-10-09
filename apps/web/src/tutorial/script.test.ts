@@ -64,7 +64,7 @@ function anchorVisible(state: GameState, step: TutorialStep): boolean {
   if (step.card) return me.hand.some((entry) => card(entry).name === step.card) && (step.kind !== "do" || myTurn);
   const anchor = typeof step.anchor === "string" ? step.anchor : step.anchor?.[0];
   if (!anchor) return true;
-  if (step.showcase) return state.phase === "finished" && ["final", "final-table", "final-detail"].includes(anchor);
+  if (step.showcase) return state.phase === "finished" && (["final", "final-table", "final-detail"].includes(anchor) || anchor.startsWith("final-item-"));
   switch (anchor) {
     case "hand":
       return me.hand.length > 0;

@@ -9,3 +9,19 @@
 .wd-chat .tut-checklist { padding: 4px 2px; }
 .wd-chat .tut-checklist h3 { margin: 0 0 6px; font-size: 12px; }
 .wd-chat .tut-checklist ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* 等候房间：入口放在标题右边的按钮那一排（房间码一栏、玩家一栏都已经排满了） */
+.app-shell .room-heading-actions { align-items: center; }
+.app-shell .room-heading-actions .tut-invite { margin: 0; padding: 6px 10px; gap: 10px; }
+.app-shell .room-heading-actions .tut-invite-copy strong { white-space: nowrap; }
+.app-shell .room-heading-actions .tut-invite-copy span { white-space: nowrap; }
+.app-shell .room-heading-actions .tut-invite .tut-invite-go { padding: 4px 12px; }
+.app-shell .room-heading-actions .tut-again { margin: 0; white-space: nowrap; }
+/* 窄屏：只留一个「新手教程」按钮，标题和按钮分两行（不把「开始对局」挤出第一屏） */
+@media (max-width: 899px) {
+  .app-shell.wd-room .room-heading { flex-wrap: wrap; row-gap: 8px; }
+  .app-shell .room-heading-actions .tut-invite { flex-wrap: nowrap; padding: 0; gap: 0; background: none; box-shadow: none; }
+  .app-shell .room-heading-actions .tut-invite img,
+  .app-shell .room-heading-actions .tut-invite-copy { display: none; }
+  .app-shell .room-heading-actions .tut-invite .tut-invite-go { width: auto; padding: 6px 12px; font-size: 24px; }
+}

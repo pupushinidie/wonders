@@ -291,17 +291,17 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
     note: "这是一局打完的样子；每列最高的标金色，总分最高的赢。",
   },
   {
-    kind: "info", id: "final-science", anchor: "final-detail", showcase: true,
+    kind: "info", id: "final-science", anchor: "final-item-science", showcase: true,
     say: "这里写着每一项怎么来的：你的科技 3 石板、2 圆规、1 齿轮 = 21 分。",
     note: "9 + 4 + 1，再加凑成的 1 套 7 分。",
   },
   {
-    kind: "info", id: "final-guild", lesson: "行会", anchor: "final-detail", showcase: true,
+    kind: "info", id: "final-guild", lesson: "行会", anchor: "final-item-guilds", showcase: true,
     say: "紫卡（行会）只在时代 III 出现，多半按两位邻居的城计分。",
     note: "比如工人行会：两位邻居每有 1 张棕卡，你得 1 分，这里是 7 分。",
   },
   {
-    kind: "info", id: "final-coins", lesson: "金币和平局", anchor: "final-detail", showcase: true,
+    kind: "info", id: "final-coins", lesson: "金币和平局", anchor: "final-item-coins", showcase: true,
     say: "剩下的金币每 3 枚算 1 分。",
     note: "总分一样时，金币多的赢。",
   },

@@ -24,6 +24,7 @@ import {
   type PreviewRoomOptions,
 } from "@wonders/game";
 import GameBoard from "./GameBoard.js";
+import { applyMove, createShowcaseGame, createTutorialGame, TUTORIAL_STEPS } from "./tutorial/script.js";
 import { socket } from "./socket.js";
 import { applyTheme, readTheme, ThemeToggle, useTheme } from "./theme.js";
 import "./styles.css";
@@ -104,6 +105,23 @@ const SCENES: Record<string, Scene> = {
       ],
     }),
     room: { bots: ["p2", "p3"], turnRemainingMs: 60000 },
+  },
+  tutorialShowcase: {
+    note: "教程讲终局计分用的「一局打完的样子」（科技 3/2/1 = 21、工人行会 7 分）",
+    game: () => createShowcaseGame("你"),
+    room: { bots: ["p2", "p3"] },
+  },
+  tutorialPractice: {
+    note: "教程剧本走完、接练习局时的局面（时代 II 第 2 轮）；练习局里有「提示」，这里预览不出",
+    game: () => {
+      let state = createTutorialGame("你");
+      for (const step of TUTORIAL_STEPS) {
+        if (step.kind === "do") state = applyMove(state, step.expect);
+        if (step.kind === "watch") for (const move of step.moves) state = applyMove(state, move);
+      }
+      return state;
+    },
+    room: { bots: ["p2", "p3"] },
   },
 };
 

@@ -301,8 +301,8 @@ function App() {
             <TutorialInvite
               record={readTutorial(GAME_ID)}
               title="等人的时候，先学一下？"
-              text="咕噜嘎带你在真牌桌上打一个时代，约 5 分钟；不会离开房间，房主一开局就自动回来。"
-              again="再看一遍新手教程（不会离开房间）"
+              text="不会离开房间，房主一开局就自动回到牌桌。"
+              again="再看一遍新手教程"
               onOpen={() => setTutorialOpen(true)}
             />
           }
@@ -503,6 +503,7 @@ function RoomView({
           <p>{spectating ? "等房主开始对局；有空座位时可以坐下一起玩。" : "把房间码分享给朋友，等大家就位后开始；空座位可以加人机。"}</p>
         </div>
         <div className="room-heading-actions">
+          {!spectating && room.status === "waiting" && tutorial}
           {isHost && <button className="quiet-button danger" type="button" onClick={onDissolve} disabled={busy}>解散房间</button>}
           <button className="quiet-button" type="button" onClick={onLeave} disabled={busy || (room.status === "playing" && !spectating)}>
             {spectating ? "离开观战" : "离开房间"}
@@ -526,7 +527,6 @@ function RoomView({
             )}
             <OptionsPanel room={room} />
             <RoomSettingsPanel room={room} />
-            {!spectating && tutorial}
           </section>
 
           <section className="room-panel player-panel">
