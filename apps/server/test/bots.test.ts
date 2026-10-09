@@ -1,4 +1,7 @@
+import { readFileSync } from "node:fs";
 import { AddressInfo } from "node:net";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { io as createClient, type Socket } from "socket.io-client";
 import {
@@ -36,6 +39,8 @@ const FULL_TEST_CAPACITY: Capacity = 3;
 // 人机立刻行动、每一步 300 ms 超时，测试才跑得快（服务端在导入时读这两个变量）。
 process.env.BOT_DELAY_SCALE = "0";
 process.env.TURN_MS = "300";
+// 对局中所有真人都离线多久关房（测「只剩人机的房间关掉」用，调短）
+process.env.ROOM_ABANDON_MS = "800";
 
 
 type TestSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
@@ -178,6 +183,11 @@ describe("人机", () => {
     stop();
     const bots = finished.members.filter((member) => member.bot).map((member) => member.id);
     expect(finished.rematch?.acceptedIds.sort()).toEqual(bots.sort());
+    // 人机用的是正式策略（会建奇迹；引擎的保底动作只会建最便宜的牌或者弃牌，从不建奇迹）
+    const botSeats = new Set(finished.members.filter((member) => member.bot).map((member) => member.playerId));
+    const botPlayers = finished.game!.players.filter((player) => botSeats.has(player.id));
+    expect(botPlayers.some((player) => player.stages > 0)).toBe(true);
+    expect(finished.game!.finalResult!.scores.filter((score) => botSeats.has(score.player)).every((score) => score.total > 15)).toBe(true);
 
     expect((await call<void>((ack) => host.emit("room:rematch", true, ack))).ok).toBe(true);
     const again = await updateWhere(host, (snapshot) => snapshot.game !== undefined && snapshot.game.phase !== "finished" && !snapshot.rematch);
@@ -192,6 +202,29 @@ describe("人机", () => {
     expect((await lobby(host)).some((candidate) => candidate.players[0]?.name === hostName)).toBe(true);
     expect((await call<void>((ack) => host.emit("room:leave", ack))).ok).toBe(true);
     expect((await lobby(host)).some((candidate) => candidate.players.some((player) => player.name === hostName))).toBe(false);
+  });
+
+  it("对局中唯一的真人掉线不回来，只剩人机的房间到时关掉（人机不会自己一直打下去）", async () => {
+    const host = await connect();
+    const hostName = nick("独自");
+    await create(host, hostName, MIN_CAPACITY);
+    await addBotsUpTo(host, 1);
+    expect((await start(host)).ok).toBe(true);
+    expect((await lobby(host)).some((candidate) => candidate.players[0]?.name === hostName)).toBe(true);
+    host.disconnect();
+    const watcher = await connect();
+    let gone = false;
+    for (let attempt = 0; attempt < 40 && !gone; attempt += 1) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      gone = !(await lobby(watcher)).some((candidate) => candidate.players.some((player) => player.name === hostName));
+    }
+    expect(gone).toBe(true);
+  });
+
+  it("全站约定的常量：离线 3 秒后人机代打、连续 2 次超时转托管", () => {
+    const source = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "../src/index.ts"), "utf8");
+    expect(source).toMatch(/const OFFLINE_GRACE_MS = 3_?000;/);
+    expect(source).toMatch(/const AUTO_AFTER_TIMEOUTS = 2;/);
   });
 
   it("连续超时两次转托管，由人机代打；取消托管后交还", async () => {
