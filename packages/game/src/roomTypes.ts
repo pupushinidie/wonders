@@ -1,7 +1,7 @@
 import type { GameCommand, GameOptions, GameState } from "./types.js";
 
-/** 房间人数：2–4 人（规格书 minPlayers / maxPlayers）。 */
-export const CAPACITY_OPTIONS = [2, 3, 4] as const;
+/** 房间人数：3–7 人（不做 2 人变体，人不够用人机补）。 */
+export const CAPACITY_OPTIONS = [3, 4, 5, 6, 7] as const;
 export type Capacity = (typeof CAPACITY_OPTIONS)[number];
 
 export interface LobbyMember {
@@ -47,7 +47,7 @@ export interface LobbyRoomSnapshot {
 	readonly members: LobbyMember[];
 	readonly chat: RoomChatMessage[];
 	readonly game?: GameState;
-	/** 当前回合剩余的毫秒数（发送时）；超时自动替当前玩家选一个合法动作。 */
+	/** 这一步（这一轮出牌 / 插入选择 / 挑奇迹）剩余的毫秒数（发送时）；有真人还没行动时才有。超时由人机替还没出的人出。 */
 	readonly turnRemainingMs?: number;
 	/** 整轮结束后的「是否继续」投票；remainingMs 为发送时剩余的毫秒数。 */
 	readonly rematch?: RematchState;
@@ -94,7 +94,7 @@ export interface SendRoomChatPayload {
 export interface CreateRoomPayload {
 	readonly name: string;
 	readonly capacity: Capacity;
-	/** 没给的选项用默认值（全关）。 */
+	/** 没给的选项用默认值（全员 A 面、随机分奇迹）。 */
 	readonly options?: Partial<GameOptions>;
 }
 

@@ -1,0 +1,3451 @@
+// 由 scripts/gen-data.mjs 从 data/*.json 生成，不要手改。
+import type { CardDef, WonderDef } from "./types.js";
+
+/** 148 张时代卡（补充文件 §2.4）。 */
+export const CARDS: readonly CardDef[] = [
+ {
+  "id": "a1_lumber_yard_3p",
+  "age": 1,
+  "color": "brown",
+  "name": "Lumber Yard",
+  "zh": "伐木场",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "W",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_lumber_yard_4p",
+  "age": 1,
+  "color": "brown",
+  "name": "Lumber Yard",
+  "zh": "伐木场",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "W",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_stone_pit_3p",
+  "age": 1,
+  "color": "brown",
+  "name": "Stone Pit",
+  "zh": "采石坑",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "S",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_stone_pit_5p",
+  "age": 1,
+  "color": "brown",
+  "name": "Stone Pit",
+  "zh": "采石坑",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "S",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_clay_pool_3p",
+  "age": 1,
+  "color": "brown",
+  "name": "Clay Pool",
+  "zh": "粘土池",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "C",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_clay_pool_5p",
+  "age": 1,
+  "color": "brown",
+  "name": "Clay Pool",
+  "zh": "粘土池",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "C",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_ore_vein_3p",
+  "age": 1,
+  "color": "brown",
+  "name": "Ore Vein",
+  "zh": "矿脉",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "O",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_ore_vein_4p",
+  "age": 1,
+  "color": "brown",
+  "name": "Ore Vein",
+  "zh": "矿脉",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "O",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_tree_farm_6p",
+  "age": 1,
+  "color": "brown",
+  "name": "Tree Farm",
+  "zh": "林场",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "produceChoice",
+   "options": "WC",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_excavation_4p",
+  "age": 1,
+  "color": "brown",
+  "name": "Excavation",
+  "zh": "挖掘场",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "produceChoice",
+   "options": "SC",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_clay_pit_3p",
+  "age": 1,
+  "color": "brown",
+  "name": "Clay Pit",
+  "zh": "黏土坑",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produceChoice",
+   "options": "CO",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_timber_yard_3p",
+  "age": 1,
+  "color": "brown",
+  "name": "Timber Yard",
+  "zh": "木材场",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produceChoice",
+   "options": "SW",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_forest_cave_5p",
+  "age": 1,
+  "color": "brown",
+  "name": "Forest Cave",
+  "zh": "森林洞穴",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "produceChoice",
+   "options": "WO",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_mine_6p",
+  "age": 1,
+  "color": "brown",
+  "name": "Mine",
+  "zh": "矿山",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "produceChoice",
+   "options": "SO",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_loom_3p",
+  "age": 1,
+  "color": "gray",
+  "name": "Loom",
+  "zh": "织布机",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "L",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_loom_6p",
+  "age": 1,
+  "color": "gray",
+  "name": "Loom",
+  "zh": "织布机",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "L",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_glassworks_3p",
+  "age": 1,
+  "color": "gray",
+  "name": "Glassworks",
+  "zh": "玻璃厂",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "G",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_glassworks_6p",
+  "age": 1,
+  "color": "gray",
+  "name": "Glassworks",
+  "zh": "玻璃厂",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "G",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_press_3p",
+  "age": 1,
+  "color": "gray",
+  "name": "Press",
+  "zh": "印刷所",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "P",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_press_6p",
+  "age": 1,
+  "color": "gray",
+  "name": "Press",
+  "zh": "印刷所",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "P",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a1_pawnshop_4p",
+  "age": 1,
+  "color": "blue",
+  "name": "Pawnshop",
+  "zh": "当铺",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 3
+  }
+ },
+ {
+  "id": "a1_pawnshop_7p",
+  "age": 1,
+  "color": "blue",
+  "name": "Pawnshop",
+  "zh": "当铺",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 3
+  }
+ },
+ {
+  "id": "a1_baths_3p",
+  "age": 1,
+  "color": "blue",
+  "name": "Baths",
+  "zh": "浴场",
+  "cost": "S",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Aqueduct"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 3
+  }
+ },
+ {
+  "id": "a1_baths_7p",
+  "age": 1,
+  "color": "blue",
+  "name": "Baths",
+  "zh": "浴场",
+  "cost": "S",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Aqueduct"
+  ],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 3
+  }
+ },
+ {
+  "id": "a1_altar_3p",
+  "age": 1,
+  "color": "blue",
+  "name": "Altar",
+  "zh": "祭坛",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Temple"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 2
+  }
+ },
+ {
+  "id": "a1_altar_5p",
+  "age": 1,
+  "color": "blue",
+  "name": "Altar",
+  "zh": "祭坛",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Temple"
+  ],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 2
+  }
+ },
+ {
+  "id": "a1_theater_3p",
+  "age": 1,
+  "color": "blue",
+  "name": "Theater",
+  "zh": "剧场",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Statue"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 2
+  }
+ },
+ {
+  "id": "a1_theater_6p",
+  "age": 1,
+  "color": "blue",
+  "name": "Theater",
+  "zh": "剧场",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Statue"
+  ],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 2
+  }
+ },
+ {
+  "id": "a1_tavern_4p",
+  "age": 1,
+  "color": "yellow",
+  "name": "Tavern",
+  "zh": "酒馆",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "coins",
+   "n": 5
+  }
+ },
+ {
+  "id": "a1_tavern_5p",
+  "age": 1,
+  "color": "yellow",
+  "name": "Tavern",
+  "zh": "酒馆",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "coins",
+   "n": 5
+  }
+ },
+ {
+  "id": "a1_tavern_7p",
+  "age": 1,
+  "color": "yellow",
+  "name": "Tavern",
+  "zh": "酒馆",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "coins",
+   "n": 5
+  }
+ },
+ {
+  "id": "a1_east_trading_post_3p",
+  "age": 1,
+  "color": "yellow",
+  "name": "East Trading Post",
+  "zh": "东贸易站",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Forum"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "tradeDiscount",
+   "res": "WCSO",
+   "from": [
+    "right"
+   ]
+  }
+ },
+ {
+  "id": "a1_east_trading_post_7p",
+  "age": 1,
+  "color": "yellow",
+  "name": "East Trading Post",
+  "zh": "东贸易站",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Forum"
+  ],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "tradeDiscount",
+   "res": "WCSO",
+   "from": [
+    "right"
+   ]
+  }
+ },
+ {
+  "id": "a1_west_trading_post_3p",
+  "age": 1,
+  "color": "yellow",
+  "name": "West Trading Post",
+  "zh": "西贸易站",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Forum"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "tradeDiscount",
+   "res": "WCSO",
+   "from": [
+    "left"
+   ]
+  }
+ },
+ {
+  "id": "a1_west_trading_post_7p",
+  "age": 1,
+  "color": "yellow",
+  "name": "West Trading Post",
+  "zh": "西贸易站",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Forum"
+  ],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "tradeDiscount",
+   "res": "WCSO",
+   "from": [
+    "left"
+   ]
+  }
+ },
+ {
+  "id": "a1_marketplace_3p",
+  "age": 1,
+  "color": "yellow",
+  "name": "Marketplace",
+  "zh": "市场",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Caravansery"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "tradeDiscount",
+   "res": "GLP",
+   "from": [
+    "left",
+    "right"
+   ]
+  }
+ },
+ {
+  "id": "a1_marketplace_6p",
+  "age": 1,
+  "color": "yellow",
+  "name": "Marketplace",
+  "zh": "市场",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Caravansery"
+  ],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "tradeDiscount",
+   "res": "GLP",
+   "from": [
+    "left",
+    "right"
+   ]
+  }
+ },
+ {
+  "id": "a1_stockade_3p",
+  "age": 1,
+  "color": "red",
+  "name": "Stockade",
+  "zh": "栅栏",
+  "cost": "W",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 1
+  }
+ },
+ {
+  "id": "a1_stockade_7p",
+  "age": 1,
+  "color": "red",
+  "name": "Stockade",
+  "zh": "栅栏",
+  "cost": "W",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 1
+  }
+ },
+ {
+  "id": "a1_barracks_3p",
+  "age": 1,
+  "color": "red",
+  "name": "Barracks",
+  "zh": "兵营",
+  "cost": "O",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 1
+  }
+ },
+ {
+  "id": "a1_barracks_5p",
+  "age": 1,
+  "color": "red",
+  "name": "Barracks",
+  "zh": "兵营",
+  "cost": "O",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 1
+  }
+ },
+ {
+  "id": "a1_guard_tower_3p",
+  "age": 1,
+  "color": "red",
+  "name": "Guard Tower",
+  "zh": "瞭望塔",
+  "cost": "C",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 1
+  }
+ },
+ {
+  "id": "a1_guard_tower_4p",
+  "age": 1,
+  "color": "red",
+  "name": "Guard Tower",
+  "zh": "瞭望塔",
+  "cost": "C",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 1
+  }
+ },
+ {
+  "id": "a1_apothecary_3p",
+  "age": 1,
+  "color": "green",
+  "name": "Apothecary",
+  "zh": "药房",
+  "cost": "L",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Stables",
+   "Dispensary"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "compass"
+  }
+ },
+ {
+  "id": "a1_apothecary_5p",
+  "age": 1,
+  "color": "green",
+  "name": "Apothecary",
+  "zh": "药房",
+  "cost": "L",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Stables",
+   "Dispensary"
+  ],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "compass"
+  }
+ },
+ {
+  "id": "a1_workshop_3p",
+  "age": 1,
+  "color": "green",
+  "name": "Workshop",
+  "zh": "工坊",
+  "cost": "G",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Archery Range",
+   "Laboratory"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "gear"
+  }
+ },
+ {
+  "id": "a1_workshop_7p",
+  "age": 1,
+  "color": "green",
+  "name": "Workshop",
+  "zh": "工坊",
+  "cost": "G",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Archery Range",
+   "Laboratory"
+  ],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "gear"
+  }
+ },
+ {
+  "id": "a1_scriptorium_3p",
+  "age": 1,
+  "color": "green",
+  "name": "Scriptorium",
+  "zh": "写字间",
+  "cost": "P",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Courthouse",
+   "Library"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "tablet"
+  }
+ },
+ {
+  "id": "a1_scriptorium_4p",
+  "age": 1,
+  "color": "green",
+  "name": "Scriptorium",
+  "zh": "写字间",
+  "cost": "P",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Courthouse",
+   "Library"
+  ],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "tablet"
+  }
+ },
+ {
+  "id": "a2_sawmill_3p",
+  "age": 2,
+  "color": "brown",
+  "name": "Sawmill",
+  "zh": "锯木厂",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "WW",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_sawmill_4p",
+  "age": 2,
+  "color": "brown",
+  "name": "Sawmill",
+  "zh": "锯木厂",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "WW",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_quarry_3p",
+  "age": 2,
+  "color": "brown",
+  "name": "Quarry",
+  "zh": "采石场",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "SS",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_quarry_4p",
+  "age": 2,
+  "color": "brown",
+  "name": "Quarry",
+  "zh": "采石场",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "SS",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_brickyard_3p",
+  "age": 2,
+  "color": "brown",
+  "name": "Brickyard",
+  "zh": "砖厂",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "CC",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_brickyard_4p",
+  "age": 2,
+  "color": "brown",
+  "name": "Brickyard",
+  "zh": "砖厂",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "CC",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_foundry_3p",
+  "age": 2,
+  "color": "brown",
+  "name": "Foundry",
+  "zh": "铸造厂",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "OO",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_foundry_4p",
+  "age": 2,
+  "color": "brown",
+  "name": "Foundry",
+  "zh": "铸造厂",
+  "cost": "",
+  "coin": 1,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "OO",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_loom_3p",
+  "age": 2,
+  "color": "gray",
+  "name": "Loom",
+  "zh": "织布机",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "L",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_loom_5p",
+  "age": 2,
+  "color": "gray",
+  "name": "Loom",
+  "zh": "织布机",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "L",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_glassworks_3p",
+  "age": 2,
+  "color": "gray",
+  "name": "Glassworks",
+  "zh": "玻璃厂",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "G",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_glassworks_5p",
+  "age": 2,
+  "color": "gray",
+  "name": "Glassworks",
+  "zh": "玻璃厂",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "G",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_press_3p",
+  "age": 2,
+  "color": "gray",
+  "name": "Press",
+  "zh": "印刷所",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "P",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_press_5p",
+  "age": 2,
+  "color": "gray",
+  "name": "Press",
+  "zh": "印刷所",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "produce",
+   "res": "P",
+   "sellable": true
+  }
+ },
+ {
+  "id": "a2_aqueduct_3p",
+  "age": 2,
+  "color": "blue",
+  "name": "Aqueduct",
+  "zh": "水道桥",
+  "cost": "SSS",
+  "coin": 0,
+  "chainFrom": [
+   "Baths"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 5
+  }
+ },
+ {
+  "id": "a2_aqueduct_7p",
+  "age": 2,
+  "color": "blue",
+  "name": "Aqueduct",
+  "zh": "水道桥",
+  "cost": "SSS",
+  "coin": 0,
+  "chainFrom": [
+   "Baths"
+  ],
+  "chainTo": [],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 5
+  }
+ },
+ {
+  "id": "a2_temple_3p",
+  "age": 2,
+  "color": "blue",
+  "name": "Temple",
+  "zh": "神庙",
+  "cost": "WCG",
+  "coin": 0,
+  "chainFrom": [
+   "Altar"
+  ],
+  "chainTo": [
+   "Pantheon"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 3
+  }
+ },
+ {
+  "id": "a2_temple_6p",
+  "age": 2,
+  "color": "blue",
+  "name": "Temple",
+  "zh": "神庙",
+  "cost": "WCG",
+  "coin": 0,
+  "chainFrom": [
+   "Altar"
+  ],
+  "chainTo": [
+   "Pantheon"
+  ],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 3
+  }
+ },
+ {
+  "id": "a2_statue_3p",
+  "age": 2,
+  "color": "blue",
+  "name": "Statue",
+  "zh": "雕像",
+  "cost": "WOO",
+  "coin": 0,
+  "chainFrom": [
+   "Theater"
+  ],
+  "chainTo": [
+   "Gardens"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 4
+  }
+ },
+ {
+  "id": "a2_statue_7p",
+  "age": 2,
+  "color": "blue",
+  "name": "Statue",
+  "zh": "雕像",
+  "cost": "WOO",
+  "coin": 0,
+  "chainFrom": [
+   "Theater"
+  ],
+  "chainTo": [
+   "Gardens"
+  ],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 4
+  }
+ },
+ {
+  "id": "a2_courthouse_3p",
+  "age": 2,
+  "color": "blue",
+  "name": "Courthouse",
+  "zh": "法庭",
+  "cost": "CCL",
+  "coin": 0,
+  "chainFrom": [
+   "Scriptorium"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 4
+  }
+ },
+ {
+  "id": "a2_courthouse_5p",
+  "age": 2,
+  "color": "blue",
+  "name": "Courthouse",
+  "zh": "法庭",
+  "cost": "CCL",
+  "coin": 0,
+  "chainFrom": [
+   "Scriptorium"
+  ],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 4
+  }
+ },
+ {
+  "id": "a2_forum_3p",
+  "age": 2,
+  "color": "yellow",
+  "name": "Forum",
+  "zh": "广场",
+  "cost": "CC",
+  "coin": 0,
+  "chainFrom": [
+   "East Trading Post",
+   "West Trading Post"
+  ],
+  "chainTo": [
+   "Haven"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produceChoice",
+   "options": "GLP",
+   "sellable": false
+  }
+ },
+ {
+  "id": "a2_forum_6p",
+  "age": 2,
+  "color": "yellow",
+  "name": "Forum",
+  "zh": "广场",
+  "cost": "CC",
+  "coin": 0,
+  "chainFrom": [
+   "East Trading Post",
+   "West Trading Post"
+  ],
+  "chainTo": [
+   "Haven"
+  ],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "produceChoice",
+   "options": "GLP",
+   "sellable": false
+  }
+ },
+ {
+  "id": "a2_forum_7p",
+  "age": 2,
+  "color": "yellow",
+  "name": "Forum",
+  "zh": "广场",
+  "cost": "CC",
+  "coin": 0,
+  "chainFrom": [
+   "East Trading Post",
+   "West Trading Post"
+  ],
+  "chainTo": [
+   "Haven"
+  ],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "produceChoice",
+   "options": "GLP",
+   "sellable": false
+  }
+ },
+ {
+  "id": "a2_caravansery_3p",
+  "age": 2,
+  "color": "yellow",
+  "name": "Caravansery",
+  "zh": "商队旅馆",
+  "cost": "WW",
+  "coin": 0,
+  "chainFrom": [
+   "Marketplace"
+  ],
+  "chainTo": [
+   "Lighthouse"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "produceChoice",
+   "options": "WSOC",
+   "sellable": false
+  }
+ },
+ {
+  "id": "a2_caravansery_5p",
+  "age": 2,
+  "color": "yellow",
+  "name": "Caravansery",
+  "zh": "商队旅馆",
+  "cost": "WW",
+  "coin": 0,
+  "chainFrom": [
+   "Marketplace"
+  ],
+  "chainTo": [
+   "Lighthouse"
+  ],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "produceChoice",
+   "options": "WSOC",
+   "sellable": false
+  }
+ },
+ {
+  "id": "a2_caravansery_6p",
+  "age": 2,
+  "color": "yellow",
+  "name": "Caravansery",
+  "zh": "商队旅馆",
+  "cost": "WW",
+  "coin": 0,
+  "chainFrom": [
+   "Marketplace"
+  ],
+  "chainTo": [
+   "Lighthouse"
+  ],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "produceChoice",
+   "options": "WSOC",
+   "sellable": false
+  }
+ },
+ {
+  "id": "a2_vineyard_3p",
+  "age": 2,
+  "color": "yellow",
+  "name": "Vineyard",
+  "zh": "葡萄园",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "brown"
+   ],
+   "scope": [
+    "left",
+    "self",
+    "right"
+   ],
+   "coinsNow": 1
+  }
+ },
+ {
+  "id": "a2_vineyard_6p",
+  "age": 2,
+  "color": "yellow",
+  "name": "Vineyard",
+  "zh": "葡萄园",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "brown"
+   ],
+   "scope": [
+    "left",
+    "self",
+    "right"
+   ],
+   "coinsNow": 1
+  }
+ },
+ {
+  "id": "a2_bazar_4p",
+  "age": 2,
+  "color": "yellow",
+  "name": "Bazar",
+  "zh": "集市",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "gray"
+   ],
+   "scope": [
+    "left",
+    "self",
+    "right"
+   ],
+   "coinsNow": 2
+  }
+ },
+ {
+  "id": "a2_bazar_7p",
+  "age": 2,
+  "color": "yellow",
+  "name": "Bazar",
+  "zh": "集市",
+  "cost": "",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "gray"
+   ],
+   "scope": [
+    "left",
+    "self",
+    "right"
+   ],
+   "coinsNow": 2
+  }
+ },
+ {
+  "id": "a2_walls_3p",
+  "age": 2,
+  "color": "red",
+  "name": "Walls",
+  "zh": "城墙",
+  "cost": "SSS",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Fortifications"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 2
+  }
+ },
+ {
+  "id": "a2_walls_7p",
+  "age": 2,
+  "color": "red",
+  "name": "Walls",
+  "zh": "城墙",
+  "cost": "SSS",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Fortifications"
+  ],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 2
+  }
+ },
+ {
+  "id": "a2_training_ground_4p",
+  "age": 2,
+  "color": "red",
+  "name": "Training Ground",
+  "zh": "练兵场",
+  "cost": "WOO",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Circus"
+  ],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 2
+  }
+ },
+ {
+  "id": "a2_training_ground_6p",
+  "age": 2,
+  "color": "red",
+  "name": "Training Ground",
+  "zh": "练兵场",
+  "cost": "WOO",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Circus"
+  ],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 2
+  }
+ },
+ {
+  "id": "a2_training_ground_7p",
+  "age": 2,
+  "color": "red",
+  "name": "Training Ground",
+  "zh": "练兵场",
+  "cost": "WOO",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Circus"
+  ],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 2
+  }
+ },
+ {
+  "id": "a2_stables_3p",
+  "age": 2,
+  "color": "red",
+  "name": "Stables",
+  "zh": "马厩",
+  "cost": "WCO",
+  "coin": 0,
+  "chainFrom": [
+   "Apothecary"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 2
+  }
+ },
+ {
+  "id": "a2_stables_5p",
+  "age": 2,
+  "color": "red",
+  "name": "Stables",
+  "zh": "马厩",
+  "cost": "WCO",
+  "coin": 0,
+  "chainFrom": [
+   "Apothecary"
+  ],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 2
+  }
+ },
+ {
+  "id": "a2_archery_range_3p",
+  "age": 2,
+  "color": "red",
+  "name": "Archery Range",
+  "zh": "射箭场",
+  "cost": "WWO",
+  "coin": 0,
+  "chainFrom": [
+   "Workshop"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 2
+  }
+ },
+ {
+  "id": "a2_archery_range_6p",
+  "age": 2,
+  "color": "red",
+  "name": "Archery Range",
+  "zh": "射箭场",
+  "cost": "WWO",
+  "coin": 0,
+  "chainFrom": [
+   "Workshop"
+  ],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 2
+  }
+ },
+ {
+  "id": "a2_dispensary_3p",
+  "age": 2,
+  "color": "green",
+  "name": "Dispensary",
+  "zh": "诊所",
+  "cost": "OOG",
+  "coin": 0,
+  "chainFrom": [
+   "Apothecary"
+  ],
+  "chainTo": [
+   "Arena",
+   "Lodge"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "compass"
+  }
+ },
+ {
+  "id": "a2_dispensary_4p",
+  "age": 2,
+  "color": "green",
+  "name": "Dispensary",
+  "zh": "诊所",
+  "cost": "OOG",
+  "coin": 0,
+  "chainFrom": [
+   "Apothecary"
+  ],
+  "chainTo": [
+   "Arena",
+   "Lodge"
+  ],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "compass"
+  }
+ },
+ {
+  "id": "a2_laboratory_3p",
+  "age": 2,
+  "color": "green",
+  "name": "Laboratory",
+  "zh": "实验室",
+  "cost": "CCP",
+  "coin": 0,
+  "chainFrom": [
+   "Workshop"
+  ],
+  "chainTo": [
+   "Siege Workshop",
+   "Observatory"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "gear"
+  }
+ },
+ {
+  "id": "a2_laboratory_5p",
+  "age": 2,
+  "color": "green",
+  "name": "Laboratory",
+  "zh": "实验室",
+  "cost": "CCP",
+  "coin": 0,
+  "chainFrom": [
+   "Workshop"
+  ],
+  "chainTo": [
+   "Siege Workshop",
+   "Observatory"
+  ],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "gear"
+  }
+ },
+ {
+  "id": "a2_library_3p",
+  "age": 2,
+  "color": "green",
+  "name": "Library",
+  "zh": "图书馆",
+  "cost": "SSL",
+  "coin": 0,
+  "chainFrom": [
+   "Scriptorium"
+  ],
+  "chainTo": [
+   "Senate",
+   "University"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "tablet"
+  }
+ },
+ {
+  "id": "a2_library_6p",
+  "age": 2,
+  "color": "green",
+  "name": "Library",
+  "zh": "图书馆",
+  "cost": "SSL",
+  "coin": 0,
+  "chainFrom": [
+   "Scriptorium"
+  ],
+  "chainTo": [
+   "Senate",
+   "University"
+  ],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "tablet"
+  }
+ },
+ {
+  "id": "a2_school_3p",
+  "age": 2,
+  "color": "green",
+  "name": "School",
+  "zh": "学校",
+  "cost": "WP",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Academy",
+   "Study"
+  ],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "tablet"
+  }
+ },
+ {
+  "id": "a2_school_7p",
+  "age": 2,
+  "color": "green",
+  "name": "School",
+  "zh": "学校",
+  "cost": "WP",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [
+   "Academy",
+   "Study"
+  ],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "tablet"
+  }
+ },
+ {
+  "id": "a3_pantheon_3p",
+  "age": 3,
+  "color": "blue",
+  "name": "Pantheon",
+  "zh": "万神殿",
+  "cost": "CCOGPL",
+  "coin": 0,
+  "chainFrom": [
+   "Temple"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 7
+  }
+ },
+ {
+  "id": "a3_pantheon_6p",
+  "age": 3,
+  "color": "blue",
+  "name": "Pantheon",
+  "zh": "万神殿",
+  "cost": "CCOGPL",
+  "coin": 0,
+  "chainFrom": [
+   "Temple"
+  ],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 7
+  }
+ },
+ {
+  "id": "a3_gardens_3p",
+  "age": 3,
+  "color": "blue",
+  "name": "Gardens",
+  "zh": "花园",
+  "cost": "CCW",
+  "coin": 0,
+  "chainFrom": [
+   "Statue"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 5
+  }
+ },
+ {
+  "id": "a3_gardens_4p",
+  "age": 3,
+  "color": "blue",
+  "name": "Gardens",
+  "zh": "花园",
+  "cost": "CCW",
+  "coin": 0,
+  "chainFrom": [
+   "Statue"
+  ],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 5
+  }
+ },
+ {
+  "id": "a3_town_hall_3p",
+  "age": 3,
+  "color": "blue",
+  "name": "Town Hall",
+  "zh": "市政厅",
+  "cost": "SSOG",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 6
+  }
+ },
+ {
+  "id": "a3_town_hall_5p",
+  "age": 3,
+  "color": "blue",
+  "name": "Town Hall",
+  "zh": "市政厅",
+  "cost": "SSOG",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 6
+  }
+ },
+ {
+  "id": "a3_town_hall_6p",
+  "age": 3,
+  "color": "blue",
+  "name": "Town Hall",
+  "zh": "市政厅",
+  "cost": "SSOG",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 6
+  }
+ },
+ {
+  "id": "a3_palace_3p",
+  "age": 3,
+  "color": "blue",
+  "name": "Palace",
+  "zh": "宫殿",
+  "cost": "WCSOGLP",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 8
+  }
+ },
+ {
+  "id": "a3_palace_7p",
+  "age": 3,
+  "color": "blue",
+  "name": "Palace",
+  "zh": "宫殿",
+  "cost": "WCSOGLP",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 8
+  }
+ },
+ {
+  "id": "a3_senate_3p",
+  "age": 3,
+  "color": "blue",
+  "name": "Senate",
+  "zh": "元老院",
+  "cost": "WWSO",
+  "coin": 0,
+  "chainFrom": [
+   "Library"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 6
+  }
+ },
+ {
+  "id": "a3_senate_5p",
+  "age": 3,
+  "color": "blue",
+  "name": "Senate",
+  "zh": "元老院",
+  "cost": "WWSO",
+  "coin": 0,
+  "chainFrom": [
+   "Library"
+  ],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "vp",
+   "n": 6
+  }
+ },
+ {
+  "id": "a3_haven_3p",
+  "age": 3,
+  "color": "yellow",
+  "name": "Haven",
+  "zh": "港口",
+  "cost": "WOL",
+  "coin": 0,
+  "chainFrom": [
+   "Forum"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "brown"
+   ],
+   "scope": [
+    "self"
+   ],
+   "coinsNow": 1,
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_haven_4p",
+  "age": 3,
+  "color": "yellow",
+  "name": "Haven",
+  "zh": "港口",
+  "cost": "WOL",
+  "coin": 0,
+  "chainFrom": [
+   "Forum"
+  ],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "brown"
+   ],
+   "scope": [
+    "self"
+   ],
+   "coinsNow": 1,
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_lighthouse_3p",
+  "age": 3,
+  "color": "yellow",
+  "name": "Lighthouse",
+  "zh": "灯塔",
+  "cost": "SG",
+  "coin": 0,
+  "chainFrom": [
+   "Caravansery"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "yellow"
+   ],
+   "scope": [
+    "self"
+   ],
+   "coinsNow": 1,
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_lighthouse_6p",
+  "age": 3,
+  "color": "yellow",
+  "name": "Lighthouse",
+  "zh": "灯塔",
+  "cost": "SG",
+  "coin": 0,
+  "chainFrom": [
+   "Caravansery"
+  ],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "yellow"
+   ],
+   "scope": [
+    "self"
+   ],
+   "coinsNow": 1,
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_chamber_of_commerce_4p",
+  "age": 3,
+  "color": "yellow",
+  "name": "Chamber of Commerce",
+  "zh": "商会",
+  "cost": "CCP",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "gray"
+   ],
+   "scope": [
+    "self"
+   ],
+   "coinsNow": 2,
+   "vpEnd": 2
+  }
+ },
+ {
+  "id": "a3_chamber_of_commerce_6p",
+  "age": 3,
+  "color": "yellow",
+  "name": "Chamber of Commerce",
+  "zh": "商会",
+  "cost": "CCP",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "gray"
+   ],
+   "scope": [
+    "self"
+   ],
+   "coinsNow": 2,
+   "vpEnd": 2
+  }
+ },
+ {
+  "id": "a3_arena_3p",
+  "age": 3,
+  "color": "yellow",
+  "name": "Arena",
+  "zh": "竞技场",
+  "cost": "SSO",
+  "coin": 0,
+  "chainFrom": [
+   "Dispensary"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "stage"
+   ],
+   "scope": [
+    "self"
+   ],
+   "coinsNow": 3,
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_arena_5p",
+  "age": 3,
+  "color": "yellow",
+  "name": "Arena",
+  "zh": "竞技场",
+  "cost": "SSO",
+  "coin": 0,
+  "chainFrom": [
+   "Dispensary"
+  ],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "stage"
+   ],
+   "scope": [
+    "self"
+   ],
+   "coinsNow": 3,
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_arena_7p",
+  "age": 3,
+  "color": "yellow",
+  "name": "Arena",
+  "zh": "竞技场",
+  "cost": "SSO",
+  "coin": 0,
+  "chainFrom": [
+   "Dispensary"
+  ],
+  "chainTo": [],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "stage"
+   ],
+   "scope": [
+    "self"
+   ],
+   "coinsNow": 3,
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_fortifications_3p",
+  "age": 3,
+  "color": "red",
+  "name": "Fortifications",
+  "zh": "要塞",
+  "cost": "SOOO",
+  "coin": 0,
+  "chainFrom": [
+   "Walls"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 3
+  }
+ },
+ {
+  "id": "a3_fortifications_7p",
+  "age": 3,
+  "color": "red",
+  "name": "Fortifications",
+  "zh": "要塞",
+  "cost": "SOOO",
+  "coin": 0,
+  "chainFrom": [
+   "Walls"
+  ],
+  "chainTo": [],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 3
+  }
+ },
+ {
+  "id": "a3_circus_4p",
+  "age": 3,
+  "color": "red",
+  "name": "Circus",
+  "zh": "角斗场",
+  "cost": "SSSO",
+  "coin": 0,
+  "chainFrom": [
+   "Training Ground"
+  ],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 3
+  }
+ },
+ {
+  "id": "a3_circus_5p",
+  "age": 3,
+  "color": "red",
+  "name": "Circus",
+  "zh": "角斗场",
+  "cost": "SSSO",
+  "coin": 0,
+  "chainFrom": [
+   "Training Ground"
+  ],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 3
+  }
+ },
+ {
+  "id": "a3_circus_6p",
+  "age": 3,
+  "color": "red",
+  "name": "Circus",
+  "zh": "角斗场",
+  "cost": "SSSO",
+  "coin": 0,
+  "chainFrom": [
+   "Training Ground"
+  ],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 3
+  }
+ },
+ {
+  "id": "a3_arsenal_3p",
+  "age": 3,
+  "color": "red",
+  "name": "Arsenal",
+  "zh": "军械库",
+  "cost": "WWOL",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 3
+  }
+ },
+ {
+  "id": "a3_arsenal_4p",
+  "age": 3,
+  "color": "red",
+  "name": "Arsenal",
+  "zh": "军械库",
+  "cost": "WWOL",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 3
+  }
+ },
+ {
+  "id": "a3_arsenal_7p",
+  "age": 3,
+  "color": "red",
+  "name": "Arsenal",
+  "zh": "军械库",
+  "cost": "WWOL",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 3
+  }
+ },
+ {
+  "id": "a3_siege_workshop_3p",
+  "age": 3,
+  "color": "red",
+  "name": "Siege Workshop",
+  "zh": "攻城工坊",
+  "cost": "WCCC",
+  "coin": 0,
+  "chainFrom": [
+   "Laboratory"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 3
+  }
+ },
+ {
+  "id": "a3_siege_workshop_5p",
+  "age": 3,
+  "color": "red",
+  "name": "Siege Workshop",
+  "zh": "攻城工坊",
+  "cost": "WCCC",
+  "coin": 0,
+  "chainFrom": [
+   "Laboratory"
+  ],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "shields",
+   "n": 3
+  }
+ },
+ {
+  "id": "a3_lodge_3p",
+  "age": 3,
+  "color": "green",
+  "name": "Lodge",
+  "zh": "学社",
+  "cost": "CCLP",
+  "coin": 0,
+  "chainFrom": [
+   "Dispensary"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "compass"
+  }
+ },
+ {
+  "id": "a3_lodge_6p",
+  "age": 3,
+  "color": "green",
+  "name": "Lodge",
+  "zh": "学社",
+  "cost": "CCLP",
+  "coin": 0,
+  "chainFrom": [
+   "Dispensary"
+  ],
+  "chainTo": [],
+  "minPlayers": 6,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "compass"
+  }
+ },
+ {
+  "id": "a3_observatory_3p",
+  "age": 3,
+  "color": "green",
+  "name": "Observatory",
+  "zh": "天文台",
+  "cost": "OOGL",
+  "coin": 0,
+  "chainFrom": [
+   "Laboratory"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "gear"
+  }
+ },
+ {
+  "id": "a3_observatory_7p",
+  "age": 3,
+  "color": "green",
+  "name": "Observatory",
+  "zh": "天文台",
+  "cost": "OOGL",
+  "coin": 0,
+  "chainFrom": [
+   "Laboratory"
+  ],
+  "chainTo": [],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "gear"
+  }
+ },
+ {
+  "id": "a3_university_3p",
+  "age": 3,
+  "color": "green",
+  "name": "University",
+  "zh": "大学",
+  "cost": "WWGP",
+  "coin": 0,
+  "chainFrom": [
+   "Library"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "tablet"
+  }
+ },
+ {
+  "id": "a3_university_4p",
+  "age": 3,
+  "color": "green",
+  "name": "University",
+  "zh": "大学",
+  "cost": "WWGP",
+  "coin": 0,
+  "chainFrom": [
+   "Library"
+  ],
+  "chainTo": [],
+  "minPlayers": 4,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "tablet"
+  }
+ },
+ {
+  "id": "a3_academy_3p",
+  "age": 3,
+  "color": "green",
+  "name": "Academy",
+  "zh": "学院",
+  "cost": "SSSG",
+  "coin": 0,
+  "chainFrom": [
+   "School"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "compass"
+  }
+ },
+ {
+  "id": "a3_academy_7p",
+  "age": 3,
+  "color": "green",
+  "name": "Academy",
+  "zh": "学院",
+  "cost": "SSSG",
+  "coin": 0,
+  "chainFrom": [
+   "School"
+  ],
+  "chainTo": [],
+  "minPlayers": 7,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "compass"
+  }
+ },
+ {
+  "id": "a3_study_3p",
+  "age": 3,
+  "color": "green",
+  "name": "Study",
+  "zh": "书斋",
+  "cost": "WLP",
+  "coin": 0,
+  "chainFrom": [
+   "School"
+  ],
+  "chainTo": [],
+  "minPlayers": 3,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "gear"
+  }
+ },
+ {
+  "id": "a3_study_5p",
+  "age": 3,
+  "color": "green",
+  "name": "Study",
+  "zh": "书斋",
+  "cost": "WLP",
+  "coin": 0,
+  "chainFrom": [
+   "School"
+  ],
+  "chainTo": [],
+  "minPlayers": 5,
+  "guild": false,
+  "effect": {
+   "type": "science",
+   "symbol": "gear"
+  }
+ },
+ {
+  "id": "a3_workers_guild",
+  "age": 3,
+  "color": "purple",
+  "name": "Workers Guild",
+  "zh": "工人行会",
+  "cost": "WCSOO",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": null,
+  "guild": true,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "brown"
+   ],
+   "scope": [
+    "left",
+    "right"
+   ],
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_craftsmens_guild",
+  "age": 3,
+  "color": "purple",
+  "name": "Craftsmens Guild",
+  "zh": "工匠行会",
+  "cost": "SSOO",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": null,
+  "guild": true,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "gray"
+   ],
+   "scope": [
+    "left",
+    "right"
+   ],
+   "vpEnd": 2
+  }
+ },
+ {
+  "id": "a3_traders_guild",
+  "age": 3,
+  "color": "purple",
+  "name": "Traders Guild",
+  "zh": "商人行会",
+  "cost": "GLP",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": null,
+  "guild": true,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "yellow"
+   ],
+   "scope": [
+    "left",
+    "right"
+   ],
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_philosophers_guild",
+  "age": 3,
+  "color": "purple",
+  "name": "Philosophers Guild",
+  "zh": "哲学家行会",
+  "cost": "CCCLP",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": null,
+  "guild": true,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "green"
+   ],
+   "scope": [
+    "left",
+    "right"
+   ],
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_spies_guild",
+  "age": 3,
+  "color": "purple",
+  "name": "Spies Guild",
+  "zh": "密探行会",
+  "cost": "CCCG",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": null,
+  "guild": true,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "red"
+   ],
+   "scope": [
+    "left",
+    "right"
+   ],
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_strategists_guild",
+  "age": 3,
+  "color": "purple",
+  "name": "Strategists Guild",
+  "zh": "军事家行会",
+  "cost": "SOOL",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": null,
+  "guild": true,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "defeat"
+   ],
+   "scope": [
+    "left",
+    "right"
+   ],
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_shipowners_guild",
+  "age": 3,
+  "color": "purple",
+  "name": "Shipowners Guild",
+  "zh": "船主行会",
+  "cost": "WWWGP",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": null,
+  "guild": true,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "brown",
+    "gray",
+    "purple"
+   ],
+   "scope": [
+    "self"
+   ],
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_scientists_guild",
+  "age": 3,
+  "color": "purple",
+  "name": "Scientists Guild",
+  "zh": "科学家行会",
+  "cost": "WWOOP",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": null,
+  "guild": true,
+  "effect": {
+   "type": "science",
+   "symbol": "any"
+  }
+ },
+ {
+  "id": "a3_magistrates_guild",
+  "age": 3,
+  "color": "purple",
+  "name": "Magistrates Guild",
+  "zh": "法官行会",
+  "cost": "WWWSL",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": null,
+  "guild": true,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "blue"
+   ],
+   "scope": [
+    "left",
+    "right"
+   ],
+   "vpEnd": 1
+  }
+ },
+ {
+  "id": "a3_builders_guild",
+  "age": 3,
+  "color": "purple",
+  "name": "Builders Guild",
+  "zh": "建筑师行会",
+  "cost": "SSCCG",
+  "coin": 0,
+  "chainFrom": [],
+  "chainTo": [],
+  "minPlayers": null,
+  "guild": true,
+  "effect": {
+   "type": "perCount",
+   "what": [
+    "stage"
+   ],
+   "scope": [
+    "left",
+    "self",
+    "right"
+   ],
+   "vpEnd": 1
+  }
+ }
+] as unknown as readonly CardDef[];
+
+/** 7 块奇迹板 × A/B 两面（补充文件 §2.5）。 */
+export const WONDERS: readonly WonderDef[] = [
+ {
+  "key": "giza",
+  "name": "Pyramids of Giza",
+  "zh": "金字塔",
+  "start": "S",
+  "sides": {
+   "A": [
+    {
+     "cost": "SS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "WWW",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 5
+      }
+     ]
+    },
+    {
+     "cost": "SSSS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "SSS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 5
+      }
+     ]
+    },
+    {
+     "cost": "CCC",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 5
+      }
+     ]
+    },
+    {
+     "cost": "SSSSP",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "key": "rhodes",
+  "name": "Colossus of Rhodes",
+  "zh": "罗德岛巨像",
+  "start": "O",
+  "sides": {
+   "A": [
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "CCC",
+     "effects": [
+      {
+       "type": "shields",
+       "n": 2
+      }
+     ]
+    },
+    {
+     "cost": "OOOO",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "SSS",
+     "effects": [
+      {
+       "type": "shields",
+       "n": 1
+      },
+      {
+       "type": "coins",
+       "n": 3
+      },
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "OOOO",
+     "effects": [
+      {
+       "type": "shields",
+       "n": 1
+      },
+      {
+       "type": "coins",
+       "n": 4
+      },
+      {
+       "type": "vp",
+       "n": 4
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "key": "alexandria",
+  "name": "Lighthouse of Alexandria",
+  "zh": "亚历山大灯塔",
+  "start": "G",
+  "sides": {
+   "A": [
+    {
+     "cost": "SS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "OO",
+     "effects": [
+      {
+       "type": "produceChoice",
+       "options": "WCSO",
+       "sellable": false
+      }
+     ]
+    },
+    {
+     "cost": "GG",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "CC",
+     "effects": [
+      {
+       "type": "produceChoice",
+       "options": "WCSO",
+       "sellable": false
+      }
+     ]
+    },
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "produceChoice",
+       "options": "GLP",
+       "sellable": false
+      }
+     ]
+    },
+    {
+     "cost": "SSS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "key": "ephesus",
+  "name": "Temple of Artemis in Ephesus",
+  "zh": "以弗所神庙",
+  "start": "P",
+  "sides": {
+   "A": [
+    {
+     "cost": "SS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "coins",
+       "n": 9
+      }
+     ]
+    },
+    {
+     "cost": "PP",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "SS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 2
+      },
+      {
+       "type": "coins",
+       "n": 4
+      }
+     ]
+    },
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      },
+      {
+       "type": "coins",
+       "n": 4
+      }
+     ]
+    },
+    {
+     "cost": "GLP",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 5
+      },
+      {
+       "type": "coins",
+       "n": 4
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "key": "babylon",
+  "name": "Hanging Gardens of Babylon",
+  "zh": "巴比伦空中花园",
+  "start": "C",
+  "sides": {
+   "A": [
+    {
+     "cost": "CC",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "WWW",
+     "effects": [
+      {
+       "type": "science",
+       "symbol": "any"
+      }
+     ]
+    },
+    {
+     "cost": "CCCC",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "CL",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "WWG",
+     "effects": [
+      {
+       "type": "playSeventhCard"
+      }
+     ]
+    },
+    {
+     "cost": "CCCP",
+     "effects": [
+      {
+       "type": "science",
+       "symbol": "any"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "key": "olympia",
+  "name": "Statue of Zeus in Olympia",
+  "zh": "奥林匹亚宙斯像",
+  "start": "W",
+  "sides": {
+   "A": [
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "SS",
+     "effects": [
+      {
+       "type": "freeBuildOncePerAge"
+      }
+     ]
+    },
+    {
+     "cost": "OO",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "WW",
+     "effects": [
+      {
+       "type": "tradeDiscount",
+       "res": "WCSO",
+       "from": [
+        "left",
+        "right"
+       ]
+      }
+     ]
+    },
+    {
+     "cost": "SS",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 5
+      }
+     ]
+    },
+    {
+     "cost": "OOL",
+     "effects": [
+      {
+       "type": "copyGuild"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "key": "halicarnassus",
+  "name": "Mausoleum of Halicarnassus",
+  "zh": "哈利卡纳苏斯陵墓",
+  "start": "L",
+  "sides": {
+   "A": [
+    {
+     "cost": "CC",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 3
+      }
+     ]
+    },
+    {
+     "cost": "OOO",
+     "effects": [
+      {
+       "type": "buildFromDiscard"
+      }
+     ]
+    },
+    {
+     "cost": "LL",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 7
+      }
+     ]
+    }
+   ],
+   "B": [
+    {
+     "cost": "OO",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 2
+      },
+      {
+       "type": "buildFromDiscard"
+      }
+     ]
+    },
+    {
+     "cost": "CCC",
+     "effects": [
+      {
+       "type": "vp",
+       "n": 1
+      },
+      {
+       "type": "buildFromDiscard"
+      }
+     ]
+    },
+    {
+     "cost": "GLP",
+     "effects": [
+      {
+       "type": "buildFromDiscard"
+      }
+     ]
+    }
+   ]
+  }
+ }
+] as unknown as readonly WonderDef[];
