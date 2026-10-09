@@ -282,6 +282,9 @@ def main(argv: list[str]) -> int:
     for it in items:
         counts[save(it, force)] += 1
     (ROOT / "art/manifest.json").write_text(json.dumps(manifest(items), ensure_ascii=False, indent=1) + "\n")
+    focus = OUT / "scene/focus.json"  # 每张场景的焦点（灯塔）横坐标，原图像素；手机按它对齐。正式美术导出时会改
+    if force or not focus.exists():
+        focus.write_text(json.dumps({f"{t}-{n}": 256 for t in ("night", "day") for n in (1, 2)}, indent=1) + "\n")
     print(f"写了 {counts['written']} 张简洁版，保留 {counts['kept']} 张正式美术；共 {len(items)} 项 → {OUT}（原图另存 art/simple/）")
     return 0
 
