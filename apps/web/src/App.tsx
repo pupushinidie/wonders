@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
 import { CAPACITY_OPTIONS, type Capacity, type GameCommand, type GameOptions, type LobbyRoomSnapshot, type PublicRoomSummary } from "@wonders/game";
+import { art } from "./art.js";
 import { useConfirm } from "./confirm.js";
 import GameBoard from "./GameBoard.js";
 import GameRules from "./GameRules.js";
@@ -289,6 +290,7 @@ function App() {
             三个时代，每轮所有人同时从手里挑一张牌：建成建筑、垫到奇迹下面建一层，或者弃掉换钱，再把剩下的牌传给邻居。
             资源只能跟左右邻居买，军事也只跟两边比。三个时代打完，七项分数加起来最高的城赢。
           </p>
+          <img className="wd-hero" src={art.cover} alt="" width={384} height={192} />
           <ul className="wd-home-points">
             <li><b>挑</b>同时选牌，剩下的传给邻居</li>
             <li><b>建</b>建筑、奇迹，缺资源向两邻买</li>
