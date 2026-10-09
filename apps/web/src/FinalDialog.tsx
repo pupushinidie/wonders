@@ -95,16 +95,13 @@ export function FinalDialog({ game, room, myId, spectating, nameOf, onRematch, o
   return (
     <div className="gm-modal-backdrop wd-backdrop" role="presentation">
       <section className="gm-panel wd-dialog wide wd-final" role="dialog" aria-modal="true" aria-labelledby="wd-final-title" data-tutorial="final">
-        {won && (
-          <div className="wd-fireworks" aria-hidden="true">
-            {[0, 1, 2].map((k) => <Sprite key={k} name="fireworks" s={2} className={`fw fw-${k}`} delay={k * 500} loopDelay={1800} />)}
-          </div>
-        )}
         <header className="wd-final-head">
+          {won && <Sprite name="fireworks" s={1} className="fw" loopDelay={900} />}
           <span className="wd-ribbon" style={{ "--rw": `${160 * 2}px` } as CSSProperties}>
             <img src={art.ribbon} alt="" width={320} height={48} />
             <h2 id="wd-final-title">{title}</h2>
           </span>
+          {won && <Sprite name="fireworks" s={1} className="fw" delay={500} loopDelay={900} />}
         </header>
         <div className="wd-final-scroll">
           <table className="wd-final-table">

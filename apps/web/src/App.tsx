@@ -409,7 +409,7 @@ function ConnectionStatus({ connected }: { connected: boolean }) {
   return (
     <div className={connected ? "connection-status online" : "connection-status"}>
       <span className="connection-dot" />
-      {connected ? "服务已连接" : "连接中…"}
+      <span className="connection-text">{connected ? "服务已连接" : "连接中…"}</span>
     </div>
   );
 }
@@ -473,6 +473,7 @@ function RoomView({
               <div className="room-code-caption">从首页列表进来观战，看不到房间码</div>
             )}
             <OptionsPanel room={room} />
+            <RoomSettingsPanel room={room} />
           </section>
 
           <section className="room-panel player-panel">
@@ -504,7 +505,6 @@ function RoomView({
               ))}
             </div>
             <p className="field-hint">每轮出牌 60 秒（巴比伦第 7 张、哈利卡纳苏斯挑弃牌 20 秒），超时由人机替你出；连续超时 2 次转托管，掉线时由人机代打，用原昵称回来能接上。</p>
-            <RoomSettingsPanel room={room} />
             <SeatSwitch room={room} />
             <div className="room-actions">
               {isHost ? (

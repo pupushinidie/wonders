@@ -227,7 +227,7 @@ export function ActionPanel(props: ActionPanelProps) {
     if (mine) body = <button type="button" className="primary-button wd-wide" onClick={props.onOpenDiscard}>打开弃牌堆</button>;
   } else if (phase === "seventh" && game.pending?.player !== me.id) {
     title = `${pendingName} 正在打第 7 张`;
-    sub = "巴比伦的奇迹能力：第 6 轮最后那张也能打出。打完结算军事。";
+    sub = `巴比伦的奇迹能力：第 6 轮最后那张也能打出。打完结算军事${me.hand.length > 0 && !spectating ? "，你剩下的那张作废" : ""}。`;
   } else if (phase === "play" && me.submitted) {
     mode = "sent";
     const play = me.play;

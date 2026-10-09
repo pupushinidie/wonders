@@ -110,7 +110,7 @@ export function MilitaryBanner({ event, meId, leftName, rightName }: { event: Mi
       {mine ? (
         <>
           {line("left")}
-          <Sprite name="clash" s={3} className="clash" />
+          <Sprite name="clash" s={2} className="clash" delay={200} />
           {line("right")}
         </>
       ) : (

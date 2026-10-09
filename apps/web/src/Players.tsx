@@ -76,7 +76,7 @@ export function ReadyMark({ game, player, showText = false }: { game: GameState;
 const warSum = (player: PlayerState) => player.tokens.reduce((sum, token) => sum + token.value, 0);
 
 /** 金币、盾、军事标记合计、当前分（数字 24px）。 */
-export function StatLine({ seat, items = ["coin", "shield", "war", "vp"], tutorial }: { seat: SeatInfo; items?: readonly ("coin" | "shield" | "war" | "vp")[]; tutorial?: string }) {
+export function StatLine({ seat, items = ["coin", "shield", "war", "vp"], tutorial }: { seat: SeatInfo; items?: readonly ("coin" | "shield" | "war" | "vp")[]; tutorial?: string | undefined }) {
   const { player } = seat;
   const war = warSum(player);
   return (
@@ -189,9 +189,11 @@ export function NeighborPanel({ seat, me, side, game, wonderN, passTo, onOpen, s
       </div>
       <Head seat={seat} game={game} />
       <PlayerBoard player={player} n={wonderN} {...(shine !== undefined ? { shine } : {})} />
-      <StatLine seat={seat} />
-      <div className="wd-nb-sub"><span>卖给你</span><small>每份几金</small></div>
-      <SellList me={me} neighbor={player} side={side} s={wonderN === 2 ? 2 : 2} />
+      <StatLine seat={seat} tutorial={tutorial ? `${tutorial}-stats` : undefined} />
+      <div className="wd-nb-sell" data-tutorial={tutorial ? `${tutorial}-sell` : undefined}>
+        <div className="wd-nb-sub"><span>卖给你</span><small>每份几金</small></div>
+        <SellList me={me} neighbor={player} side={side} s={2} />
+      </div>
       <ColorCounts player={player} />
       <ScienceCounts player={player} />
       <LastPlay last={seat.last} />

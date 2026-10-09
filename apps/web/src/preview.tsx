@@ -131,8 +131,8 @@ function Preview({ entry }: { entry: Scene }) {
   const [theme, toggleTheme] = useTheme();
   const options = { ...(entry.room ?? {}) } as PreviewRoomOptions & { viewer?: string };
   let viewer = params.get("viewer") ?? options.viewer ?? state.players[0]!.id;
-  if (sceneName === "chooseWonders" && !params.get("viewer")) viewer = chooserId(state);
-  if (viewer === "__other__") viewer = state.players.find((player) => player.id !== chooserId(state) && !player.wonder)?.id ?? state.players[0]!.id;
+  if (sceneName === "chooseWonders" && !params.get("viewer")) viewer = chooserId(initial);
+  if (viewer === "__other__") viewer = initial.players.find((player) => player.id !== chooserId(initial) && !player.wonder)?.id ?? initial.players[0]!.id;
   const spectating = options.spectating === true;
   Object.defineProperty(socket, "id", { get: () => (spectating ? "socket-spectator" : `socket-${viewer}`), configurable: true });
   const realRoom = previewRoom(state, { ...options, viewer });
@@ -178,7 +178,7 @@ function Preview({ entry }: { entry: Scene }) {
         error={error}
         notice=""
         brand={<a className="brand" href="?" aria-label="预览页目录"><span className="brand-mark" aria-hidden="true"><i /><i /><i /></span><span className="brand-name">七大奇迹<span> WONDERS</span></span></a>}
-        connection={<div className="connection-status online"><span className="connection-dot" />服务已连接</div>}
+        connection={<div className="connection-status online"><span className="connection-dot" /><span className="connection-text">服务已连接</span></div>}
         themeToggle={<ThemeToggle theme={theme} onToggle={toggleTheme} />}
         theme={theme}
         chat={<div className="room-chat light"><p className="room-chat-empty">（预览页没有聊天）</p></div>}

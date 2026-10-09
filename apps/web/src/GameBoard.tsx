@@ -109,7 +109,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
   const canAct = !spectating && !autoPlaying && ((game.phase === "play" && !me.submitted) || (game.phase === "seventh" && game.pending?.player === me.id));
   const hand = useMemo(() => [...me.hand].sort(byColor), [me.hand]);
   const options = useMemo(() => (canAct ? playOptions(game, me.id) : []), [canAct, game, me.id]);
-  const statuses = useMemo(() => new Map<CardId, CardStatus>(options.map((entry) => [entry.card, buildStatus(entry.build)])), [options]);
+  const statuses = useMemo(() => new Map<CardId, CardStatus>(options.map((entry) => [entry.card, buildStatus(entry.build, entry.card)])), [options]);
   const [selected, setSelected] = useState<CardId | null>(null);
   const [choice, setChoice] = useState({ build: 0, wonder: 0 });
   const handKey = hand.join(",");
@@ -263,7 +263,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
       nameOf={nameOf}
       feedback={feedback}
       mobile={layout.mobile}
-      iconS={layout.mobile ? 1 : 2}
+      iconS={layout.mobile || !layout.actInHand ? 1 : 2}
       onOpenDiscard={() => setDiscardOpen(true)}
       onOpenWonders={() => setWondersOpen(true)}
       onOpenFinal={() => setFinalHidden(false)}
@@ -362,7 +362,14 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
   const mine = seats[meIndex]!;
 
   // ---------- 手牌 ----------
-  const handCards = hand.length === 0 ? (
+  const hiddenHand = hand.length === 0 && me.handCount > 0;
+  const handCards = hiddenHand ? (
+    layout.mobile
+      ? <p className="wd-hand-empty">{nameOf(me.id)} 手里 {me.handCount} 张（观战看不到牌面）</p>
+      : Array.from({ length: me.handCount }, (_, index) => (
+        <img key={index} className="wd-back" src={art.back(game.age)} alt="" width={64 * layout.handN} height={96 * layout.handN} title="观战看不到手牌" />
+      ))
+  ) : hand.length === 0 ? (
     <p className="wd-hand-empty">{finished ? "游戏结束" : game.phase === "wonders" ? "挑完奇迹就发牌" : "手里没有牌了，等这一步结算"}</p>
   ) : hand.map((id, index) => {
     const status = statuses.get(id);
@@ -376,7 +383,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
   });
   const enterFrom = lastPass ? (lastPass.value.direction === "left" ? "right" : "left") : game.direction === "left" ? "right" : "left";
   const handBox = (
-    <div className={`wd-hand ${passCount > 0 ? `enter-${enterFrom}` : ""}`} key={passCount} data-tutorial="hand" style={{ "--n": layout.handN, "--card-gap": `${layout.cardGap}px` } as CSSProperties}>
+    <div className={`wd-hand ${passCount > 0 ? `enter-${enterFrom}` : ""}`} key={`hand-${passCount}`} data-tutorial="hand" style={{ "--n": layout.handN, "--card-gap": `${layout.cardGap}px` } as CSSProperties}>
       {handCards}
     </div>
   );
@@ -423,14 +430,14 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
   );
   const myInfo = (
     <section className="wd-panel wd-myinfo" data-tutorial="my-info">
-      <div className="wd-pd-line"><em>你的产出</em><Production player={me} /></div>
+      <div className="wd-pd-line"><em>{spectating ? "产出" : "你的产出"}</em><Production player={me} /></div>
       <div className="wd-pd-line"><em>科技</em><ScienceCounts player={me} /></div>
       <div className="wd-pd-line"><em>军事标记</em>
         <span className="wd-tokens">
           {me.tokens.length === 0 ? <span className="wd-muted">还没有</span> : me.tokens.map((token, index) => <img key={index} src={art.token(token.value)} alt={String(token.value)} width={32} height={32} />)}
         </span>
       </div>
-      <LastPlay last={mine.last} label="你上轮" />
+      <LastPlay last={mine.last} label={spectating ? "上轮" : "你上轮"} />
       <p className="wd-muted">弃牌堆 {game.discardCount} 张 · 手牌 {me.handCount} 张</p>
     </section>
   );
@@ -440,7 +447,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
   return (
     <div className={`wd-screen ${layout.actInHand ? "act-hand" : "act-center"} ${n === 3 ? "three" : ""}`} style={{ "--top-h": `${layout.topH}px` } as CSSProperties}>
       {topbar}
-      <div className={layout.nbW >= 400 ? "wd-table nb-wide" : "wd-table"} style={tableStyle}>
+      <div className={["wd-table", layout.nbW >= 400 ? "nb-wide" : "", layout.middleH < 420 ? "compact" : ""].join(" ")} style={tableStyle}>
         {otherIndexes.length > 0 && (
           <div className="wd-others" data-tutorial="others">
             {otherIndexes.map((index) => <OtherCard key={index} seat={seats[index]!} game={game} emblemN={layout.emblemN} onOpen={() => setOpenSeat(game.players[index]!.id)} />)}
@@ -458,7 +465,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
         <div className="wd-handrow">
           {handBox}
           {layout.actInHand && actionPanel}
-          {lastPass && <PassFly key={lastPass.id} direction={lastPass.value.direction} age={lastPass.value.age} n={layout.handN} />}
+          {lastPass && <PassFly key={`pass-${lastPass.id}`} direction={lastPass.value.direction} age={lastPass.value.age} n={layout.handN} />}
         </div>
         {drawerPanel}
       </div>

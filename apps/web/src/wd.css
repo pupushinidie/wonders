@@ -65,7 +65,7 @@
 .wd-menu-pop .game-room-menu .game-room-popover { right: 0; top: calc(100% + 8px); }
 .wd-menu-backdrop { position: fixed; inset: 0; z-index: 25; }
 @media (max-width: 1279px) {
-  .wd-topbar .connection-status { font-size: 0; }
+  .wd-topbar .connection-status .connection-text { display: none; }
   .wd-topbar .connection-status .connection-dot { width: 10px; height: 10px; }
 }
 @media (max-width: 1100px) {
@@ -164,6 +164,12 @@
 .wd-neighbor .wd-stats { flex-wrap: nowrap; justify-content: space-between; gap: 4px; }
 .wd-neighbor .wd-stats .wd-icon { width: 16px; height: 16px; }
 .wd-table.nb-wide .wd-neighbor .wd-stats .wd-icon { width: 32px; height: 32px; }
+.wd-table.compact .wd-neighbor { gap: 4px; padding: 6px 8px; }
+.wd-table.compact .wd-neighbor .wd-last { display: none; }
+.wd-table.compact .wd-neighbor .wd-sell-res .wd-icon { width: 16px; height: 16px; }
+.wd-table.compact .wd-neighbor .wd-sell-price b { line-height: 24px; }
+.wd-table:not(.nb-wide) .wd-neighbor .wd-head .wd-emblem { display: none; }
+.wd-nb-sell { display: flex; flex-direction: column; gap: 4px; }
 .wd-nb-sub { display: flex; align-items: baseline; justify-content: space-between; margin-top: 2px; padding-top: 4px; color: var(--text); font-size: 12px; border-top: var(--px) solid var(--panel-2); }
 .wd-nb-sub small { color: var(--muted); }
 
@@ -171,8 +177,8 @@
 .wd-other { display: flex; align-items: center; gap: 8px; min-width: 0; height: 100%; padding: 4px 10px; border: 0; text-align: left; cursor: zoom-in; font: inherit; }
 .wd-other-main { display: flex; flex: 1 1 auto; flex-direction: column; justify-content: center; gap: 2px; min-width: 0; }
 .wd-other-name { display: flex; align-items: center; gap: 6px; min-width: 0; }
-.wd-other-name strong { min-width: 0; overflow: hidden; color: var(--text); font-size: 12px; font-weight: 400; text-overflow: ellipsis; white-space: nowrap; }
-.wd-other-wonder { flex: 0 0 auto; color: var(--muted); }
+.wd-other-name strong { flex: 0 0 auto; max-width: 9em; min-width: 0; overflow: hidden; color: var(--text); font-size: 12px; font-weight: 400; text-overflow: ellipsis; white-space: nowrap; }
+.wd-other-wonder { flex: 0 1 auto; min-width: 0; overflow: hidden; color: var(--muted); text-overflow: ellipsis; white-space: nowrap; }
 .wd-other .wd-stats { flex-wrap: nowrap; gap: 10px; }
 .wd-other .wd-stats .wd-icon { width: 16px; height: 16px; }
 .wd-other:hover { filter: brightness(1.1); }
@@ -212,7 +218,7 @@
 .wd-stage-eff .wd-num { color: var(--wd-ink-text); font-size: 24px; font-weight: 400; line-height: 1; }
 .wd-board.small .wd-stage-eff { display: none; }
 .wd-stage-check { position: absolute; top: 1px; right: 1px; }
-.wd-stages.detail { height: auto; }
+.wd-board .wd-stages.detail, .wd-board.small .wd-stages.detail { height: auto; }
 .wd-stages.detail li { flex-wrap: wrap; padding: 4px; }
 .wd-stages.detail small { flex: 1 1 100%; color: var(--wd-ink-text); text-align: center; line-height: 1.4; }
 
@@ -254,6 +260,7 @@
 
 /* ---------- 手牌（卡面 64×96 × n） ---------- */
 .wd-hand { display: flex; flex: 0 0 auto; align-items: flex-end; gap: var(--card-gap, 8px); min-width: 0; }
+.wd-back { flex: 0 0 auto; image-rendering: pixelated; }
 .wd-hand-empty { align-self: center; margin: 0 auto; color: var(--muted); font-size: 24px; }
 .act-hand .wd-hand { justify-content: center; width: calc(64px * 7 * var(--n) + var(--card-gap) * 6); }
 .act-hand .wd-hand-empty { text-align: center; }
@@ -478,6 +485,7 @@ button.wd-item { cursor: pointer; }
 .wd-mil-token { animation: wd-token 560ms steps(7, jump-none) both; }
 @keyframes wd-token { from { translate: 0 -48px; } to { translate: 0 0; } }
 .wd-mil-line .land { position: absolute; right: 4px; top: -4px; }
+.wd-mil .clash { position: absolute; right: 18px; top: 50%; margin-top: -16px; }
 
 /* ---------- 抽屉：记录 / 聊天 ---------- */
 .wd-drawer { position: absolute; top: var(--pad); right: var(--pad); bottom: var(--pad); z-index: 20; display: flex; flex-direction: column; gap: 8px; width: min(380px, calc(100% - 2 * var(--pad))); padding: 10px; box-sizing: border-box; }
@@ -548,16 +556,15 @@ button.wd-item { cursor: pointer; }
 .wd-final-detail li { display: grid; grid-template-columns: 16px 36px 36px minmax(0, 1fr); align-items: center; gap: 8px; font-size: 12px; }
 .wd-final-detail li em { color: var(--muted); font-style: normal; }
 .wd-final-detail li b { color: var(--gold); font-size: 24px; font-weight: 400; text-align: right; }
-.wd-final-gap { margin: 8px 0 0; color: var(--text); font-size: 24px; }
+.app-shell .wd-final-gap { margin: 8px 0 0; color: var(--text); font-size: 24px; line-height: 1.4; }
 .wd-rematch { display: flex; flex: 0 0 auto; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; font-size: 12px; }
 .app-shell .wd-rematch .gm-panel-actions { margin: 0; }
 .app-shell .wd-rematch .primary-button { width: auto; margin: 0; min-height: 44px; padding: 0 20px; font-size: 24px; }
 .app-shell .wd-rematch .quiet-button { min-height: 44px; font-size: 24px; }
-.wd-fireworks { position: absolute; inset: 0; pointer-events: none; }
-.wd-fireworks .fw { position: absolute; }
-.wd-fireworks .fw-0 { left: 6%; top: 8px; }
-.wd-fireworks .fw-1 { right: 8%; top: 24px; }
-.wd-fireworks .fw-2 { left: 42%; top: -24px; }
+.wd-final-head { align-items: center; gap: 24px; }
+@media (min-width: 1000px) {
+  .wd-final-scroll { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(340px, 1fr); align-items: start; }
+}
 
 /* 规则 */
 .app-shell .gm-panel.wd-rules { width: min(900px, 100%); max-height: calc(100dvh - 32px); overflow: auto; }
@@ -566,16 +573,22 @@ button.wd-item { cursor: pointer; }
 .app-shell .wd-rules h3 { margin: 0; color: var(--gold); font-size: 24px; font-weight: 400; }
 .app-shell .wd-rules p, .app-shell .wd-rules li { margin: 0; color: var(--text); font-size: 12px; line-height: 1.7; }
 .app-shell .wd-rules ul { margin: 0; padding-left: 18px; }
-.app-shell .wd-rules b { color: var(--gold); font-weight: 400; }
-.wd-rules-pics { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; }
+.app-shell .wd-rules :is(p, li) > b { color: var(--gold); font-weight: 400; }
+@media (min-width: 1200px) { .app-shell .gm-panel.wd-rules { width: min(1180px, 100%); } .wd-rules-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.wd-rules-pics { display: flex; align-items: flex-end; gap: 10px; }
+.wd-rules-pics > p { flex: 1 1 auto; min-width: 0; }
+.wd-rules-pics:not(:has(p)) { flex-wrap: wrap; }
 .app-shell .wd-rules .primary-button { width: auto; margin: 12px 0 0; padding: 0 24px; font-size: 24px; }
 
 /* ---------- 手机 ---------- */
-.wd-screen.mobile { display: block; height: auto; min-height: 100dvh; overflow: visible; }
+.wd-screen.mobile { display: block; height: auto; min-height: 100dvh; overflow: visible; overflow-x: clip; }
 .mobile .wd-topbar { position: sticky; top: 0; height: 40px; gap: 6px; padding: 0 6px; }
 .mobile .wd-topbar .brand-name { display: none; }
 .mobile .wd-turn { justify-content: flex-start; gap: 8px; }
 .mobile .wd-topbar .connection-status { display: none; }
+.app-shell .gm-modal-backdrop { grid-template-columns: minmax(0, 1fr); white-space: normal; }
+.wd-topbar .game-room-popover { white-space: normal; }
+.app-shell .gm-modal-backdrop > .gm-panel { justify-self: center; }
 .mobile .wd-topbar-right { gap: 4px; }
 .app-shell .mobile .wd-topbar .quiet-button { padding: 4px 6px; }
 .mobile .wd-timer { min-width: 0; padding: 2px 4px; }
@@ -638,11 +651,12 @@ button.wd-item { cursor: pointer; }
   .wd-final-table th small { display: none; }
   .wd-final-table td { padding: 2px; line-height: 28px; }
   .wd-final-table td.name strong { display: none; }
-  .wd-final-table td.total { font-size: 24px; }
+  .wd-final-table :is(td.total, td.rank) { font-size: 24px; }
   .wd-final-table th .wd-icon { width: 16px; height: 16px; }
   .wd-final-detail li { grid-template-columns: 16px 28px 32px minmax(0, 1fr); gap: 4px; }
   .wd-dialog .wd-city { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .wd-mil-line { font-size: 12px; }
+  .wd-final-head .fw { display: none; }
 }
 
 /* ---------- 首页 ---------- */
@@ -686,7 +700,8 @@ button.wd-item { cursor: pointer; }
   .wd-home .welcome-copy { display: contents; }
   .wd-home .welcome-copy > * { order: 1; }
   .wd-home .wd-home-side { display: contents; }
-  .wd-home .entry-card { order: 2; }
+  .app-shell.wd-home .welcome-copy h1 { order: -1; }
+  .wd-home .entry-card { order: 0; }
   .wd-home .wd-hero { order: 3; margin: 0 auto; }
   .wd-home-points { order: 4; }
   .wd-home .online-rooms { order: 5; }
@@ -708,7 +723,10 @@ button.wd-item { cursor: pointer; }
 .wd-room .room-grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) minmax(0, 1fr); gap: 16px; align-items: start; }
 .wd-room .player-details strong { font-size: 24px; line-height: 1.25; }
 .wd-room .open-seat .player-details strong { color: var(--muted); font-size: 12px; }
-.wd-room .player-row { min-height: 56px; }
+.wd-room .player-row { min-height: 52px; }
+.wd-room .player-details { display: flex; flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: 10px; min-width: 0; }
+.wd-room .player-panel { display: flex; flex-direction: column; }
+.wd-room .player-list { flex: 0 1 auto; min-height: 0; overflow-y: auto; }
 .wd-room :is(.player-avatar, .empty-avatar) { width: 44px; height: 44px; flex-basis: 44px; font-size: 24px; }
 .wd-member-avatar { position: relative; overflow: hidden; }
 .wd-member-avatar span { display: grid; place-items: center; width: 100%; height: 100%; font-size: 24px; }
@@ -736,13 +754,17 @@ button.wd-item { cursor: pointer; }
   .app-shell.wd-room .room-chat-list { min-height: 40px; }
   .wd-options { margin-top: 10px; gap: 6px; }
   .wd-room .room-feedback.feedback-success { display: none; }
+  .app-shell.wd-room .room-code-display { font-size: 24px; }
+  .wd-room .room-code-caption { display: none; }
+  .wd-room .room-code-panel { padding-top: 12px; padding-bottom: 12px; }
 }
 @media (min-width: 760px) and (max-height: 820px) {
   .wd-room .room-layout { padding-top: 16px; }
   .wd-room .room-heading { margin-bottom: 14px; }
   .wd-room .room-heading p { display: none; }
   .wd-room .player-panel .field-hint { margin: 8px 0; }
-  .wd-room .player-row { min-height: 50px; }
+  .wd-room .player-row { min-height: 44px; }
+  .wd-room :is(.player-avatar, .empty-avatar) { width: 36px; height: 36px; flex-basis: 36px; }
   .app-shell.wd-room .room-actions .primary-button { margin-top: 6px; }
 }
 @media (min-width: 760px) and (max-width: 1180px) {

@@ -112,7 +112,7 @@ export interface CardStatus {
   readonly text: string;
 }
 
-export function buildStatus(info: PaymentInfo): CardStatus {
+export function buildStatus(info: PaymentInfo, id?: CardId): CardStatus {
   const option = info.options[0];
   if (!option) {
     if (info.reason?.startsWith("已经建过")) return { kind: "dup", text: "已有同名" };
@@ -121,7 +121,7 @@ export function buildStatus(info: PaymentInfo): CardStatus {
   }
   if (option.kind === "chain") return { kind: "chain", text: "免费链" };
   if (option.kind === "olympia") return { kind: "olympia", text: "宙斯免费" };
-  if (option.total === 0) return { kind: "own", text: "自产" };
+  if (option.total === 0) return { kind: "own", text: id && !card(id).cost && !card(id).coin ? "免费" : "自产" };
   if (option.leftCost + option.rightCost === 0) return { kind: "own", text: `付${option.bankCost}金` };
   return { kind: "trade", text: `买${option.total}金` };
 }
