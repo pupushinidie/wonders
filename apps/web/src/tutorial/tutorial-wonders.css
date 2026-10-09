@@ -1,0 +1,11 @@
+/*
+ * 七大奇迹自己的教程样式（共用的 tutorial.css 原样不动）：
+ * 「提示」按钮（出牌面板底下、托管旁边）、教练框里的小链接不折行、记录·聊天抽屉里的教程进度。
+ */
+.app-shell .wd-hint-btn { flex: 0 0 auto; margin-left: auto; padding: 4px 12px; white-space: nowrap; }
+.app-shell .wd-hint-btn + .wd-auto-btn { margin-left: 0; }
+.app-shell .wd-hint-btn.on { color: var(--tut-gold-text, var(--gold)); box-shadow: inset 0 0 0 var(--px) var(--tut-gold-text, var(--gold)); }
+.tut-dock .tut-link { white-space: nowrap; }
+.wd-chat .tut-checklist { padding: 4px 2px; }
+.wd-chat .tut-checklist h3 { margin: 0 0 6px; font-size: 12px; }
+.wd-chat .tut-checklist ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }

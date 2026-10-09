@@ -187,6 +187,8 @@ export interface ActionPanelProps {
   readonly choice: { readonly build: number; readonly wonder: number };
   readonly onChoice: (choice: { build: number; wonder: number }) => void;
   readonly className?: string;
+  /** 「提示」按钮（练习局、只有自己和人机的房间才有），放在托管按钮旁边。 */
+  readonly hintButton?: ReactNode;
 }
 
 export function ActionPanel(props: ActionPanelProps) {
@@ -303,6 +305,7 @@ export function ActionPanel(props: ActionPanelProps) {
       {!spectating && phase !== "finished" && !autoPlaying && mode !== "act" && (
         <div className="wd-act-foot">
           {!mobile && mode !== "sent" && myTurnToPlay && <small>键盘：1–7 选牌 · B 建造 · W 建奇迹 · D 弃掉 · Esc 取消</small>}
+          {props.hintButton}
           <button type="button" className="quiet-button wd-auto-btn" data-tutorial="auto" onClick={() => onAuto(true)}>托管</button>
         </div>
       )}

@@ -1,7 +1,7 @@
 /**
  * 终局：七项分数表（每列最高的标金色），点一行看那个人每一项是怎么来的，再写「比第一名少几分、主要差在哪」。
  */
-import { useState, type CSSProperties } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   card,
   countFor,
@@ -73,7 +73,7 @@ function explain(game: GameState, score: ScoreBreakdown, key: ItemKey): string {
   }
 }
 
-export function FinalDialog({ game, room, myId, spectating, nameOf, onRematch, onLeave, onHide }: {
+export function FinalDialog({ game, room, myId, spectating, nameOf, onRematch, onLeave, onHide, actions }: {
   game: GameState;
   room: LobbyRoomSnapshot;
   myId: string;
@@ -82,6 +82,8 @@ export function FinalDialog({ game, room, myId, spectating, nameOf, onRematch, o
   onRematch: (accept: boolean) => void;
   onLeave: () => void;
   onHide: () => void;
+  /** 替代「再来一局」「离开」的按钮（新手教程的练习局放「结束教程」「再练一局」）。 */
+  actions?: ReactNode;
 }) {
   const result = game.finalResult!;
   const scores = [...result.scores].sort((a, b) => a.rank - b.rank || b.total - a.total);
@@ -105,7 +107,7 @@ export function FinalDialog({ game, room, myId, spectating, nameOf, onRematch, o
           {won && <Sprite name="fireworks" s={1} className="fw" delay={500} loopDelay={900} />}
         </header>
         <div className="wd-final-scroll">
-          <table className="wd-final-table">
+          <table className="wd-final-table" data-tutorial="final-table">
             <thead>
               <tr>
                 <th>名次</th>
@@ -151,14 +153,16 @@ export function FinalDialog({ game, room, myId, spectating, nameOf, onRematch, o
           </div>
         </div>
         <div className="wd-rematch">
-          {spectating ? (
+          {actions ? (
+            <span>练习局结束</span>
+          ) : spectating ? (
             <span>{room.rematch ? `等玩家决定要不要再来一局（${room.rematch.acceptedIds.length}/${room.members.length} 人同意）` : "对局结束"}</span>
           ) : room.rematch ? (
             <span>再来一局？还剩 {Math.ceil(room.rematch.remainingMs / 1000)} 秒（{room.rematch.acceptedIds.length}/{room.members.length} 人同意）</span>
           ) : <span>对局结束</span>}
           <div className="gm-panel-actions">
             <button className="quiet-button" type="button" onClick={onHide}>看牌桌</button>
-            {spectating ? (
+            {actions ? actions : spectating ? (
               <button className="quiet-button" type="button" onClick={onLeave}>离开观战</button>
             ) : room.rematch ? (
               <>

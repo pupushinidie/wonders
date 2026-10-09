@@ -10,6 +10,10 @@ import { roomRole, RoomSettingsPanel, SeatSwitch } from "./RoomExtras.js";
 import { socket } from "./socket.js";
 import { ThemeToggle, useTheme } from "./theme.js";
 import { useVoice } from "./voice.js";
+import { TutorialInvite } from "./tutorial/Invite.js";
+import { readTutorial } from "./tutorial/storage.js";
+import TutorialMode from "./tutorial/TutorialMode.js";
+import { GAME_ID } from "./tutorial/tutorialGame.js";
 
 type EntryMode = "create" | "join";
 
@@ -40,6 +44,26 @@ function App() {
   // 观战时从谁的座位看（默认第一位玩家）。
   const [watchId, setWatchId] = useState("");
   const voice = useVoice(room);
+  // 新手教程：首页或等候房间点进来（地址带 ?tutorial 时直接打开，游戏中心可以直接链过来）
+  const [tutorialOpen, setTutorialOpen] = useState(() => new URLSearchParams(window.location.search).has("tutorial"));
+
+  function closeTutorial() {
+    setTutorialOpen(false);
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("tutorial")) {
+      params.delete("tutorial");
+      const query = params.toString();
+      window.history.replaceState(null, "", `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`);
+    }
+  }
+
+  // 在等候房间里看教程时，房主一开局就回到牌桌（不然这一轮会超时、由人机替你出）
+  useEffect(() => {
+    if (tutorialOpen && room?.status === "playing") {
+      closeTutorial();
+      setNotice("对局开始了，教程先停在这里。");
+    }
+  }, [tutorialOpen, room?.status]);
 
   // 在房间里时服务端不推送在线牌桌列表；回到首页时主动拉一次最新的。
   useEffect(() => {
@@ -213,6 +237,15 @@ function App() {
     }
   }
 
+  if (tutorialOpen && room?.status !== "playing") {
+    return (
+      <main className="app-shell wd-game tut-on">
+        <TutorialMode name={name} brand={<Brand />} themeToggle={themeToggle} theme={theme} waitingRoom={room?.code} onExit={closeTutorial} />
+        {confirmDialog}
+      </main>
+    );
+  }
+
   if (room?.status === "playing" && room.game) {
     const players = room.game.players;
     const watched = players.some((player) => player.id === watchId) ? watchId : players[0]!.id;
@@ -264,6 +297,15 @@ function App() {
           onAddBot={addBot}
           onDissolve={dissolveRoom}
           chat={<RoomChat room={room} voice={voice} />}
+          tutorial={
+            <TutorialInvite
+              record={readTutorial(GAME_ID)}
+              title="等人的时候，先学一下？"
+              text="咕噜嘎带你在真牌桌上打一个时代，约 5 分钟；不会离开房间，房主一开局就自动回来。"
+              again="再看一遍新手教程（不会离开房间）"
+              onOpen={() => setTutorialOpen(true)}
+            />
+          }
         />
         {confirmDialog}
       </main>
@@ -290,6 +332,13 @@ function App() {
             三个时代，每轮所有人同时从手里挑一张牌：建成建筑、垫到奇迹下面建一层，或者弃掉换钱，再把剩下的牌传给邻居。
             资源只能跟左右邻居买，军事也只跟两边比。三个时代打完，七项分数加起来最高的城赢。
           </p>
+          <TutorialInvite
+            record={readTutorial(GAME_ID)}
+            title="第一次玩？5 分钟学会"
+            text="咕噜嘎在真牌桌上带你打完第一个时代，学完和人机练一局。"
+            again="再看一遍新手教程"
+            onOpen={() => setTutorialOpen(true)}
+          />
           <img className="wd-hero" src={art.cover} alt="" width={384} height={192} />
           <ul className="wd-home-points">
             <li><b>挑</b>同时选牌，剩下的传给邻居</li>
@@ -426,6 +475,7 @@ function RoomView({
   onAddBot,
   onDissolve,
   chat,
+  tutorial,
 }: {
   room: LobbyRoomSnapshot;
   busy: boolean;
@@ -438,6 +488,8 @@ function RoomView({
   onAddBot: () => void;
   onDissolve: () => void;
   chat: ReactNode;
+  /** 新手教程入口（等人的时候先学一下）。 */
+  tutorial: ReactNode;
 }) {
   const { isHost, spectating } = roomRole(room);
   const openSeats = Math.max(0, room.capacity - room.members.length);
@@ -474,6 +526,7 @@ function RoomView({
             )}
             <OptionsPanel room={room} />
             <RoomSettingsPanel room={room} />
+            {!spectating && tutorial}
           </section>
 
           <section className="room-panel player-panel">

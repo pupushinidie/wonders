@@ -23,6 +23,9 @@ import { ChooseWonderDialog, City, DiscardDialog, PlayerDialog, Production } fro
 import { FinalDialog } from "./FinalDialog.js";
 import { MilitaryBanner, PassArrow, PassFly, Sprite, useTransient } from "./Fx.js";
 import GameRules from "./GameRules.js";
+import { Coach, TipToast } from "./tutorial/Coach.js";
+import { useFirstTimeTips } from "./tutorial/tips.js";
+import { detectTips, GAME_ID, hintFor, TIPS, type Hint } from "./tutorial/tutorialGame.js";
 import { boardH, useLayout } from "./layout.js";
 import { ColorCounts, LastPlay, MobileNeighbor, NeighborPanel, OtherCard, OtherTag, ScienceCounts, StatLine, type SeatInfo } from "./Players.js";
 import { GameRoomMenu, SpectateBar } from "./RoomExtras.js";
@@ -52,6 +55,15 @@ interface GameBoardProps {
   readonly onWatch: (playerId: string) => void;
   /** 观战的人离开。 */
   readonly onLeave: () => void;
+  /** 自己在 room.members 里的 id（默认 socket.id；新手教程里传固定值）。 */
+  readonly selfMemberId?: string;
+  /**
+   * online：真实对局（默认）；只有自己和人机时有「提示」，还会出「第一次遇到」小贴士。
+   * tutorial：新手教程的剧本进行中（咕噜嘎在讲，不出提示和小贴士）；practice：教程后的练习局（随时能看提示）。
+   */
+  readonly mode?: "online" | "tutorial" | "practice";
+  /** 结算框里替代「再来一局」的按钮（练习局放「结束教程」「再练一局」）。 */
+  readonly finalActions?: ReactNode;
 }
 
 function useCountdown(room: LobbyRoomSnapshot): number | null {
@@ -71,9 +83,9 @@ const byColor = (a: CardId, b: CardId) => COLOR_ORDER.get(card(a).color)! - COLO
 
 type Military = Extract<GameEvent, { type: "MilitaryResolved" }>;
 
-function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, theme, chat, onCommand, onRematch, onAuto, onDissolve, watchId, onWatch, onLeave }: GameBoardProps) {
+function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, theme, chat, onCommand, onRematch, onAuto, onDissolve, watchId, onWatch, onLeave, selfMemberId, mode = "online", finalActions }: GameBoardProps) {
   const game = room.game!;
-  const member = room.members.find((candidate) => candidate.id === socket.id);
+  const member = room.members.find((candidate) => candidate.id === (selfMemberId ?? socket.id));
   const spectating = !member;
   const myId = member?.playerId ?? watchId;
   const selfId = spectating ? "" : myId;
@@ -144,6 +156,26 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
   useEffect(() => { if (!finished) setFinalHidden(false); }, [finished]);
   const [drawer, setDrawer] = useState(false);
   const [menu, setMenu] = useState(false);
+
+  // ---------- 「提示」（练习局，或者只有自己和人机的房间）和「第一次遇到」小贴士 ----------
+  const botsOnly = room.members.every((candidate) => candidate.id === member?.id || candidate.bot === true);
+  const canHint = !spectating && !autoPlaying && (canAct || discardMine) && (mode === "practice" || (mode === "online" && botsOnly));
+  const [hint, setHint] = useState<{ version: number; hint: Hint | null } | null>(null);
+  const shownHint = hint && hint.version === game.version && canHint ? hint.hint : null;
+  const toggleHint = () => setHint((current) => (current && current.version === game.version ? null : { version: game.version, hint: hintFor(game, myId) }));
+  useEffect(() => {
+    if (!canHint) return;
+    const onKey = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (event.key.toLowerCase() === "h") toggleHint();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [canHint, game.version]);
+  const hintAnchor = shownHint ? (shownHint.card ? (hand.includes(shownHint.card) ? `hand-card-${hand.indexOf(shownHint.card)}` : null) : shownHint.anchor ?? null) : null;
+  const tips = useFirstTimeTips(GAME_ID, game.version, () => detectTips(game, myId), TIPS, mode === "online" && !spectating);
 
   // ---------- 键盘：1–7 选牌，B / W / D 出牌，U 撤回，Esc 取消 ----------
   useEffect(() => {
@@ -271,6 +303,11 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
       choice={choice}
       onChoice={setChoice}
       className={layout.mobile && selected ? "sheet" : ""}
+      hintButton={canHint ? (
+        <button className={shownHint ? "quiet-button wd-hint-btn on" : "quiet-button wd-hint-btn"} type="button" data-tutorial="hint" onClick={toggleHint}>
+          提示{layout.mobile ? "" : "（H）"}
+        </button>
+      ) : null}
     />
   );
 
@@ -350,9 +387,24 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
       )}
       {discardOpen && discardMine && <DiscardDialog game={game} me={me.id} onCommand={onCommand} onClose={() => setDiscardOpen(false)} busy={busy} />}
       {finished && !finalHidden && game.finalResult && (
-        <FinalDialog game={game} room={room} myId={selfId} spectating={spectating} nameOf={nameOf} onRematch={onRematch} onLeave={onLeave} onHide={() => setFinalHidden(true)} />
+        <FinalDialog game={game} room={room} myId={selfId} spectating={spectating} nameOf={nameOf} onRematch={onRematch} onLeave={onLeave} onHide={() => setFinalHidden(true)} {...(finalActions ? { actions: finalActions } : {})} />
       )}
       {lastMilitary && <MilitaryBanner event={lastMilitary} meId={me.id} leftName={nameOf(game.players[leftIndex]!.id)} rightName={nameOf(game.players[rightIndex]!.id)} />}
+      {shownHint && (
+        <Coach
+          bubble
+          view={{
+            key: `hint-${game.version}`,
+            say: shownHint.say,
+            ...(shownHint.note ? { note: shownHint.note } : {}),
+            anchor: hintAnchor,
+            focus: false,
+            face: "think",
+            actions: <button className="quiet-button" type="button" onClick={() => setHint(null)}>知道了</button>,
+          }}
+        />
+      )}
+      {tips.tip && <TipToast tip={tips.tip} onClose={tips.dismiss} onNever={tips.never} />}
     </>
   );
 
