@@ -117,7 +117,7 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
   {
     kind: "do", id: "r1-build", lesson: "建造", card: "Stone Pit", expect: mine("Stone Pit", "build"),
     say: "点手牌「采石坑」，再点「建造」。",
-    note: "采石坑不要任何成本，建好后每轮多产 1 石。",
+    note: "牌上写着要付什么：采石坑免费，黏土坑要付 1 金；建好后每轮多产 1 石。",
   },
   {
     kind: "info", id: "r1-city", lesson: "资源不会用掉", anchor: "my-city", face: "happy",
@@ -169,7 +169,7 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
   {
     kind: "info", id: "r3-sell", lesson: "向邻居买", anchor: ["neighbor-right-sell", "neighbor-right"], face: "think",
     say: "「写字间」要 1 纸，你不产纸，但右邻有印刷所。",
-    note: "缺的资源可以向左右邻居买，每份 2 金，钱付给邻居；隔一个座位的人买不到。",
+    note: "缺的资源可以向左右邻居买，每份 2 金，钱付给邻居；隔一个座位的人买不到，邻居的黄卡和奇迹产的也买不到。",
   },
   {
     kind: "do", id: "r3-build", card: "Scriptorium", expect: mine("Scriptorium", "build"),
@@ -288,7 +288,7 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
   {
     kind: "info", id: "final", lesson: "终局计分", anchor: "final-table", showcase: true,
     say: "快进看看：三个时代打完，自动算七项分。",
-    note: "这是一局打完的样子；每列最高的标金色，总分最高的赢。",
+    note: "这是一局打完的样子：军事、金币、奇迹、文明（蓝卡）、科技（绿卡）、商业（黄卡）、行会（紫卡）七列加起来，总分最高的赢。",
   },
   {
     kind: "info", id: "final-science", anchor: "final-item-science", showcase: true,
