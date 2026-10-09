@@ -1,0 +1,378 @@
+/*
+ * 首页和等候房间的像素风皮肤（来自宝石商人的 app-pixel.css，配色换成沙漠夜色的暖棕）。
+ * 沙丘赛驼只有像素版，这份皮肤一直叠在 styles.css 上面；styles.css 和其他游戏保持一致不改。
+ * 原样式里有些 hover / focus / 浅色聊天框的规则选择器更具体，这里对应的规则都加了 .app-shell 前缀压过它们。
+ * 字号只用 12 的整数倍才清晰。
+ */
+
+@font-face {
+  font-family: "Fusion Pixel";
+  src: url("./assets/pixel/fusion-pixel-12px-zh_hans.woff2") format("woff2");
+  font-display: swap;
+}
+
+:root { color-scheme: dark; background: #120e0b; }
+body { background: repeating-conic-gradient(#18120e 0 25%, #120e0b 0 50%) 0 0 / 4px 4px; }
+
+.app-shell {
+  --px: 2px;
+  --bg: #120e0b;
+  --panel: #231a14;
+  --panel-2: #2e2319;
+  --edge: #070504;
+  --rim: #6a4f37;
+  --shade: #0c0907;
+  --text: #f1ece0;
+  --muted: #b09d84;
+  --gold: #f0c050;
+  --gold-2: #b3821c;
+  --ok: #62c97a;
+  --bad: #f25c5c;
+  color: var(--text);
+  font-family: "Fusion Pixel", -apple-system, "PingFang SC", sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+.app-shell :is(button, input) { font-family: inherit; font-size: 12px; letter-spacing: 0; }
+.app-shell * { scrollbar-color: var(--rim) var(--bg); scrollbar-width: thin; }
+.app-shell :focus-visible { outline: var(--px) solid var(--gold); outline-offset: calc(var(--px) * 2); }
+
+/* ---------- 像素边框：四边各一条黑边、角上留空，内侧亮边 + 暗边 ---------- */
+.app-shell :is(
+  .entry-card, .room-panel, .online-room, .online-rooms-empty, .online-rooms-count, .online-room-status,
+  .text-input, .capacity-option, .primary-button, .quiet-button, .kick-button, .host-badge, .bot-badge, .waiting-pill,
+  .player-avatar, .empty-avatar, .ready-summary > div, .admin-bar, .admin-bar-button, .admin-dissolve,
+  .game-rules-toggle, .game-rules-panel, .room-chat, .room-chat-list, .room-chat-message, .room-chat-input,
+  .room-chat-send, .voice-bar, .voice-button, .voice-person, .gm-panel
+) {
+  border: 0;
+  border-radius: 0;
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--edge),
+    0 var(--px) 0 0 var(--edge),
+    calc(var(--px) * -1) 0 0 0 var(--edge),
+    var(--px) 0 0 0 var(--edge),
+    inset var(--px) var(--px) 0 0 var(--rim),
+    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--shade);
+}
+
+/* ---------- 按钮：靛蓝（普通）、金色（主要）、红色（危险）；按下时下沉一格 ---------- */
+.app-shell :is(.quiet-button, .game-rules-toggle, .admin-bar-button, .voice-button) {
+  --rim: #8a6a48;
+  --shade: #150f0b;
+  padding: 6px 12px;
+  color: var(--text);
+  background: #3d2e22;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 400;
+}
+.app-shell :is(.primary-button, .room-chat-send, .voice-button.join) {
+  --rim: #fff2b8;
+  --shade: #7a5410;
+  color: #2a1c06;
+  background: var(--gold);
+  font-weight: 400;
+}
+.app-shell :is(.quiet-button.danger, .kick-button, .admin-dissolve) { --rim: #f25c5c; --shade: #3d0a12; color: #ffd8d0; background: #6e1020; }
+.app-shell :is(.quiet-button, .game-rules-toggle, .admin-bar-button, .kick-button, .admin-dissolve, .capacity-option):hover:not(:disabled) {
+  color: inherit;
+  filter: brightness(1.15);
+}
+.app-shell :is(.quiet-button, .game-rules-toggle, .admin-bar-button):hover:not(:disabled) { color: var(--text); background: #3d2e22; }
+.app-shell :is(.quiet-button.danger, .kick-button, .admin-dissolve):hover:not(:disabled) { color: #ffd8d0; background: #6e1020; }
+.app-shell .primary-button:hover:not(:disabled),
+.app-shell .room-chat.light .room-chat-send:hover:not(:disabled) {
+  background: var(--gold);
+  filter: brightness(1.1);
+  transform: none;
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--edge),
+    0 var(--px) 0 0 var(--edge),
+    calc(var(--px) * -1) 0 0 0 var(--edge),
+    var(--px) 0 0 0 var(--edge),
+    inset var(--px) var(--px) 0 0 var(--rim),
+    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--shade);
+}
+.app-shell :is(.primary-button, .quiet-button, .capacity-option, .kick-button, .admin-bar-button, .admin-dissolve, .game-rules-toggle, .room-chat-send, .voice-button):active:not(:disabled) {
+  transform: translateY(var(--px));
+  --rim: var(--shade);
+}
+.app-shell :is(.primary-button, .quiet-button, .room-chat-send, .voice-button, .admin-bar-button):disabled {
+  cursor: default;
+  opacity: 1;
+  filter: grayscale(0.6) brightness(0.7);
+}
+
+/* ---------- 顶栏 ---------- */
+.app-shell .topbar { border-bottom: var(--px) solid #3d2e22; }
+.app-shell .brand { color: var(--text); gap: 8px; }
+.app-shell .brand-mark { width: 24px; height: 24px; border: 0; border-radius: 0; transform: none; padding: 0; gap: 2px; }
+.app-shell .brand-mark i { width: 6px; border-radius: 0; }
+.app-shell .brand-mark i:nth-child(1) { background: #d9a441; }
+.app-shell .brand-mark i:nth-child(2) { background: var(--gold); }
+.app-shell .brand-mark i:nth-child(3) { background: #c8553d; }
+.app-shell .brand-name { font-size: 12px; font-weight: 400; letter-spacing: 0; }
+.app-shell .brand-name span { margin-left: 8px; color: var(--muted); font-size: 12px; font-weight: 400; letter-spacing: 0.1em; }
+.app-shell .topbar-right { gap: 14px; }
+.app-shell .center-link { color: var(--muted); font-size: 12px; font-weight: 400; }
+.app-shell .center-link:hover { color: var(--gold); }
+.app-shell .connection-status { gap: 6px; color: var(--muted); font-size: 12px; }
+.app-shell :is(.connection-dot, .waiting-pill i, .pulse-dot) { border-radius: 0; box-shadow: none; }
+.app-shell .connection-dot { width: 6px; height: 6px; background: var(--gold-2); }
+.app-shell .connection-status.online .connection-dot { background: var(--ok); box-shadow: none; }
+@keyframes app-blink { 50% { opacity: 0; } }
+
+/* ---------- 首页：标题、介绍、五色宝石 ---------- */
+.app-shell .eyebrow { gap: 10px; color: var(--muted); font-size: 12px; font-weight: 400; letter-spacing: 0.1em; }
+.app-shell .eyebrow-line { width: 24px; height: var(--px); background: var(--gold); }
+.app-shell :is(.welcome-copy h1, .room-heading h1) {
+  color: var(--gold);
+  font-family: inherit;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.25;
+  text-shadow: calc(var(--px) * 2) calc(var(--px) * 2) 0 var(--edge);
+}
+.app-shell .welcome-copy h1 { margin: 24px 0 18px; font-size: 72px; }
+.app-shell .welcome-description { color: var(--muted); font-size: 12px; line-height: 2; }
+.app-shell .camel-showcase { display: flex; align-items: center; gap: 10px; margin-top: 28px; }
+.app-shell .camel-showcase .ct-mini-ticket { width: 24px; height: 32px; }
+.app-shell .showcase-caption { margin-left: 4px; color: var(--muted); font-size: 12px; letter-spacing: 0.05em; }
+
+/* ---------- 首页：进入牌桌 ---------- */
+.app-shell .entry-card { --rim: var(--gold-2); padding: 24px 28px 20px; background: var(--panel); }
+.app-shell .section-kicker { color: var(--gold); font-size: 12px; font-weight: 400; letter-spacing: 0.1em; }
+.app-shell .entry-card h2 { margin: 4px 0 0; color: var(--text); font-family: inherit; font-size: 24px; font-weight: 400; letter-spacing: 0; }
+.app-shell .step-indicator { color: var(--muted); font-size: 12px; }
+.app-shell .step-indicator i { width: 20px; height: var(--px); background: var(--rim); }
+.app-shell .mode-switch { border-bottom: var(--px) solid #3d2e22; }
+.app-shell .mode-tab { padding: 0 4px 10px; color: var(--muted); font-size: 12px; font-weight: 400; }
+.app-shell .mode-tab.active { color: var(--gold); }
+.app-shell .mode-tab.active::after { left: 15%; right: 15%; bottom: calc(var(--px) * -1); height: calc(var(--px) * 2); border-radius: 0; background: var(--gold); }
+.app-shell .field-label { margin-bottom: 8px; color: var(--text); font-size: 12px; font-weight: 400; letter-spacing: 0; }
+.app-shell .text-input { --rim: var(--shade); --shade: #3d2e22; height: 40px; padding: 0 12px; color: var(--text); background: var(--bg); font-size: 12px; }
+.app-shell .text-input::placeholder { color: #7a6650; }
+.app-shell .text-input:focus,
+.app-shell .room-chat.light .room-chat-input:focus {
+  outline: var(--px) solid var(--gold);
+  outline-offset: 0;
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--edge),
+    0 var(--px) 0 0 var(--edge),
+    calc(var(--px) * -1) 0 0 0 var(--edge),
+    var(--px) 0 0 0 var(--edge),
+    inset var(--px) var(--px) 0 0 var(--rim),
+    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--shade);
+}
+.app-shell .room-code-input { font-size: 24px; font-weight: 400; letter-spacing: 0.2em; }
+.app-shell .capacity-option { --rim: #6a4f37; height: 56px; gap: 6px; color: var(--muted); background: var(--panel-2); }
+.app-shell .capacity-option strong { color: var(--text); font-size: 24px; font-weight: 400; }
+.app-shell .capacity-option span { font-size: 12px; }
+.app-shell .capacity-option.selected { --rim: var(--gold); --shade: #7a5410; color: var(--gold); background: #3a2c10; }
+.app-shell .capacity-option.selected strong { color: var(--gold); }
+.app-shell .turn-time-setting .capacity-option { height: 48px; }
+.app-shell .field-hint { color: var(--muted); font-size: 12px; line-height: 1.5; }
+.app-shell .primary-button { min-height: 44px; margin-top: 20px; font-size: 12px; letter-spacing: 0.05em; }
+.app-shell .primary-button > span:last-child { font-size: 12px; }
+.app-shell .spinner { border-radius: 0; border-color: rgba(42, 28, 6, 0.35); border-top-color: #2a1c06; animation-timing-function: steps(8); }
+.app-shell .entry-footnote { color: var(--muted); font-size: 12px; }
+.app-shell .lock-icon { color: var(--gold); font-size: 12px; }
+.app-shell .feedback { font-size: 12px; }
+.app-shell .feedback-error { color: var(--bad); }
+.app-shell .feedback-success { color: var(--ok); }
+
+/* ---------- 首页：流程、页脚 ---------- */
+.app-shell .how-it-works { color: var(--muted); font-size: 12px; }
+.app-shell .how-number { color: var(--gold); font-size: 12px; font-weight: 400; }
+.app-shell .how-divider { width: 36px; height: var(--px); background: repeating-linear-gradient(90deg, var(--rim) 0 4px, transparent 4px 8px); }
+.app-shell .page-footer { border-top: var(--px) solid #3d2e22; color: var(--muted); font-size: 12px; letter-spacing: 0.05em; }
+
+/* ---------- 首页：在线牌桌 ---------- */
+.app-shell .online-rooms { border-top: var(--px) solid #3d2e22; }
+.app-shell .online-rooms-heading h2 { color: var(--text); font-family: inherit; font-size: 24px; font-weight: 400; letter-spacing: 0; }
+.app-shell .online-rooms-count { --rim: #3d2e22; padding: 4px 10px; color: var(--muted); background: var(--bg); font-size: 12px; }
+.app-shell .online-rooms-count i { border-radius: 0; background: var(--rim); }
+.app-shell .online-rooms-count i.live { background: var(--ok); box-shadow: none; }
+.app-shell .online-room { padding: 12px 14px 10px; background: var(--panel); }
+.app-shell .online-room.playing { --rim: var(--ok); }
+.app-shell .online-room-status { --rim: var(--gold-2); --shade: #2a1c06; padding: 0 8px; color: var(--gold); background: #3a2c10; font-size: 12px; font-weight: 400; }
+.app-shell .online-room-status.playing { --rim: var(--ok); --shade: #0b2614; color: #b7f0c0; background: #12452a; }
+.app-shell .online-room-status.finished { --rim: #6a4f37; --shade: #0c0907; color: var(--muted); background: var(--panel-2); }
+.app-shell .online-room-seats { color: var(--muted); font-size: 12px; }
+.app-shell .online-room-players li { border-top: var(--px) solid var(--panel-2); color: var(--text); font-size: 12px; }
+.app-shell .online-room-players li.offline { color: var(--muted); }
+.app-shell .online-room-players .presence { border-radius: 0; background: #6a4f37; }
+.app-shell .online-room-players .presence.online { background: var(--ok); }
+.app-shell .online-room-players small { border-radius: 0; padding: 0 6px; color: var(--muted); background: var(--panel-2); font-size: 12px; }
+.app-shell .online-room-players small.turn { color: #b7f0c0; background: #12452a; }
+.app-shell .online-room-players small.winner { color: #2a1c06; background: var(--gold); }
+.app-shell .online-room-players b { color: var(--gold); font-family: inherit; font-size: 12px; font-weight: 400; }
+.app-shell .online-room-players b span { font-family: inherit; font-size: 12px; }
+.app-shell .online-rooms-empty { --rim: #3d2e22; padding: 20px; color: var(--muted); background: var(--bg); font-size: 12px; }
+.app-shell .online-rooms-note { color: var(--muted); font-size: 12px; }
+.app-shell .admin-bar { --rim: var(--gold-2); padding: 10px 12px; background: #241d16; }
+.app-shell .admin-bar-row { color: var(--gold); font-size: 12px; }
+.app-shell .admin-bar-row .text-input { height: 32px; }
+.app-shell .admin-bar-button { padding: 4px 10px; }
+.app-shell .admin-bar-error { color: var(--bad); font-size: 12px; }
+.app-shell .admin-dissolve { padding: 4px; font-size: 12px; }
+
+/* ---------- 等候房间 ---------- */
+.app-shell .room-heading h1 { margin: 16px 0 8px; font-size: 36px; }
+.app-shell .room-heading p { color: var(--muted); font-size: 12px; }
+.app-shell .room-panel { padding: 20px; background: var(--panel); }
+.app-shell .room-code-panel { --rim: var(--gold-2); }
+.app-shell .panel-label { color: var(--text); font-size: 12px; font-weight: 400; letter-spacing: 0; }
+.app-shell .panel-label > span { color: var(--muted); font-size: 12px; }
+.app-shell .room-code-display { color: var(--gold); font-size: 36px; font-weight: 400; letter-spacing: 0.15em; text-shadow: calc(var(--px) * 2) calc(var(--px) * 2) 0 var(--edge); }
+.app-shell .room-code-display span { color: var(--muted); font-size: 24px; text-shadow: none; }
+.app-shell .room-code-caption { color: var(--muted); font-size: 12px; }
+.app-shell .waiting-pill { --rim: var(--gold-2); --shade: #2a1c06; padding: 2px 8px; color: var(--gold); background: #3a2c10; font-size: 12px; }
+.app-shell .waiting-pill i { background: var(--gold); animation: app-blink 1s steps(2, jump-none) infinite; }
+.app-shell .player-list { border-top: var(--px) solid #3d2e22; }
+.app-shell .player-row { min-height: 56px; border-bottom: var(--px) solid var(--panel-2); }
+.app-shell :is(.player-avatar, .empty-avatar) { width: 32px; height: 32px; flex-basis: 32px; font-size: 12px; font-weight: 400; }
+.app-shell .player-avatar { --rim: #6fb0ff; color: #fff; background: #1f4f99; }
+.app-shell .avatar-2 { --rim: #ff7a86; background: #a3182c; }
+.app-shell .avatar-3 { --rim: #7fe3a0; background: #1d6e3d; }
+.app-shell .avatar-4 { --rim: #fff2b8; color: #2a1c06; background: #b3821c; }
+.app-shell .empty-avatar { --rim: #3d2e22; color: var(--muted); background: var(--bg); }
+.app-shell .player-details strong { color: var(--text); font-size: 12px; font-weight: 400; }
+.app-shell .player-details strong small { color: var(--gold); font-size: 12px; }
+.app-shell .player-details span { color: var(--muted); font-size: 12px; }
+.app-shell .host-badge { --rim: var(--gold-2); --shade: #2a1c06; padding: 0 6px; color: var(--gold); background: #3a2c10; font-size: 12px; }
+.app-shell .kick-button { padding: 2px 8px; font-size: 12px; }
+.app-shell .host-wait-note { color: var(--muted); font-size: 12px; }
+.app-shell .pulse-dot { background: var(--gold); animation: app-blink 1s steps(2, jump-none) infinite; }
+.app-shell .room-secure-note { color: var(--muted); font-size: 12px; }
+.app-shell .room-secure-note span { color: var(--gold); font-size: 12px; }
+.app-shell .ready-summary > div { padding: 14px; background: var(--bg); }
+.app-shell .ready-summary strong { color: var(--gold); font-family: inherit; font-size: 24px; font-weight: 400; }
+.app-shell .ready-summary span { color: var(--muted); font-size: 12px; }
+.app-shell .game-ready-copy { color: var(--muted); font-size: 12px; }
+
+/* ---------- 等候房间：规则面板 ---------- */
+.app-shell .game-rules-toggle > span { color: var(--gold); }
+.app-shell .game-rules-toggle > i { color: var(--muted); font-size: 12px; }
+.app-shell .game-rules.open .game-rules-toggle { --rim: var(--gold); }
+.app-shell .game-rules-panel { --rim: var(--gold-2); margin-top: 12px; padding: 18px 20px; background: var(--panel); }
+.app-shell .game-rules-block h3 { color: var(--gold); font-family: inherit; font-size: 12px; font-weight: 400; }
+.app-shell .game-rules-block :is(p, li) { color: var(--text); font-size: 12px; line-height: 1.7; }
+.app-shell .game-rules-block b { color: var(--gold); font-weight: 400; }
+.app-shell .game-rules-block .game-rules-note { color: var(--muted); font-size: 12px; }
+
+/* ---------- 等候房间：聊天和语音（原样式里是浅色版 .room-chat.light） ---------- */
+.app-shell .room-chat.light { margin-top: 18px; padding: 14px 16px 16px; color: var(--text); background: var(--panel); }
+.app-shell .room-chat.light .room-chat-heading h2 { color: var(--gold); font-family: inherit; font-size: 12px; font-weight: 400; }
+.app-shell .room-chat.light .room-chat-heading span { color: var(--muted); font-size: 12px; }
+.app-shell .room-chat.light .room-chat-list { --rim: var(--shade); --shade: #3d2e22; padding: 10px; background: var(--bg); }
+.app-shell .room-chat.light .room-chat-message { --rim: #6a4f37; padding: 4px 8px; background: var(--panel-2); }
+.app-shell .room-chat.light .room-chat-message.mine { --rim: var(--gold-2); --shade: #2a1c06; background: #3a2c10; }
+.app-shell .room-chat.light .room-chat-meta strong { color: var(--gold); font-size: 12px; font-weight: 400; }
+.app-shell .room-chat.light .room-chat-meta time { color: var(--muted); font-size: 12px; }
+.app-shell .room-chat.light .room-chat-message p { color: var(--text); font-size: 12px; }
+.app-shell .room-chat.light .room-chat-empty { color: var(--muted); font-size: 12px; }
+.app-shell .room-chat.light .room-chat-input { --rim: var(--shade); --shade: #3d2e22; height: 32px; color: var(--text); background: var(--bg); font-size: 12px; }
+.app-shell .room-chat.light .room-chat-input::placeholder { color: #7a6650; }
+.app-shell .room-chat.light .room-chat-send { padding: 0 14px; color: #2a1c06; background: var(--gold); font-size: 12px; font-weight: 400; }
+.app-shell .room-chat.light .room-chat-error { color: var(--bad); font-size: 12px; }
+.app-shell .room-chat.light .voice-bar { --rim: var(--shade); --shade: #3d2e22; padding: 8px; background: var(--bg); }
+.app-shell .room-chat.light .voice-button { padding: 2px 8px; color: var(--text); background: #3d2e22; font-size: 12px; }
+.app-shell .room-chat.light .voice-button.join { color: #2a1c06; background: var(--gold); }
+.app-shell .room-chat.light .voice-button.live { --rim: #62c97a; --shade: #0b2614; color: #b7f0c0; background: #12452a; }
+.app-shell .room-chat.light .voice-button.leave { color: #ffd8d0; }
+.app-shell .room-chat.light :is(.voice-count, .voice-person small) { color: var(--muted); font-size: 12px; }
+.app-shell .room-chat.light .voice-person { --rim: #6a4f37; padding: 0 6px; color: var(--text); background: var(--panel-2); font-size: 12px; }
+.app-shell .room-chat.light .voice-person.speaking { --rim: var(--ok); }
+.app-shell .room-chat.light .voice-error { color: var(--bad); font-size: 12px; }
+
+/* ---------- 确认弹窗（解散房间等），和牌桌上的弹窗一个样子 ---------- */
+.app-shell .gm-modal-backdrop {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: repeating-conic-gradient(rgba(7, 5, 4, 0.85) 0 25%, rgba(7, 5, 4, 0.6) 0 50%) 0 0 / 4px 4px;
+}
+.app-shell .gm-panel { --rim: var(--gold); width: min(380px, 100%); padding: 22px 24px; color: var(--text); background: var(--panel); }
+.app-shell .gm-panel h2 { margin: 0 0 10px; color: var(--gold); font-family: inherit; font-size: 24px; font-weight: 400; line-height: 1.25; }
+.app-shell .gm-panel p { margin: 0; color: var(--text); font-size: 12px; line-height: 1.7; }
+.app-shell .gm-panel-actions { display: flex; justify-content: flex-end; gap: 14px; margin-top: 20px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell :is(.waiting-pill i, .pulse-dot) { animation: none; }
+}
+
+/* 原样式在窄屏下会改字号；像素字体要保持 12 的整数倍 */
+@media (max-width: 850px) {
+  .app-shell .welcome-copy h1 { font-size: 48px; }
+}
+@media (max-width: 520px) {
+  .app-shell .welcome-copy h1 { margin: 18px 0 12px; font-size: 36px; }
+  .app-shell :is(.room-heading h1, .room-code-display) { font-size: 24px; }
+  .app-shell .topbar-right { gap: 8px; }
+  .app-shell .quiet-button { padding: 4px 8px; }
+  /* 像素字体最小 12px，「解散房间」「离开房间」两个按钮比原版宽：按钮组保持原宽，让左边的标题文字换行 */
+  .app-shell .room-heading-actions { flex: 0 0 auto; }
+}
+
+/* ---------- 房间设置、观战（几款游戏共用这一段） ---------- */
+.app-shell .room-settings { display: grid; gap: 8px; margin-top: 12px; }
+.app-shell .room-settings-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.app-shell .room-setting {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 4px 10px;
+  border: 0; color: var(--muted); background: var(--panel-2); cursor: pointer;
+  box-shadow: 0 0 0 var(--px) var(--edge), inset var(--px) var(--px) 0 0 var(--rim), inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--shade);
+}
+.app-shell .room-setting i { width: 10px; height: 10px; background: var(--edge); box-shadow: inset 0 0 0 var(--px) var(--muted); }
+.app-shell .room-setting.on { --rim: var(--gold); --shade: #7a5410; color: var(--gold); background: #3a2c10; }
+.app-shell .room-setting.on i { background: var(--gold); box-shadow: none; }
+.app-shell .room-setting:disabled { cursor: default; }
+.app-shell .room-setting:disabled:not(.on) { opacity: 0.6; }
+.app-shell .room-spectators { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; color: var(--muted); }
+.app-shell .room-spectator { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; color: var(--text); background: var(--panel-2); }
+.app-shell .room-spectator button { padding: 0 4px; border: 0; color: var(--bad); background: none; cursor: pointer; }
+.app-shell .seat-switch { display: grid; gap: 6px; margin-top: 10px; }
+.app-shell .online-room-tag { margin-right: 6px; padding: 0 6px; color: var(--muted); background: var(--panel-2); font-style: normal; }
+.app-shell .online-room-tag.open { color: #2a1c06; background: var(--gold); }
+.app-shell .online-room-actions { display: flex; gap: 8px; margin-top: 8px; }
+.app-shell :is(.online-room-join, .online-room-watch) {
+  flex: 1; min-height: 32px; border: 0; cursor: pointer; color: var(--text); background: var(--panel-2);
+  box-shadow: 0 0 0 var(--px) var(--edge), inset var(--px) var(--px) 0 0 var(--rim), inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--shade);
+}
+.app-shell .online-room-join { --rim: #fff2b8; --shade: #7a5410; color: #2a1c06; background: var(--gold); }
+.app-shell :is(.online-room-join, .online-room-watch):disabled { cursor: default; opacity: 0.6; }
+.app-shell .room-chat-spectator { margin-left: 4px; padding: 0 4px; color: var(--muted); background: var(--panel-2); font-size: 12px; }
+.app-shell .spectator-count { align-self: center; padding: 2px 8px; color: var(--muted); background: var(--panel-2); }
+.app-shell .game-room-menu { position: relative; display: inline-flex; }
+.app-shell .game-room-popover {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 40; display: grid; gap: 10px; width: min(320px, 90vw); padding: 14px;
+  background: var(--panel); box-shadow: 0 0 0 var(--px) var(--edge), inset var(--px) var(--px) 0 0 var(--rim), 0 8px 0 0 rgba(0, 0, 0, 0.35);
+}
+.app-shell .game-room-popover .room-settings { margin-top: 0; }
+.app-shell .spectate-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; background: var(--panel);
+  box-shadow: 0 0 0 var(--px) var(--edge), inset var(--px) var(--px) 0 0 var(--gold-2), inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--shade);
+}
+.app-shell .spectate-bar strong { color: var(--gold); font-size: 24px; font-weight: 400; line-height: 1; }
+.app-shell .spectate-hint { color: var(--muted); }
+.app-shell .spectate-seats { display: flex; flex-wrap: wrap; gap: 6px; }
+.app-shell .spectate-seat { min-height: 28px; padding: 2px 8px; border: 0; color: var(--muted); background: var(--panel-2); cursor: pointer; }
+.app-shell .spectate-seat.on { color: #2a1c06; background: var(--gold); }
+.app-shell .spectate-bar .quiet-button { margin-left: auto; }
+/* 窄屏上观战栏收紧：去掉说明，按钮变小，牌桌尽量留在一屏里 */
+@media (max-width: 520px) {
+  .app-shell .spectate-bar { gap: 6px; padding: 6px 8px; }
+  .app-shell .spectate-bar strong { font-size: 12px; }
+  .app-shell .spectate-hint { display: none; }
+  .app-shell .spectate-seat { min-height: 24px; padding: 0 6px; }
+}
+
+/* 人机：等待界面的「人机」标签和空座位上的「加人机」 */
+.app-shell .bot-badge { --rim: #8ec0ff; --shade: #0e2550; padding: 0 6px; color: #d8e8ff; background: #2a62c0; font-size: 12px; }
+.app-shell .add-bot-button { margin-left: auto; padding: 2px 8px; font-size: 12px; white-space: nowrap; }
