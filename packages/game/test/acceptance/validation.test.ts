@@ -3,7 +3,7 @@
  * 不合法的命令 apply 抛错（给玩家看的中文），不改输入，version 每步 +1。
  */
 import { describe, expect, it } from "vitest";
-import { apply, buildScene, createGame, legalActions, pendingActors, type GameCommand, type GameState } from "@wonders/game";
+import { apply, applyTimeout, autoCommand, buildScene, createGame, legalActions, pendingActors, playTo, type GameCommand, type GameState } from "@wonders/game";
 import { act, P, round } from "./helpers.js";
 
 const g3 = () => createGame([0, 1, 2].map((i) => ({ id: P(i), name: `玩家${i}` })), 31);
@@ -96,4 +96,20 @@ describe("TC14 非法命令被拒绝", () => {
     expect(legalActions(s, P(1))).toEqual([]);
     for (const cmd of legalActions(s, P(0))) expect(() => apply(s, P(0), cmd)).not.toThrow();
   });
+
+  it("超时兜底：保底动作总是合法；人机给了非法命令时 applyTimeout 退回保底动作、不卡住，并记一条超时事件", () => {
+    for (const [n, age, rd] of [[3, 1, 1], [5, 2, 4], [7, 3, 6]] as const) {
+      const s = playTo({ players: n, age, round: rd, seed: 3 });
+      for (let i = 0; i < n; i++) {
+        const c = autoCommand(s, P(i));
+        expect(c).not.toBeNull();
+        expect(() => apply(s, P(i), c!)).not.toThrow();
+      }
+      const t = applyTimeout(s, P(1), { type: "PLAY", card: "bogus", action: "discard" });
+      expect(t.players[1]!.submitted).toBe(true);
+      expect(t.events.some((e) => e.type === "TurnTimedOut" && e.player === P(1))).toBe(true);
+      expect(autoCommand(t, P(1))).toBeNull();
+    }
+  });
 });
+

@@ -317,6 +317,12 @@ describe("README #11（U10）两邻都卖、一样便宜时默认向右邻买；
     expect(t.players[1]!.coins).toBe(3 + 3);
   });
 
+  it("开工拍板「一次提交买资源方案」：指定向左邻买（非默认），结算时钱给左邻", () => {
+    const t = round(s, { 0: { build: "Baths", trade: { left: "S", right: "" } } });
+    expect(t.players[1]!.coins).toBe(3 + 3 + 2);
+    expect(t.players[2]!.coins).toBe(3 + 3);
+  });
+
   it("自己产得出还硬要买（多买）、向不产这种资源的邻居买、钱不够的买法：都被拒绝", () => {
     const g = buildScene({ age: 1, round: 6, players: [{ wonder: "giza", coins: 1, hand: ["Baths", "Altar"] }, { wonder: "olympia" }, { wonder: "rhodes" }] });
     expect(() => act(g, 0, { build: "Baths", trade: { left: "", right: "S" } })).toThrow();

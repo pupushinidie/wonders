@@ -460,3 +460,47 @@ describe("建成时拿金币的黄卡（规则书 §2.3 注、E-T11、TC11）", 
     expect(round(s, { 0: { build: "Chamber of Commerce" } }).players[0]!.coins).toBe(4);
   });
 });
+
+describe("U6 葡萄园只算同时结算的那一步；亚历山大的阶段产出自己能用", () => {
+  it("葡萄园在第 ① 步算：邻居巴比伦之后用第 7 张建的锯木厂不追加", () => {
+    const s = buildScene({
+      age: 2,
+      round: 6,
+      players: [
+        { wonder: "giza", built: ["Lumber Yard"], hand: ["Vineyard", "Temple"] },
+        { wonder: "babylon", side: "B", stages: 2, built: ["Ore Vein"], hand: ["Statue", "Sawmill"] },
+        { wonder: "rhodes", built: ["Clay Pool"] },
+      ],
+    });
+    let t = round(s, { 0: { build: "Vineyard" }, 1: { discard: "Statue" } });
+    expect(t.phase).toBe("seventh");
+    expect(t.players[0]!.coins).toBe(3 + 3);
+    t = act(t, 1, { build: "Sawmill" });
+    expect(builtNames(t, 1)).toContain("Sawmill");
+    expect(t.players[0]!.coins).toBe(3 + 3);
+  });
+
+  it("第 7 张本身是葡萄园：按那一刻的数量算（含第 ① 步邻居刚建的锯木厂）", () => {
+    const s = buildScene({
+      age: 2,
+      round: 6,
+      players: [
+        { wonder: "giza", built: ["Lumber Yard"], hand: ["Sawmill", "Temple"] },
+        { wonder: "babylon", side: "B", stages: 2, built: ["Ore Vein"], hand: ["Statue", "Vineyard"] },
+        { wonder: "rhodes", built: ["Clay Pool"] },
+      ],
+    });
+    let t = round(s, { 0: { build: "Sawmill" }, 1: { discard: "Statue" } });
+    expect(t.players[1]!.coins).toBe(6);
+    t = act(t, 1, { build: "Vineyard" });
+    expect(t.players[1]!.coins).toBe(6 + 4); // 自己 1 + 左邻 1 + 右邻 2
+  });
+
+  it("亚历山大 A 阶段 2（任选原料）、B 阶段 2（任选制成品）自己能用", () => {
+    const a = buildScene({ age: 1, round: 6, players: [{ wonder: "alexandria", stages: 2, coins: 0, hand: ["Stockade", "Barracks"] }, { wonder: "giza" }, { wonder: "babylon" }] });
+    expect(paymentOptions(a, P(0), { card: handId(a, 0, "Stockade") }).options[0]!.kind).toBe("own");
+    const b = buildScene({ age: 1, round: 6, players: [{ wonder: "alexandria", side: "B", stages: 2, coins: 0, hand: ["Apothecary", "Scriptorium"] }, { wonder: "giza" }, { wonder: "babylon" }] });
+    expect(paymentOptions(b, P(0), { card: handId(b, 0, "Apothecary") }).options[0]!.kind).toBe("own");
+    expect(paymentOptions(b, P(0), { card: handId(b, 0, "Scriptorium") }).options[0]!.kind).toBe("own");
+  });
+});

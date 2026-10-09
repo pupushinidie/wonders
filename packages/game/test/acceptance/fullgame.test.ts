@@ -294,6 +294,7 @@ describe("随机整局 × 独立模型对照", () => {
     }, 120_000);
   }
   it("覆盖面：交易、免费链、奇迹、巴比伦第 7 张、哈利卡纳苏斯都真的出现过", () => {
+    if (process.env.ACC_STATS) console.log("覆盖面", JSON.stringify(total));
     expect(total.games).toBe(300);
     expect(total.trades).toBeGreaterThan(100);
     expect(total.chains).toBeGreaterThan(20);

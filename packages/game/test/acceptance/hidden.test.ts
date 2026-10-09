@@ -3,9 +3,9 @@
  * 别人的手牌、交了什么、垫在奇迹下的牌、Age III 抽掉的行会、弃牌堆牌面都拿不到；种子和随机状态不下发。
  */
 import { describe, expect, it } from "vitest";
-import { apply, buildScene, createGame, GUILDS, playTo, redactGameForViewer, type GameState } from "@wonders/game";
+import { apply, buildScene, createGame, GUILDS, playTo, previewRoom, redactGameForViewer, scene, type GameState } from "@wonders/game";
 import { act, P, round } from "./helpers.js";
-import { leaks } from "./leaks.js";
+import { hiddenIds, leaks } from "./leaks.js";
 
 describe("出牌阶段的视角", () => {
   it("别人的手牌是 []、张数公开；别人交了什么是 null、只公开「已交」；种子、随机状态、动作序列、预排手牌都不下发", () => {
@@ -116,4 +116,17 @@ describe("Age III 抽掉的行会不进任何视角（规则书 §4.4，E-T14）
       }
     });
   }
+});
+
+describe("预览快照 previewRoom 也是 redact 过的", () => {
+  it("scene(\"submitted\") 从座位 1 看：拿不到座位 0 的手牌和交的牌、弃牌堆、种子", () => {
+    const full = scene("submitted");
+    const room = previewRoom(full, { viewer: P(1) });
+    const text = JSON.stringify(room);
+    expect(hiddenIds(full, 1).filter((id) => text.includes(`"${id}"`))).toEqual([]);
+    expect(text).not.toContain('"rngState"');
+    expect(text).not.toContain('"seed"');
+    const spec = JSON.stringify(previewRoom(full, { viewer: "", spectating: true }));
+    expect(hiddenIds(full, -1).filter((id) => spec.includes(`"${id}"`))).toEqual([]);
+  });
 });
