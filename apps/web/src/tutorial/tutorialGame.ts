@@ -3,7 +3,7 @@
  * 游戏 id、「提示」怎么说、「第一次遇到」小贴士什么时候出。
  */
 import "./tutorial-wonders.css";
-import { botHint, card, playOptions, wonder, type CardId, type GameState, type PlayAction } from "@wonders/game";
+import { botHint, card, playOptions, wonder, type CardId, type GameCommand, type GameState, type PlayAction } from "@wonders/game";
 
 /** 本机记录（gm-tutorial-<id>、gm-tips-<id>）用的游戏 id。 */
 export const GAME_ID = "wonders";
@@ -14,8 +14,10 @@ export interface Hint {
   /** 建议出哪张手牌（高亮它）；从弃牌堆挑、挑奇迹时是 null。 */
   readonly card: CardId | null;
   readonly action?: PlayAction;
-  /** 没有手牌可指时高亮哪个弹窗（data-tutorial）。 */
+  /** 没有手牌可指时高亮哪个元素（data-tutorial）。 */
   readonly anchor?: string;
+  /** 人机算出来的完整命令（带付款方案、奥林匹亚免费建造），牌桌按它预选用法那一行的付款方案。 */
+  readonly command?: GameCommand;
 }
 
 /** 理由太长时只留第一个分句（手机上提示框放不下）。 */
@@ -38,17 +40,17 @@ export function hintFor(game: GameState, playerId: string): Hint | null {
     const zh = card(command.card).zh;
     const me = game.players.find((player) => player.id === playerId);
     const say = command.action === "build"
-      ? `我会建「${zh}」。`
+      ? command.olympia ? `我会用奥林匹亚的免费建造建「${zh}」。` : `我会建「${zh}」。`
       : command.action === "wonder"
         ? `我会拿「${zh}」去建奇迹第 ${(me?.stages ?? 0) + 1} 层。`
         : `我会弃掉「${zh}」换 3 金。`;
-    return { say, note, card: command.card, action: command.action };
+    return { say, note, card: command.card, action: command.action, command };
   }
   if (command.type === "DISCARD_BUILD") {
-    return { say: command.card ? `我会从弃牌堆免费建「${card(command.card).zh}」。` : "我会放弃这次挑选。", note, card: null, anchor: "discard-dialog" };
+    return { say: command.card ? `我会从弃牌堆免费建「${card(command.card).zh}」。` : "我会放弃这次挑选。", note, card: null, command };
   }
   if (command.type === "CHOOSE_WONDER") {
-    return { say: `我会挑${wonder(command.wonder).zh}（${command.side} 面）。`, note, card: null, anchor: "choose-wonder" };
+    return { say: `我会挑${wonder(command.wonder).zh}（${command.side} 面）。`, note, card: null, command };
   }
   return { say: "现在撤回比较好。", note, card: null, anchor: "undo" };
 }

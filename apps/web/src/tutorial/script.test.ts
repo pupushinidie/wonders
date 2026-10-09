@@ -11,6 +11,7 @@ import {
   pendingActors,
   redactGameForViewer,
   scoreBreakdown,
+  wonderStages,
   type GameState,
 } from "@wonders/game";
 import {
@@ -122,7 +123,18 @@ describe("新手教程剧本", () => {
     const undone = playScript(stepIndex("r2-undo") + 1);
     expect(player(undone, TUTORIAL_SELF).submitted).toBe(false);
     // 浴场 3 分
-    expect(scoreBreakdown(playScript(stepIndex("r2-score")), TUTORIAL_SELF).civilian).toBe(3);
+    const r2 = scoreBreakdown(playScript(stepIndex("r2-score")), TUTORIAL_SELF);
+    expect([r2.civilian, r2.coins, r2.total]).toEqual([3, 1, 4]);
+    // 右邻「卖给你」里有奥林匹亚自带的木和印刷所的纸（I4：奇迹板起始资源能买）
+    const sell = playScript(stepIndex("r3-sellable"));
+    expect(paymentOptions(sell, TUTORIAL_SELF, { card: resolveCard(sell, "Scriptorium") }).options[0]).toMatchObject({ right: "P" });
+    expect(player(sell, TUTORIAL_RIGHT).wonder).toBe("olympia");
+    expect(player(sell, TUTORIAL_RIGHT).built.map((entry) => card(entry).name)).toContain("Press");
+    // 奇迹能力一步：右邻奥林匹亚 A 第 2 层是「每个时代免费建 1 张」
+    expect(wonderStages("olympia", "A")[1]!.effects[0]!.type).toBe("freeBuildOncePerAge");
+    // 同名一步：手里有玻璃厂（时代 II 那张），时代 I 也有同名的
+    const same = playScript(stepIndex("same-name"));
+    expect(player(same, TUTORIAL_SELF).hand.some((entry) => card(entry).name === "Glassworks" && card(entry).age === 2)).toBe(true);
     // 第 3 轮：写字间只能向右邻买 1 纸，2 金；买完剩 1 金，右邻收 2 金
     const r3 = playScript(stepIndex("r3-build"));
     const scriptorium = paymentOptions(r3, TUTORIAL_SELF, { card: resolveCard(r3, "Scriptorium") }).options;
@@ -178,6 +190,8 @@ describe("新手教程剧本", () => {
     // 学员赢（教程收尾时心情好），每一项都有分
     expect(state.finalResult!.winners).toEqual([TUTORIAL_SELF]);
     for (const score of state.finalResult!.scores) expect(score.total).toBeGreaterThan(30);
+    expect(me.commerce).toBe(3);
+    expect(TUTORIAL_STEPS.find((entry) => entry.id === "final-commerce")!.note).toContain(`${me.commerce} 分`);
     const step = TUTORIAL_STEPS.find((entry) => entry.id === "final-guild")!;
     expect(step.note).toContain(`${me.guildDetail[0]!.points} 分`);
   });

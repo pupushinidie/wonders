@@ -159,10 +159,20 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
 
   // ---------- 「提示」（练习局，或者只有自己和人机的房间）和「第一次遇到」小贴士 ----------
   const botsOnly = room.members.every((candidate) => candidate.id === member?.id || candidate.bot === true);
-  const canHint = !spectating && !autoPlaying && (canAct || discardMine) && (mode === "practice" || (mode === "online" && botsOnly));
+  const chooseMine = !spectating && game.phase === "wonders" && game.players[game.chooseOrder[game.chooser] ?? -1]?.id === selfId;
+  const canHint = !spectating && !autoPlaying && (canAct || discardMine || chooseMine) && (mode === "practice" || (mode === "online" && botsOnly));
   const [hint, setHint] = useState<{ version: number; hint: Hint | null } | null>(null);
-  const shownHint = hint && hint.version === game.version && canHint ? hint.hint : null;
-  const toggleHint = () => setHint((current) => (current && current.version === game.version ? null : { version: game.version, hint: hintFor(game, myId) }));
+  // 提示建议出一张手牌时，顺手把那张选中、用法那一行的付款方案切到提示说的那种；玩家改选别的牌，提示就收起
+  const shownHint = hint && hint.version === game.version && canHint && (!hint.hint?.card || !canAct || selected === hint.hint.card) ? hint.hint : null;
+  const toggleHint = () => {
+    if (hint && hint.version === game.version && shownHint) {
+      setHint(null);
+      return;
+    }
+    const next = hintFor(game, myId);
+    setHint({ version: game.version, hint: next });
+    if (next?.card && canAct) setSelected(next.card);
+  };
   useEffect(() => {
     if (!canHint) return;
     const onKey = (event: KeyboardEvent) => {
@@ -174,7 +184,18 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [canHint, game.version]);
-  const hintAnchor = shownHint ? (shownHint.card ? (hand.includes(shownHint.card) ? `hand-card-${hand.indexOf(shownHint.card)}` : null) : shownHint.anchor ?? null) : null;
+  const hintAnchor = shownHint ? (shownHint.card && shownHint.action ? `act-${shownHint.action}` : shownHint.anchor === "undo" ? "undo" : null) : null;
+  // 用法那一行默认是最便宜的付款方案；提示用的是别的（比如奥林匹亚免费建造、向另一边买）就切过去
+  useEffect(() => {
+    const command = shownHint?.command;
+    if (!command || command.type !== "PLAY" || command.action === "discard" || selected !== command.card) return;
+    const entry = options.find((candidate) => candidate.card === command.card);
+    const list = (command.action === "build" ? entry?.build : entry?.wonder)?.options ?? [];
+    const index = list.findIndex((option) => (command.olympia ? option.kind === "olympia" : command.trade ? option.kind !== "olympia" && option.left === command.trade.left && option.right === command.trade.right : option.isDefault));
+    if (index > 0) setChoice((old) => ({ ...old, [command.action]: index }));
+  }, [selected, shownHint]);
+  // 挑弃牌、自选奇迹的弹窗会盖住出牌面板上的「提示」：弹窗开着时另放一个浮在上面的
+  const modalHint = canHint && ((discardOpen && discardMine) || (wondersOpen && chooseMine));
   const tips = useFirstTimeTips(GAME_ID, game.version, () => detectTips(game, myId), TIPS, mode === "online" && !spectating);
 
   // ---------- 键盘：1–7 选牌，B / W / D 出牌，U 撤回，Esc 取消 ----------
@@ -403,6 +424,9 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
             actions: <button className="quiet-button" type="button" onClick={() => setHint(null)}>知道了</button>,
           }}
         />
+      )}
+      {modalHint && (
+        <button className={shownHint ? "quiet-button wd-hint-btn wd-hint-float on" : "quiet-button wd-hint-btn wd-hint-float"} type="button" data-tutorial="hint-float" onClick={toggleHint}>提示</button>
       )}
       {tips.tip && <TipToast tip={tips.tip} onClose={tips.dismiss} onNever={tips.never} />}
     </>

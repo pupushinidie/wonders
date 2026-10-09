@@ -89,8 +89,8 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
   },
   {
     kind: "info", id: "city", lesson: "你的城", anchor: ["my-wonder", "my-board"],
-    say: "这是你的城：金字塔，它每轮自带产 1 石。",
-    note: "奇迹板上有 3 层，以后可以一层一层建上去。",
+    say: "这是你的城：金字塔，板上自带 1 石，每轮都能拿来用。",
+    note: "资源不是一轮轮攒起来的，也不会用掉；板上的 3 层以后一层一层建上去。",
   },
   {
     kind: "info", id: "neighbors", lesson: "两位邻居", anchor: "neighbor-left",
@@ -105,7 +105,7 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
 
   // ---------- 时代 I 第 1 轮：建造 ----------
   {
-    kind: "watch", id: "r1-bots", anchor: "neighbor-left",
+    kind: "watch", id: "r1-bots", anchor: "submitted-count",
     say: "两位邻居正在挑牌……",
     moves: bots(["Clay Pool", "build"], ["Press", "build"]),
   },
@@ -117,12 +117,12 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
   {
     kind: "do", id: "r1-build", lesson: "建造", card: "Stone Pit", expect: mine("Stone Pit", "build"),
     say: "点手牌「采石坑」，再点「建造」。",
-    note: "牌上写着要付什么：采石坑免费，黏土坑要付 1 金；建好后每轮多产 1 石。",
+    note: "牌上写着要付什么：采石坑免费，黏土坑要付 1 金；建好后你每轮就有 2 石可用。",
   },
   {
     kind: "info", id: "r1-city", lesson: "资源不会用掉", anchor: "my-city", face: "happy",
     say: "亮牌：采石坑进了你的城。",
-    note: "资源不会用掉：自己产的石头每轮都能用，建多少次都行。",
+    note: "城里的建筑按颜色归类（棕色原料那一栏多了 1 张）；它产的石和金字塔自带的一样，每轮都能用。",
   },
   {
     kind: "info", id: "pass", lesson: "传牌", anchor: "pass-arrow",
@@ -157,24 +157,29 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
   {
     kind: "info", id: "r2-score", lesson: "蓝卡给分", anchor: "my-stats",
     say: "浴场是蓝卡，直接给 3 分。",
-    note: "你的金币、盾和当前分数都在这一行。",
+    note: "这一行依次是金币、盾、军事标记合计、当前总分；3 金也折 1 分，所以总分是 4。",
   },
 
   // ---------- 第 3 轮：向邻居买资源 ----------
   {
-    kind: "watch", id: "r3-bots", anchor: "neighbor-right",
+    kind: "watch", id: "r3-bots", anchor: "submitted-count",
     say: "两位邻居又在挑牌……",
     moves: bots(["Lumber Yard", "build"], ["Clay Pit", "build"]),
   },
   {
-    kind: "info", id: "r3-sell", lesson: "向邻居买", anchor: ["neighbor-right-sell", "neighbor-right"], face: "think",
-    say: "「写字间」要 1 纸，你不产纸，但右邻有印刷所。",
-    note: "缺的资源可以向左右邻居买，每份 2 金，钱付给邻居；隔一个座位的人买不到，邻居的黄卡和奇迹产的也买不到。",
+    kind: "info", id: "r3-sell", lesson: "向邻居买", card: "Scriptorium", face: "think",
+    say: "「写字间」要 1 纸，你不产纸，可以向邻居买。",
+    note: "只能向左右两位邻居买，每份 2 金，钱付给他；隔一个座位的人买不到。",
+  },
+  {
+    kind: "info", id: "r3-sellable", anchor: ["neighbor-right-sell", "neighbor-right"],
+    say: "这里列着右邻能卖给你的：他奇迹板自带的木，加上棕卡、灰卡产的。",
+    note: "印刷所的纸就在里面；邻居黄卡和奇迹建出来那几层产的不卖。",
   },
   {
     kind: "do", id: "r3-build", card: "Scriptorium", expect: mine("Scriptorium", "build"),
     say: "建「写字间」，向右邻买 1 纸，付 2 金。",
-    note: "出牌面板会写清楚：哪些自己产、向谁买、一共付几金。",
+    note: "出牌面板写清楚哪些自己产、向谁买、一共几金；有几种买法时点「换买法」切换，两边同价时默认向右邻买。",
   },
   {
     kind: "info", id: "r3-paid", lesson: "当轮的钱", anchor: ["neighbor-right-stats", "neighbor-right"],
@@ -184,7 +189,7 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
 
   // ---------- 第 4 轮：建奇迹 ----------
   {
-    kind: "watch", id: "r4-bots", anchor: "neighbor-left",
+    kind: "watch", id: "r4-bots", anchor: "submitted-count",
     say: "两位邻居在挑牌……",
     moves: bots(["Loom", "build"], ["Ore Vein", "build"]),
   },
@@ -203,10 +208,15 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
     say: "金字塔第 1 层建好了，+3 分！",
     note: "奇迹只能从下往上按顺序建，下一层要 3 木。",
   },
+  {
+    kind: "info", id: "wonder-power", lesson: "奇迹能力", anchor: "neighbor-right",
+    say: "有的奇迹某一层给的是特殊能力：右邻奥林匹亚第 2 层，每个时代能免费建 1 张牌。",
+    note: "点任何人的奇迹板能看每层说明；奇迹板有 A、B 两面，默认都用 A 面，房主开房时可以选「随机 A/B 面」。",
+  },
 
   // ---------- 第 5 轮：弃牌换钱、折扣 ----------
   {
-    kind: "watch", id: "r5-bots", anchor: "neighbor-right",
+    kind: "watch", id: "r5-bots", anchor: "submitted-count",
     say: "两位邻居在挑牌……",
     moves: bots(["Altar", "build"], ["West Trading Post", "build"]),
   },
@@ -228,7 +238,7 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
 
   // ---------- 第 6 轮：最后一张作废 ----------
   {
-    kind: "watch", id: "r6-bots", anchor: "neighbor-left",
+    kind: "watch", id: "r6-bots", anchor: "submitted-count",
     say: "最后一轮，两位邻居在挑牌……",
     moves: bots(["East Trading Post", "build"], ["Theater", "build"]),
   },
@@ -265,7 +275,7 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
     note: "「水道桥」也能免费链（你建过浴场）；前置建筑哪个时代建的都算。",
   },
   {
-    kind: "watch", id: "a2-bots", anchor: "neighbor-left",
+    kind: "watch", id: "a2-bots", anchor: "submitted-count",
     say: "两位邻居在挑牌……",
     moves: bots(["Brickyard", "build"], ["Stables", "build"]),
   },
@@ -279,9 +289,9 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
     note: "你 2 张石板 = 4 分；再来 1 圆规 + 1 齿轮就是 4+1+1+7 = 13 分，凑套很划算。",
   },
   {
-    kind: "info", id: "same-name", lesson: "不能同名", anchor: "hand",
-    say: "同名的建筑，一座城只能有一张。",
-    note: "手牌上标「已有同名」的，只能拿去建奇迹或者弃掉。",
+    kind: "info", id: "same-name", lesson: "不能同名", card: "Glassworks",
+    say: "同名的建筑，一座城只能有一张：像「玻璃厂」时代 I、II 都有。",
+    note: "要是你已经建过，手牌上会标「已有同名」，只能拿去建奇迹或者弃掉。",
   },
 
   // ---------- 快进到终局：计分 ----------
@@ -299,6 +309,11 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = [
     kind: "info", id: "final-guild", lesson: "行会", anchor: "final-item-guilds", showcase: true,
     say: "紫卡（行会）只在时代 III 出现，多半按两位邻居的城计分。",
     note: "比如工人行会：两位邻居每有 1 张棕卡，你得 1 分，这里是 7 分。",
+  },
+  {
+    kind: "info", id: "final-commerce", anchor: "final-item-commerce", showcase: true,
+    say: "时代 III 的黄卡（竞技场、港口、灯塔、商会）终局还按条件给分。",
+    note: "比如竞技场：你建好的每层奇迹 1 分，这里是 3 分。",
   },
   {
     kind: "info", id: "final-coins", lesson: "金币和平局", anchor: "final-item-coins", showcase: true,
@@ -357,7 +372,7 @@ export function createShowcaseGame(selfName: string): GameState {
     players: [
       {
         id: TUTORIAL_SELF, name: selfName, wonder: "giza", stages: 3, coins: 8, tokens: [1, 3, -1, 5],
-        built: ["Stone Pit", "Clay Pool", "Baths", "Scriptorium", "Apothecary", "Workshop", "Barracks", "Library", "Aqueduct", "School", "Dispensary", "Temple", "Pantheon", "Workers Guild"],
+        built: ["Stone Pit", "Clay Pool", "Baths", "Scriptorium", "Apothecary", "Workshop", "Barracks", "Library", "Aqueduct", "School", "Dispensary", "Temple", "Pantheon", "Arena", "Workers Guild"],
       },
       {
         id: TUTORIAL_LEFT, name: TUTORIAL_NAMES[TUTORIAL_LEFT], wonder: "babylon", stages: 3, coins: 4, tokens: [1, 3, 5],
