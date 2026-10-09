@@ -541,7 +541,7 @@ function expireTurn(room: RoomState): void {
   // 几个人一起超时：每人一步 apply，事件合在一起发（谁超时了、这一轮怎么结算的都看得到）
   const events: GameState["events"] = [];
   for (let guard = 0; guard < 16; guard += 1) {
-    const game = room.game;
+    const game: GameState | undefined = room.game;
     if (!game || game.phase === "finished" || turnKey(game) !== key) break;
     const playerId = pendingActors(game).find((candidate) => !handled.has(candidate));
     if (!playerId) break;
