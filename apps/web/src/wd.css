@@ -497,7 +497,7 @@ button.wd-item { cursor: pointer; }
 .wd-mil .clash { position: absolute; right: 18px; top: 50%; margin-top: -16px; }
 
 /* ---------- 抽屉：记录 / 聊天 ---------- */
-.wd-drawer { position: absolute; top: var(--pad); right: var(--pad); bottom: var(--pad); z-index: 20; display: flex; flex-direction: column; gap: 8px; width: min(380px, calc(100% - 2 * var(--pad))); padding: 10px; box-sizing: border-box; }
+.wd-drawer { background: var(--panel); position: absolute; top: var(--pad); right: var(--pad); bottom: var(--pad); z-index: 20; display: flex; flex-direction: column; gap: 8px; width: min(380px, calc(100% - 2 * var(--pad))); padding: 10px; box-sizing: border-box; }
 .wd-tab-bar { display: flex; align-items: center; gap: 6px; }
 .wd-tab-bar > button[role="tab"] { padding: 4px 10px; border: 0; color: var(--muted); background: var(--panel-2); font: inherit; cursor: pointer; }
 .wd-tab-bar > button.active { color: #2a1c06; background: var(--gold); }
@@ -791,7 +791,8 @@ button.wd-item { cursor: pointer; }
   .wd-room .room-heading p { display: none; }
   .wd-room .player-panel { display: flex; flex-direction: column; }
   .wd-room .player-panel > .field-hint { order: 3; }
-  .wd-room .player-row { min-height: 48px; }
+  .wd-room .player-row { min-height: 44px; }
+  .wd-room :is(.player-avatar, .empty-avatar) { width: 36px; height: 36px; flex-basis: 36px; }
   .wd-room .room-code-panel { order: 2; }
   .wd-room .player-panel { order: 1; }
   .wd-room .wd-room-chat { order: 3; }

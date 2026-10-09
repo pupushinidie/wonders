@@ -280,10 +280,11 @@ export function ActionPanel(props: ActionPanelProps) {
       </div>
     );
   } else if (myTurnToPlay) {
-    title = phase === "seventh" ? "巴比伦：打出第 7 张" : game.round === 6 ? "第 6 轮：打一张，另一张作废" : "轮到你：选一张手牌";
+    title = phase === "seventh" ? "巴比伦：打出第 7 张" : game.round === 6 ? "第 6 轮：选一张打" : "轮到你：选一张手牌";
+    const tail = phase === "seventh" ? "打完结算军事。" : game.round === 6 ? "另一张作废，不给钱。" : `剩下的传给${props.passName}。`;
     sub = mobile
-      ? "点手牌看三种用法。大家都选好后一起亮牌。"
-      : `点一张手牌（或按 1–${me.hand.length}）看三种用法。大家都选好后一起亮牌，剩下的传给${props.passName}。`;
+      ? `点手牌看三种用法。${game.round === 6 && phase === "play" ? "另一张作废，不给钱。" : "大家都选好后一起亮牌。"}`
+      : `点一张手牌（或按 1–${me.hand.length}）看三种用法。大家都选好后一起亮牌，${tail}`;
   } else {
     title = "等一下";
   }
