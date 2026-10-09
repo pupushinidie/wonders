@@ -4,6 +4,7 @@
 import { describe, expect, it } from "vitest";
 import {
   apply,
+  applyCommand,
   applyTimeout,
   autoCommand,
   buildScene,
@@ -11,6 +12,7 @@ import {
   createGame,
   discardBuildOptions,
   legalActions,
+  normalizeCommand,
   paymentOptions,
   pendingActors,
   playTo,
@@ -428,5 +430,34 @@ describe("开局、自选奇迹、纯函数、超时", () => {
     expect(score.commerce).toBe(2 + 5 + 2 + 2);
     expect(score.military + score.coins + score.wonder + score.civilian + score.science + score.commerce + score.guilds).toBe(score.total);
     expect(WONDER_KEYS).toHaveLength(7);
+  });
+});
+
+describe("命令白名单（首发验收 I8）", () => {
+  it("normalizeCommand 只留已知字段、字符串限长；不认识的返回 null", () => {
+    expect(normalizeCommand({ type: "PLAY", card: "a1_altar_3p", action: "build", trade: { left: "W", right: "", extra: 1 }, olympia: false, player: "p2", junk: "x" })).toEqual({
+      type: "PLAY",
+      card: "a1_altar_3p",
+      action: "build",
+      trade: { left: "W", right: "" },
+    });
+    expect(normalizeCommand({ type: "PLAY", card: "a1_altar_3p", action: "build", olympia: true })).toEqual({ type: "PLAY", card: "a1_altar_3p", action: "build", olympia: true });
+    expect(normalizeCommand({ type: "UNDO", junk: "x".repeat(1000) })).toEqual({ type: "UNDO" });
+    expect(normalizeCommand({ type: "CHOOSE_WONDER", wonder: "giza", side: "B", x: 1 })).toEqual({ type: "CHOOSE_WONDER", wonder: "giza", side: "B" });
+    expect(normalizeCommand({ type: "DISCARD_BUILD", card: null, x: 1 })).toEqual({ type: "DISCARD_BUILD", card: null });
+    for (const bad of [null, undefined, "PLAY", 3, [], { type: "HACK" }, { type: "PLAY", card: "x".repeat(65), action: "build" }, { type: "PLAY", card: "a", action: "steal" },
+      { type: "PLAY", card: "a", action: "build", trade: "WW" }, { type: "PLAY", card: "a", action: "build", trade: { left: "W".repeat(17), right: "" } },
+      { type: "PLAY", card: "a", action: "build", olympia: "yes" }, { type: "CHOOSE_WONDER", wonder: 5, side: "A" }, { type: "DISCARD_BUILD", card: 7 }]) {
+      expect(normalizeCommand(bad), JSON.stringify(bad)).toBeNull();
+    }
+  });
+
+  it("applyCommand 记进动作序列的是重建后的命令；畸形命令拒绝", () => {
+    const state = buildScene({ players: [{ wonder: "giza" }, { wonder: "olympia" }, { wonder: "rhodes" }] });
+    const card = player(state, "p1").hand[0]!;
+    const next = applyCommand(state, "p1", { type: "PLAY", card, action: "discard", junk: "x".repeat(10_000) } as never);
+    expect(next.log!.at(-1)).toEqual({ player: "p1", command: { type: "PLAY", card, action: "discard" } });
+    expect(JSON.stringify(next).includes("xxxx")).toBe(false);
+    expect(() => applyCommand(state, "p1", { type: "PLAY", card: { evil: true }, action: "discard" } as never)).toThrow(/格式/);
   });
 });

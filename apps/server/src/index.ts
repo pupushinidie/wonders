@@ -13,6 +13,7 @@ import {
   DEFAULT_OPTIONS,
   DEFAULT_ROOM_ACCESS,
   finalScores,
+  normalizeCommand,
   pendingActors,
   redactGameForViewer,
   type Capacity,
@@ -76,6 +77,14 @@ const REMATCH_TIMEOUT_MS = Number(process.env.REMATCH_TIMEOUT_MS ?? 60_000);
 const ADMIN_RETRY_DELAY_MS = 2_000;
 const VOICE_SIGNAL_MAX_LENGTH = 20_000;
 const MAX_SPECTATORS = 20;
+/**
+ * 一条 socket 消息最大多少字节（socket.io 的 maxHttpBufferSize，超过直接断开这条连接）。
+ * 最大的正常消息是语音的 SDP（上限 VOICE_SIGNAL_MAX_LENGTH = 2 万字符），留够余量取 32 KB；命令、聊天都远小于它。
+ */
+const MAX_MESSAGE_BYTES = 32 * 1024;
+/** 每条连接的限频（令牌桶）：游戏命令（出牌 / 撤回……）每秒 15 条、最多攒 30 条；其余事件合计每秒 30 条、最多攒 60 条。两种分开算，正常玩远远碰不到。 */
+const EVENT_RATE = { perSecond: 30, burst: 60 };
+const COMMAND_RATE = { perSecond: 15, burst: 30 };
 /** 每一步的计时（毫秒）；默认每轮出牌 60 秒、插入选择 20 秒、挑奇迹 30 秒，测试时可以用环境变量统一缩短。 */
 const TURN_MS_OVERRIDE = process.env.TURN_MS ? Number(process.env.TURN_MS) : undefined;
 /** 人机的名字，按顺序取第一个没人用的。 */
@@ -136,22 +145,42 @@ function isAllowedWebOrigin(origin: string | undefined): boolean {
 }
 
 export const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
+  maxHttpBufferSize: MAX_MESSAGE_BYTES,
   cors: {
     origin: (origin, callback) => callback(null, isAllowedWebOrigin(origin)),
     methods: ["GET", "POST"],
   },
 });
 
+/** 文字方向控制符（RLO 之类）：能把「号一噜咕」显示成「咕噜一号」，聊天和昵称里都去掉。 */
+const BIDI_CONTROLS = /[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]/g;
+
 function normalizeChatMessage(value: unknown): string | null {
   if (typeof value !== "string") return null;
-  const message = value.replace(/[\u0000-\u001f\u007f]/g, " ").trim().replace(/\s+/g, " ");
+  const message = value.replace(/[\u0000-\u001f\u007f]/g, " ").replace(BIDI_CONTROLS, "").trim().replace(/\s+/g, " ");
   return message.length >= 1 && message.length <= ROOM_CHAT_MAX_LENGTH ? message : null;
 }
 
+/**
+ * 昵称：去掉控制字符、Unicode 格式字符（Cf：零宽字符、方向控制符等）和看起来是空白的填充字符，
+ * 压掉多余空格；长度 2–18，而且至少有 2 个看得见的字（字母、数字、标点、符号）。
+ */
 function normalizeName(value: unknown): string | null {
   if (typeof value !== "string") return null;
-  const name = value.replace(/[\u0000-\u001f\u007f]/g, "").trim().replace(/\s+/g, " ");
-  return name.length >= 2 && name.length <= 18 ? name : null;
+  const name = value
+    .replace(/[\u0000-\u001f\u007f-\u009f]/g, "")
+    .replace(/\p{Cf}/gu, "")
+    .replace(/[\u115f\u1160\u3164\uffa0\u2800]/g, "")
+    .trim()
+    .replace(/\s+/g, " ");
+  const visible = name.match(/[\p{L}\p{N}\p{P}\p{S}]/gu)?.length ?? 0;
+  return name.length >= 2 && name.length <= 18 && visible >= 2 ? name : null;
+}
+
+/** 「咕噜」开头（人机叫咕噜一号、二号……）和带「人机」的昵称留给人机，真人不能用，免得冒充人机。 */
+function reservedForBots(name: string): boolean {
+  const compact = name.replace(/[\s\p{P}\p{S}]/gu, "");
+  return /^咕[噜嚕]/.test(compact) || compact.includes("人机") || compact.includes("人機");
 }
 
 function normalizeCode(value: unknown): string | null {
@@ -365,10 +394,10 @@ function removeWaitingMember(socketId: string): void {
 /** 所有玩家离线满 ROOM_ABANDON_MS 后关闭房间；期间有人重新加入则取消。 */
 function scheduleAbandonedRoomClose(room: RoomState): void {
   clearTimeout(room.abandonTimer);
-  room.abandonTimer = setTimeout(() => {
+  room.abandonTimer = setTimeout(() => safely("关闭无人房间", () => {
     if (rooms.get(room.code) !== room || humans(room).some((member) => member.connected)) return;
     deleteRoom(room, "玩家都离线了，房间已关闭。");
-  }, ROOM_ABANDON_MS);
+  }), ROOM_ABANDON_MS);
   room.abandonTimer.unref();
 }
 
@@ -443,7 +472,7 @@ function clearGameTimers(room: RoomState): void {
 
 function setTurnDeadline(room: RoomState, deadline: number, key: string): void {
   clearTurnTimer(room);
-  const timer = setTimeout(() => expireTurn(room), Math.max(0, deadline - Date.now()));
+  const timer = setTimeout(() => safely("超时处理", () => expireTurn(room)), Math.max(0, deadline - Date.now()));
   timer.unref();
   room.turn = { deadline, timer, key };
 }
@@ -482,7 +511,7 @@ function updateTurnTimer(room: RoomState): void {
   }
   for (const playerId of actors) {
     if (!robotSeat(room, playerId) || room.botTimers.has(playerId)) continue;
-    const timer = setTimeout(() => runBot(room, playerId, key), botDelay(room, game, playerId) * BOT_DELAY_SCALE);
+    const timer = setTimeout(() => safely("人机行动", () => runBot(room, playerId, key)), botDelay(room, game, playerId) * BOT_DELAY_SCALE);
     timer.unref();
     room.botTimers.set(playerId, { timer, key });
   }
@@ -601,12 +630,12 @@ async function logFinishedGame(game: GameState): Promise<void> {
 /** 整轮结束：所有人需在 REMATCH_TIMEOUT_MS 内确认是否继续。 */
 function startRematchVote(room: RoomState): void {
   clearTimeout(room.rematch?.timer);
-  const timer = setTimeout(() => {
+  const timer = setTimeout(() => safely("再来一局超时", () => {
     if (rooms.get(room.code) !== room || !room.rematch) return;
     const accepted = room.rematch.accepted;
     const pending = room.members.filter((member) => !accepted.has(member.id)).map((member) => member.id);
     returnToWaiting(room, pending, "没有在 1 分钟内确认继续，已被移出房间。");
-  }, REMATCH_TIMEOUT_MS);
+  }), REMATCH_TIMEOUT_MS);
   timer.unref();
   // 人机总是同意再来一局
   const bots = room.members.filter((member) => member.bot).map((member) => member.id);
@@ -670,7 +699,58 @@ function reassignMember(room: RoomState, previousId: string, nextId: string): vo
 }
 
 function invalidNameMessage(payload: CreateRoomPayload | JoinRoomPayload): string | null {
-  return normalizeName(payload?.name) ? null : "昵称长度需为 2–18 个字符。";
+  const name = normalizeName(payload?.name);
+  if (!name) return "昵称长度需为 2–18 个字符（不能全是空白或看不见的字符）。";
+  if (reservedForBots(name)) return "「咕噜」开头和带「人机」的昵称留给人机用，换一个吧。";
+  return null;
+}
+
+/** 回调在第几个参数（不算事件名，0 起）；voice:signal 没有回调（-1）。不在表里的事件直接丢掉。 */
+const ACK_POSITION: Readonly<Record<string, number>> = {
+  "lobby:get": 0,
+  "room:start": 0,
+  "room:leave": 0,
+  "room:sit": 0,
+  "room:stand": 0,
+  "room:dissolve": 0,
+  "room:add-bot": 0,
+  "voice:leave": 0,
+  "room:create": 1,
+  "room:join": 1,
+  "room:settings": 1,
+  "game:command": 1,
+  "room:chat": 1,
+  "room:rematch": 1,
+  "room:kick": 1,
+  "room:access": 1,
+  "room:auto": 1,
+  "admin:verify": 1,
+  "admin:dissolve": 1,
+  "admin:kick-session": 1,
+  "voice:join": 1,
+  "voice:mute": 1,
+  "voice:signal": -1,
+};
+
+const noop = () => {};
+
+/** 令牌桶：每秒补 perSecond 个、最多 burst 个；拿到返回 true。 */
+function takeToken(bucket: { tokens: number; at: number }, rate: { perSecond: number; burst: number }): boolean {
+  const now = Date.now();
+  bucket.tokens = Math.min(rate.burst, bucket.tokens + ((now - bucket.at) / 1000) * rate.perSecond);
+  bucket.at = now;
+  if (bucket.tokens < 1) return false;
+  bucket.tokens -= 1;
+  return true;
+}
+
+/** 计时器回调里出错只记日志：计时器里抛出的异常没人接，会让整个进程退出。 */
+function safely(label: string, run: () => void): void {
+  try {
+    run();
+  } catch (error) {
+    console.error(`${label}出错`, error);
+  }
 }
 
 /**
@@ -680,6 +760,42 @@ function invalidNameMessage(payload: CreateRoomPayload | JoinRoomPayload): strin
 const socketsBySession = new Map<string, Set<string>>();
 
 io.on("connection", (socket) => {
+  // 客户端发来的每条消息先过这里：
+  // 1. 回调放到处理函数期待的位置（没带回调就换成空函数）——不带回调发 lobby:get 曾经让 ack(...) 抛错、整个进程退出；
+  // 2. 不认识的事件丢掉；3. 限频，超了回「操作太快了」。
+  const eventBucket = { tokens: EVENT_RATE.burst, at: Date.now() };
+  const commandBucket = { tokens: COMMAND_RATE.burst, at: Date.now() };
+  socket.use((packet, next) => {
+    const event = packet[0];
+    const position = typeof event === "string" && Object.hasOwn(ACK_POSITION, event) ? ACK_POSITION[event]! : undefined;
+    if (position === undefined) return;
+    const args = packet.slice(1);
+    const ack = typeof args[args.length - 1] === "function" ? (args.pop() as (response: unknown) => void) : undefined;
+    if (event === "game:command" ? !takeToken(commandBucket, COMMAND_RATE) : !takeToken(eventBucket, EVENT_RATE)) {
+      ack?.({ ok: false, error: "操作太快了，请稍等一下。" });
+      return;
+    }
+    const fixed: unknown[] = args.slice(0, Math.max(position, 1));
+    if (position >= 0) {
+      fixed.length = position;
+      fixed.push(ack ?? noop);
+    }
+    packet.splice(1, packet.length - 1, ...fixed);
+    next();
+  });
+  /** 注册处理函数：里面抛错只记日志、回一句「服务器出错了」，不让进程退出。 */
+  const on = <E extends keyof ClientToServerEvents>(event: E, listener: ClientToServerEvents[E]): void => {
+    socket.on(event, ((...args: unknown[]) => {
+      try {
+        (listener as (...values: unknown[]) => void)(...args);
+      } catch (error) {
+        console.error(`处理 ${event} 出错`, error);
+        const ack = args[args.length - 1];
+        if (typeof ack === "function") safely("回执", () => ack({ ok: false, error: "服务器出错了，请重试。" }));
+      }
+    }) as never);
+  };
+
   const loginSession = socket.handshake.headers["x-gc-session"];
   if (typeof loginSession === "string" && loginSession) {
     const sockets = socketsBySession.get(loginSession) ?? new Set<string>();
@@ -691,11 +807,11 @@ io.on("connection", (socket) => {
     });
   }
 
-  socket.on("lobby:get", (ack) => {
+  on("lobby:get", (ack) => {
     ack({ ok: true, data: roomSummaries() });
   });
 
-  socket.on("room:create", (payload, ack) => {
+  on("room:create", (payload, ack) => {
     if (socketRooms.has(socket.id)) {
       ack({ ok: false, error: "请先离开当前房间，再创建新房间。" });
       return;
@@ -747,7 +863,7 @@ io.on("connection", (socket) => {
     emitRoomUpdate(room);
   });
 
-  socket.on("room:join", (payload, ack) => {
+  on("room:join", (payload, ack) => {
     if (socketRooms.has(socket.id)) {
       ack({ ok: false, error: "请先离开当前房间，再加入新房间。" });
       return;
@@ -856,7 +972,7 @@ io.on("connection", (socket) => {
     emitRoomUpdate(room);
   });
 
-  socket.on("room:access", (settings, ack) => {
+  on("room:access", (settings, ack) => {
     const room = findRoomForSocket(socket.id);
     if (!room || room.ownerId !== socket.id) {
       ack({ ok: false, error: "只有房主可以修改房间设置。" });
@@ -872,6 +988,11 @@ io.on("connection", (socket) => {
       }
       next[key] = value;
     }
+    // 「观战看手牌」只能在等候房间改：局中打开等于让房主用第二个窗口偷看别人的手牌
+    if (next.spectatorsSeeAll !== room.access.spectatorsSeeAll && room.status !== "waiting") {
+      ack({ ok: false, error: "对局开始后不能再改「观战看手牌」，等这局结束回到等候房间再改。" });
+      return;
+    }
     room.access = next;
     if (!next.allowSpectators && room.spectators.length > 0) {
       for (const spectator of room.spectators) closeMemberConnection(room, spectator.id, "房主关闭了观战。");
@@ -882,7 +1003,7 @@ io.on("connection", (socket) => {
     emitRoomUpdate(room);
   });
 
-  socket.on("room:sit", (ack) => {
+  on("room:sit", (ack) => {
     const room = findRoomForSocket(socket.id);
     const spectator = room?.spectators.find((candidate) => candidate.id === socket.id);
     if (!room || !spectator) {
@@ -908,7 +1029,7 @@ io.on("connection", (socket) => {
     emitRoomUpdate(room);
   });
 
-  socket.on("room:stand", (ack) => {
+  on("room:stand", (ack) => {
     const room = findRoomForSocket(socket.id);
     const member = room?.members.find((candidate) => candidate.id === socket.id);
     if (!room || !member) {
@@ -935,7 +1056,7 @@ io.on("connection", (socket) => {
     emitRoomUpdate(room);
   });
 
-  socket.on("room:start", (ack) => {
+  on("room:start", (ack) => {
     const room = findRoomForSocket(socket.id);
     if (!room) {
       ack({ ok: false, error: "你当前不在房间中。" });
@@ -967,7 +1088,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("room:settings", (payload, ack) => {
+  on("room:settings", (payload, ack) => {
     const room = findRoomForSocket(socket.id);
     if (!room || room.ownerId !== socket.id) {
       ack({ ok: false, error: "只有房主可以改设置。" });
@@ -986,7 +1107,7 @@ io.on("connection", (socket) => {
     emitRoomUpdate(room);
   });
 
-  socket.on("room:leave", (ack) => {
+  on("room:leave", (ack) => {
     const room = findRoomForSocket(socket.id);
     if (!room) {
       ack({ ok: false, error: "你当前不在房间中。" });
@@ -1002,7 +1123,7 @@ io.on("connection", (socket) => {
     ack({ ok: true, data: undefined });
   });
 
-  socket.on("game:command", (command, ack) => {
+  on("game:command", (command, ack) => {
     const room = findRoomForSocket(socket.id);
     if (!room || room.status !== "playing" || !room.game) {
       ack({ ok: false, error: "当前没有进行中的对局。" });
@@ -1013,9 +1134,15 @@ io.on("connection", (socket) => {
       return;
     }
 
+    // 按白名单重建命令（多余字段丢掉、字符串限长），动作序列里只记重建后的
+    const clean = normalizeCommand(command);
+    if (!clean) {
+      ack({ ok: false, error: "命令格式不对。" });
+      return;
+    }
     try {
       const playerId = seatOf(room, socket.id);
-      room.game = applyCommand(room.game, playerId, command);
+      room.game = applyCommand(room.game, playerId, clean);
       // 自己动了一下：超时次数清零，托管也取消
       room.timeouts.delete(playerId);
       setAuto(room, playerId, false);
@@ -1029,7 +1156,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("room:rematch", (accept, ack) => {
+  on("room:rematch", (accept, ack) => {
     const room = findRoomForSocket(socket.id);
     if (!room?.rematch || !room.members.some((member) => member.id === socket.id)) {
       ack({ ok: false, error: "现在不需要确认。" });
@@ -1050,7 +1177,7 @@ io.on("connection", (socket) => {
     emitRoomUpdate(room);
   });
 
-  socket.on("room:kick", (memberId, ack) => {
+  on("room:kick", (memberId, ack) => {
     const room = findRoomForSocket(socket.id);
     if (!room || room.ownerId !== socket.id) {
       ack({ ok: false, error: "只有房主可以移出玩家。" });
@@ -1078,7 +1205,7 @@ io.on("connection", (socket) => {
     emitRoomUpdate(room);
   });
 
-  socket.on("room:add-bot", (ack) => {
+  on("room:add-bot", (ack) => {
     const room = findRoomForSocket(socket.id);
     if (!room || room.ownerId !== socket.id) {
       ack({ ok: false, error: "只有房主可以加人机。" });
@@ -1102,7 +1229,7 @@ io.on("connection", (socket) => {
     emitRoomUpdate(room);
   });
 
-  socket.on("room:auto", (enabled, ack) => {
+  on("room:auto", (enabled, ack) => {
     const room = findRoomForSocket(socket.id);
     const member = room?.members.find((candidate) => candidate.id === socket.id);
     if (!room || !member || room.status !== "playing" || !room.game) {
@@ -1116,7 +1243,7 @@ io.on("connection", (socket) => {
     emitRoomUpdate(room);
   });
 
-  socket.on("room:dissolve", (ack) => {
+  on("room:dissolve", (ack) => {
     const room = findRoomForSocket(socket.id);
     if (!room || room.ownerId !== socket.id) {
       ack({ ok: false, error: "只有房主可以解散房间。" });
@@ -1126,12 +1253,12 @@ io.on("connection", (socket) => {
     dissolveRoom(room, "房主解散了房间。");
   });
 
-  socket.on("admin:verify", (token, ack) => {
+  on("admin:verify", (token, ack) => {
     const error = checkAdminToken(socket.id, token);
     ack(error ? { ok: false, error } : { ok: true, data: undefined });
   });
 
-  socket.on("admin:kick-session", (payload, ack) => {
+  on("admin:kick-session", (payload, ack) => {
     const error = checkAdminToken(socket.id, payload?.token);
     if (error) {
       ack({ ok: false, error });
@@ -1149,7 +1276,7 @@ io.on("connection", (socket) => {
     ack({ ok: true, data: kicked });
   });
 
-  socket.on("admin:dissolve", (payload, ack) => {
+  on("admin:dissolve", (payload, ack) => {
     const error = checkAdminToken(socket.id, payload?.token);
     if (error) {
       ack({ ok: false, error });
@@ -1164,7 +1291,7 @@ io.on("connection", (socket) => {
     ack({ ok: true, data: undefined });
   });
 
-  socket.on("voice:join", (payload, ack) => {
+  on("voice:join", (payload, ack) => {
     const room = findRoomForSocket(socket.id);
     if (!room) {
       ack({ ok: false, error: "你当前不在房间中。" });
@@ -1179,7 +1306,7 @@ io.on("connection", (socket) => {
     emitRoomUpdate(room);
   });
 
-  socket.on("voice:mute", (muted, ack) => {
+  on("voice:mute", (muted, ack) => {
     const room = findRoomForSocket(socket.id);
     const state = room?.voice.get(socket.id);
     if (!room || !state) {
@@ -1191,13 +1318,13 @@ io.on("connection", (socket) => {
     emitRoomUpdate(room);
   });
 
-  socket.on("voice:leave", (ack) => {
+  on("voice:leave", (ack) => {
     const room = findRoomForSocket(socket.id);
     if (room?.voice.delete(socket.id)) emitRoomUpdate(room);
     ack({ ok: true, data: undefined });
   });
 
-  socket.on("voice:signal", (payload) => {
+  on("voice:signal", (payload) => {
     // 只在同一房间、都在语音里的两人之间转发。
     const room = findRoomForSocket(socket.id);
     if (!room || !room.voice.has(socket.id) || !room.voice.has(payload?.to) || payload.to === socket.id) return;
@@ -1205,7 +1332,7 @@ io.on("connection", (socket) => {
     io.to(payload.to).emit("voice:signal", { from: socket.id, data: payload.data });
   });
 
-  socket.on("room:chat", (payload, ack) => {
+  on("room:chat", (payload, ack) => {
     const room = findRoomForSocket(socket.id);
     const member = room?.members.find((candidate) => candidate.id === socket.id)
       ?? room?.spectators.find((candidate) => candidate.id === socket.id);
@@ -1237,7 +1364,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     roomChatTimes.delete(socket.id);
     adminFailureTimes.delete(socket.id);
-    removeWaitingMember(socket.id);
+    safely("断线处理", () => removeWaitingMember(socket.id));
   });
 });
 
@@ -1275,6 +1402,10 @@ export const testHooks = {
     updateTurnTimer(room);
     emitRoomUpdate(room);
   },
+  /** 服务端完整的对局状态（含动作序列），测试用。 */
+  game(code: string): GameState | undefined {
+    return rooms.get(code)?.game;
+  },
   /** 现在的截止时间和计时键（测「别人交牌不重置倒计时」用）。 */
   turnInfo(code: string): { deadline: number; key: string } | null {
     const room = rooms.get(code);
@@ -1283,6 +1414,9 @@ export const testHooks = {
 };
 
 if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.meta.url) {
+  // 兜底：哪里漏了的异常只记日志，不让进程退出（进程一退所有房间都没了）
+  process.on("uncaughtException", (error) => console.error("未捕获的异常（进程继续运行）", error));
+  process.on("unhandledRejection", (reason) => console.error("未处理的 Promise 拒绝（进程继续运行）", reason));
   const port = Number(process.env.PORT ?? process.env.SERVER_PORT ?? 3016);
   httpServer.listen(port, () => {
     console.log(`Wonders server listening on http://localhost:${port}`);

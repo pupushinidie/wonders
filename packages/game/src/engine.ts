@@ -477,7 +477,11 @@ function resolveDiscardBuild(state: GameState, index: number, cardId: CardId | n
  */
 export function apply(state: GameState, playerId: string, command: GameCommand, rng?: Rng): { state: GameState; events: GameEvent[] } {
   if (state.phase === "finished") throw new Error("对局已经结束。");
-  const next = structuredClone(state);
+  // 动作序列只追加不修改、上一步的事件这一步会换掉：都不用深拷贝（动作序列跟着新状态走，同一个数组）
+  const { log, events: _previousEvents, ...rest } = state;
+  const next = structuredClone(rest) as GameState;
+  next.events = [];
+  if (log) next.log = log;
   const random = rng ?? createRng(next.rngState ?? next.seed ?? 0);
   const index = playerIndex(next, playerId);
   if (index < 0) throw new Error("你不在这局里。");
@@ -538,10 +542,66 @@ export function apply(state: GameState, playerId: string, command: GameCommand, 
   return { state: next, events };
 }
 
-/** 服务端用：执行命令并记进动作序列（同一种子重放这串动作就能复现整局）。 */
+/** 命令里字符串的长度上限：卡牌 id 最长 30 多个字符，买资源方案一边最多 7 份。 */
+const MAX_ID_LENGTH = 64;
+const MAX_TRADE_LENGTH = 16;
+
+/**
+ * 按白名单重建客户端发来的命令：只留已知字段，类型和长度对才要，不认识的返回 null（服务器回「命令格式不对」）。
+ * 多余字段（比如塞进来的大字符串、冒充的 player）一律丢掉；值合不合规则仍由 apply 判断。
+ * 服务器收到 game:command 先过它；applyCommand 记进动作序列的也是它的结果。
+ */
+export function normalizeCommand(raw: unknown): GameCommand | null {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+  const input = raw as Record<string, unknown>;
+  const text = (value: unknown, max: number): string | null => (typeof value === "string" && value.length <= max ? value : null);
+  switch (input.type) {
+    case "PLAY": {
+      const cardId = text(input.card, MAX_ID_LENGTH);
+      const action = input.action;
+      if (cardId === null || (action !== "build" && action !== "wonder" && action !== "discard")) return null;
+      let trade: { left: string; right: string } | undefined;
+      if (input.trade !== undefined) {
+        const raw = input.trade as Record<string, unknown> | null;
+        if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+        const left = text(raw.left, MAX_TRADE_LENGTH);
+        const right = text(raw.right, MAX_TRADE_LENGTH);
+        if (left === null || right === null) return null;
+        trade = { left, right };
+      }
+      if (input.olympia !== undefined && typeof input.olympia !== "boolean") return null;
+      return {
+        type: "PLAY",
+        card: cardId,
+        action,
+        ...(trade ? { trade } : {}),
+        ...(input.olympia === true ? { olympia: true } : {}),
+      };
+    }
+    case "UNDO":
+      return { type: "UNDO" };
+    case "CHOOSE_WONDER": {
+      const key = text(input.wonder, 20);
+      const side = text(input.side, 2);
+      if (key === null || side === null) return null;
+      return { type: "CHOOSE_WONDER", wonder: key as WonderKey, side: side as WonderSide };
+    }
+    case "DISCARD_BUILD": {
+      if (input.card === null) return { type: "DISCARD_BUILD", card: null };
+      const cardId = text(input.card, MAX_ID_LENGTH);
+      return cardId === null ? null : { type: "DISCARD_BUILD", card: cardId };
+    }
+    default:
+      return null;
+  }
+}
+
+/** 服务端用：命令先按白名单重建，执行后记进动作序列（只记重建后的命令；同一种子重放这串动作就能复现整局）。 */
 export function applyCommand(state: GameState, playerId: string, command: GameCommand): GameState {
-  const { state: next } = apply(state, playerId, command);
-  next.log = [...(state.log ?? []), { player: playerId, command }];
+  const clean = normalizeCommand(command);
+  if (!clean) throw new Error("命令格式不对。");
+  const { state: next } = apply(state, playerId, clean);
+  next.log = [...(state.log ?? []), { player: playerId, command: clean }];
   return next;
 }
 
@@ -611,7 +671,7 @@ export function applyTimeout(state: GameState, playerId: string, command?: GameC
   }
   const next = result.state;
   if (timedOut) next.events = [{ type: "TurnTimedOut", player: playerId }, ...next.events];
-  next.log = [...(state.log ?? []), { player: playerId, command: used!, timeout: true }];
+  next.log = [...(state.log ?? []), { player: playerId, command: normalizeCommand(used) ?? used!, timeout: true }];
   return next;
 }
 

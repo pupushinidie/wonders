@@ -9,6 +9,7 @@ export {
   defaultConfig,
   discardBuildOptions,
   legalActions,
+  normalizeCommand,
   passDirection,
   pendingActors,
   playOptions,

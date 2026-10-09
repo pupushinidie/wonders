@@ -231,20 +231,25 @@ describe("七大奇迹房间", () => {
 
   it("抓包：一整局里每个真人收到的每一条更新，都没有别人的手牌、交的牌、垫奇迹的牌、种子；整局打完能再来一局", async () => {
     const { code, players } = await table(4);
-    // 每个人每轮：能建就建（第一个建造），否则看情况垫奇迹或弃牌
+    // 每个人每一步（game.step：换轮 / 换阶段才变）出一次：能建就建（第一个建造），否则看情况垫奇迹或弃牌。
+    // 按 step 而不是 version 去重：同一轮别人交牌也会推更新，按 version 会重复交，旧命令晚到会被拒；被拒就清掉重来。
     const stops = players.map((client) => {
       let sentFor = "";
       const handler = (room: LobbyRoomSnapshot) => {
         const game = room.game;
         if (!game || game.phase === "finished") return;
         const actions = legalActions(game, seatOf(client));
-        const key = `${game.version}`;
+        const key = `${game.step}`;
         if (actions.length === 0 || sentFor === key) return;
         sentFor = key;
         const pick = (game.round + game.age) % 3 === 0
           ? actions.find((action) => action.type === "PLAY" && action.action === "wonder")
           : actions.find((action) => action.type === "PLAY" && action.action === "build");
-        client.emit("game:command", pick ?? actions[0]!, () => {});
+        client.emit("game:command", pick ?? actions[0]!, (response: AckResponse<LobbyRoomSnapshot>) => {
+          if (response.ok) return;
+          sentFor = "";
+          handler(latest.get(client)!);
+        });
       };
       client.on("room:updated", handler);
       handler(latest.get(client)!);

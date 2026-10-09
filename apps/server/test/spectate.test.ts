@@ -183,13 +183,15 @@ describe("观战和公开房间", () => {
     expect(joined.ok && joined.data.members.some((member) => member.name === thirdName)).toBe(true);
   });
 
-  it("对局中观战默认只看公开信息，房主打开「看手牌」后能看到；不能操作，随时能离开", async () => {
+  /** 建房坐满、拉一个观战（可以先在等候房间打开「观战看手牌」）、开局、走几步让场上有藏起来的牌。 */
+  async function watchedGame(seeAll: boolean) {
     const host = await connect();
     const room = await create(host, nick("玩家"));
     const players = [host, ...(await fillSeats(room.code, 1))];
     const viewer = await connect();
     const invited = await join(viewer, { name: nick("看客"), code: room.code, spectate: true });
     expect(invited.ok && invited.data.code).toBe(room.code);
+    if (seeAll) expect((await access(host, { spectatorsSeeAll: true })).ok).toBe(true);
 
     expect((await call<LobbyRoomSnapshot>((ack) => host.emit("room:start", ack))).ok).toBe(true);
     await updateWhere(viewer, (snapshot) => snapshot.game !== undefined);
@@ -205,23 +207,25 @@ describe("观战和公开房间", () => {
       await updateWhere(viewer, (snapshot) => snapshot.game!.version !== version);
       await delay(20);
     }
-
-    const blind = latest.get(viewer)!.game!;
-    for (const key of SERVER_ONLY) expect(hiddenField((blind as unknown as Record<string, unknown>)[key])).toBe(true);
     // 每位玩家自己看到的那一份里，自己身上的秘密。
     const owners = players.reduce((total, client) => {
       const game = latest.get(client)!.game!;
       return total + secretsSeen({ ...game, players: game.players.filter((player) => player.id === seatOf(client)) });
     }, 0);
+    return { host, players, viewer, owners };
+  }
+
+  it("对局中观战默认只看公开信息；对局开始后房主不能再打开「看手牌」；观战不能操作，随时能离开", async () => {
+    const { host, players, viewer, owners } = await watchedGame(false);
+    const blind = latest.get(viewer)!.game!;
+    for (const key of SERVER_ONLY) expect(hiddenField((blind as unknown as Record<string, unknown>)[key])).toBe(true);
     if (HIDDEN_INFO) {
       expect(owners).toBeGreaterThan(0);
       expect(secretsSeen(blind)).toBeLessThan(owners);
     }
-
-    expect((await access(host, { spectatorsSeeAll: true })).ok).toBe(true);
-    const godView = (await updateWhere(viewer, (snapshot) => snapshot.access.spectatorsSeeAll)).game!;
-    for (const key of SERVER_ONLY) expect(hiddenField((godView as unknown as Record<string, unknown>)[key])).toBe(true);
-    expect(secretsSeen(godView)).toBeGreaterThanOrEqual(owners);
+    // 局中打开「观战看手牌」会被拒（不然房主开个观战窗口就能偷看）
+    expect((await access(host, { spectatorsSeeAll: true })).ok).toBe(false);
+    expect(latest.get(viewer)!.access.spectatorsSeeAll).toBe(false);
 
     // 观战的人发动作会被拒。
     const anyAction = players.map((client) => legalActions(latest.get(client)!.game!, seatOf(client))[0]).find(Boolean);
@@ -231,6 +235,15 @@ describe("观战和公开房间", () => {
     // 对局中玩家不能改成观战；观战的人随时能离开。
     expect((await call<void>((ack) => players[1]!.emit("room:stand", ack))).ok).toBe(false);
     expect((await call<void>((ack) => viewer.emit("room:leave", ack))).ok).toBe(true);
+  });
+
+  it("等候房间里打开「观战看手牌」后开局，观战能看到所有人的暗牌，但种子等服务端字段照样拿不到；局中不能再关", async () => {
+    const { host, viewer, owners } = await watchedGame(true);
+    const godView = latest.get(viewer)!.game!;
+    expect(latest.get(viewer)!.access.spectatorsSeeAll).toBe(true);
+    for (const key of SERVER_ONLY) expect(hiddenField((godView as unknown as Record<string, unknown>)[key])).toBe(true);
+    expect(secretsSeen(godView)).toBeGreaterThanOrEqual(owners);
+    expect((await access(host, { spectatorsSeeAll: false })).ok).toBe(false);
   });
 
   it("房主关闭观战会把观战的人请出去；房间解散时观战的人也会收到通知", async () => {
