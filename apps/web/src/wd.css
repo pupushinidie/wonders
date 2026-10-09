@@ -1,0 +1,27 @@
+/* 调试牌桌（引擎联调用）：界面阶段会整个换掉。 */
+.wd-debug { padding: 12px 16px; font-size: 14px; color: var(--ink, #f1ece0); }
+.wd-topbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; justify-content: space-between; }
+.wd-topbar-right { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.wd-status { font-size: 16px; }
+.wd-timer { color: #f0c048; }
+.wd-note { opacity: 0.7; font-size: 12px; }
+.wd-players { width: 100%; border-collapse: collapse; margin: 8px 0; }
+.wd-players td { border: 1px solid #3d2e22; padding: 4px 6px; vertical-align: top; }
+.wd-me td { background: #2e2319; }
+.wd-city span { display: block; }
+.wd-c-brown { color: #c88a52; } .wd-c-gray { color: #b8b8b8; } .wd-c-blue { color: #6aa8f0; } .wd-c-yellow { color: #f0c048; }
+.wd-c-red { color: #f06a5a; } .wd-c-green { color: #6ad07a; } .wd-c-purple { color: #c08af0; }
+.wd-hand ul { list-style: none; padding: 0; }
+.wd-hand li { margin: 4px 0; }
+.wd-actions { display: inline-flex; flex-wrap: wrap; gap: 4px; margin-left: 8px; }
+.wd-actions .quiet-button { padding: 2px 8px; font-size: 13px; }
+.wd-why { opacity: 0.7; }
+.wd-auto { margin-left: 4px; color: #f0c048; }
+.wd-final table { border-collapse: collapse; }
+.wd-final td, .wd-final th { border: 1px solid #3d2e22; padding: 2px 6px; }
+.wd-bottom { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 12px; }
+.wd-log ul { max-height: 260px; overflow: auto; padding-left: 16px; font-size: 13px; }
+.wd-watch { display: flex; gap: 4px; flex-wrap: wrap; }
+.app-shell .gm-panel.wd-rules { width: min(640px, 100%); max-height: 90vh; overflow: auto; }
+.app-shell .gm-panel.wd-rules li { margin: 6px 0; font-size: 13px; line-height: 1.6; }
+.wd-member-avatar span { display: grid; place-items: center; width: 100%; height: 100%; font-size: 18px; }

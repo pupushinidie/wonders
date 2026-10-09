@@ -9,8 +9,8 @@ export function roomRole(room: LobbyRoomSnapshot) {
 }
 
 /** 这款游戏有没有藏起来的信息（手牌等）；没有的话不显示「观战看手牌」。 */
-const HIDDEN_INFO = false;
-/** 藏起来的是什么（显示在开关上）。 */
+const HIDDEN_INFO = true;
+/** 藏起来的是什么（显示在开关上）：手牌、交了还没亮的牌、垫在奇迹下的牌、弃牌堆。 */
 const SECRET = "手牌";
 
 const ALL_OPTIONS: { key: keyof RoomAccess; label: string; hint: string }[] = [

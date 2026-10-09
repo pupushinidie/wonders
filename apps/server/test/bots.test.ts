@@ -14,9 +14,9 @@ import {
 } from "@wonders/game";
 
 // ---------- 每款游戏不一样的地方 ----------
-/** 测试里真人怎么走：从合法动作里挑一个（要保证对局能走完）。多米诺王国：第一个合法动作（放不下就弃，对局照样会结束）。 */
+/** 测试里真人怎么走：从合法动作里挑一个（要保证对局能走完）。七大奇迹：能建就建（第一个建造动作），否则第一个动作（弃牌）。 */
 function humanMove(_game: GameState, actions: GameCommand[]): GameCommand {
-  return actions[0]!;
+  return actions.find((action) => action.type === "PLAY" && action.action === "build") ?? actions[0]!;
 }
 /** 这位玩家自己做了点什么（不是超时、不是轮到他）。 */
 function actedBy(room: LobbyRoomSnapshot, playerId: string): boolean {
@@ -26,10 +26,10 @@ function actedBy(room: LobbyRoomSnapshot, playerId: string): boolean {
   }) === true;
 }
 /** 最小的房间人数选项、开局至少几人。 */
-const MIN_CAPACITY: Capacity = 2;
-const MIN_PLAYERS = 2;
-/** 「一个人加满人机」用几人房；「加满后加不了」用几人房。 */
-const SOLO_CAPACITY: Capacity = 4;
+const MIN_CAPACITY: Capacity = 3;
+const MIN_PLAYERS = 3;
+/** 「一个人加满人机」用几人房；「加满后加不了」用几人房。7 人房：人机排到咕噜六号。 */
+const SOLO_CAPACITY: Capacity = 7;
 const FULL_TEST_CAPACITY: Capacity = 3;
 // ----------------------------------------
 
@@ -170,7 +170,7 @@ describe("人机", () => {
     await create(host, nick("独行"), SOLO_CAPACITY);
     for (let seat = 1; seat < SOLO_CAPACITY; seat += 1) expect((await addBot(host)).ok).toBe(true);
     const names = (await updateWhere(host, (snapshot) => snapshot.members.length === SOLO_CAPACITY)).members.map((member) => member.name);
-    expect(names.slice(1)).toEqual(["咕噜一号", "咕噜二号", "咕噜三号", "咕噜四号"].slice(0, SOLO_CAPACITY - 1));
+    expect(names.slice(1)).toEqual(["咕噜一号", "咕噜二号", "咕噜三号", "咕噜四号", "咕噜五号", "咕噜六号"].slice(0, SOLO_CAPACITY - 1));
 
     expect((await start(host)).ok).toBe(true);
     const stop = autoplay(host);
@@ -208,10 +208,11 @@ describe("人机", () => {
     const idleSeat = seatOf(idle);
     expect(autoRoom.game!.events.some((event) => event.type === "TurnTimedOut" && event.player === idleSeat)).toBe(true);
 
-    // 托管后轮到他时没有倒计时，人机替他走：之后他的回合不再超时，而是真的行动
-    const hisTurn = await updateWhere(idle, (snapshot) => isAuto(snapshot) && snapshot.game?.players[snapshot.game.currentPlayer]?.id === idleSeat);
-    expect(hisTurn.turnRemainingMs).toBeUndefined();
-    await updateWhere(idle, (snapshot) => actedBy(snapshot, idleSeat));
+    // 托管后人机替他出：之后的轮次他不再超时，而是由人机交牌（同时出牌，没有「轮到他」，看他的 Submitted 事件）
+    const autoStep = autoRoom.game!.step;
+    const handed = await updateWhere(idle, (snapshot) =>
+      isAuto(snapshot) && snapshot.game!.step > autoStep && actedBy(snapshot, idleSeat));
+    expect(handed.game!.events.some((event) => event.type === "TurnTimedOut" && event.player === idleSeat)).toBe(false);
 
     expect((await call<void>((ack) => idle.emit("room:auto", false, ack))).ok).toBe(true);
     await updateWhere(idle, (snapshot) => !isAuto(snapshot));

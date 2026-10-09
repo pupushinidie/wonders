@@ -16,16 +16,16 @@ import {
 
 // ---------- 每款游戏不一样的地方 ----------
 /** 最小的房间人数（对局要坐满才开始测）。 */
-const CAPACITY: Capacity = 2;
-/** 这款游戏有没有藏起来的信息（多米诺王国只有别人提前放好的位置，观战一律看不到，不做「观战看全部」开关）。 */
-const HIDDEN_INFO = false;
-/** 开局后先走几步（每步选轮到的人的第一个合法动作），让场上有藏起来的牌。 */
-const STEPS = 4;
-/** 只在服务端的字段（牌堆顺序、种子等），观战的人永远拿不到。 */
-const SERVER_ONLY = ["seed", "rngState", "deck", "setAside", "log"];
-/** 这份状态里看得到几样藏起来的东西（手牌之类）。 */
-function secretsSeen(_game: GameState): number {
-  return 0;
+const CAPACITY: Capacity = 3;
+/** 这款游戏有没有藏起来的信息：手牌、交了还没亮的牌、垫在奇迹下的牌、弃牌堆。 */
+const HIDDEN_INFO = true;
+/** 开局后先走几步（每步选能动的人的第一个合法动作：弃第一张牌），让场上有交了没亮的牌、弃牌堆。 */
+const STEPS = 5;
+/** 只在服务端的字段（种子、随机数状态、动作序列、预先排好的手牌），观战的人永远拿不到。 */
+const SERVER_ONLY = ["seed", "rngState", "log", "stacked"];
+/** 这份状态里看得到几样藏起来的东西：手牌张数 + 交了没亮的牌 + 垫奇迹的牌 + 弃牌堆牌面。 */
+function secretsSeen(game: GameState): number {
+  return game.players.reduce((total, player) => total + player.hand.length + (player.play ? 1 : 0) + player.stageCards.length, 0) + game.discard.length;
 }
 // ----------------------------------------
 
