@@ -2,8 +2,8 @@
  * 规则核对（背靠背）用的独立规则模型：只依据规则书、补充文件 §2.4 / §2.5 的卡表和奇迹板 JSON（fixtures/），
  * 不读、不复用引擎的实现。用来和引擎的结果对照（计分、军事、价格、能不能买）。
  */
-import cardsJson from "./fixtures/cards.json";
-import wondersJson from "./fixtures/wonders.json";
+import cardsJson from "./fixtures/cards.json" with { type: "json" };
+import wondersJson from "./fixtures/wonders.json" with { type: "json" };
 
 export type Color = "brown" | "gray" | "blue" | "yellow" | "red" | "green" | "purple";
 export interface FxEffect {
