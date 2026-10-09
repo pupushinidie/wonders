@@ -80,6 +80,8 @@ export interface BotTuning {
   deferStage: number;
   /** 奥林匹亚 A 的免费建造留着的价值（本时代还有后面几轮时）。 */
   olympiaKeep: number;
+  /** 军事输赢变化的权重。 */
+  militaryWeight: number;
 }
 
 /** 「普通」难度的参数。调弱时改这里（比如 denial 改 0、cardWeight 减半），模拟脚本 sim-wonders.ts 复测。 */
@@ -92,12 +94,13 @@ export const BOT_TUNING: BotTuning = {
   neighborTax: 0.17,
   liquidity: 0.25,
   liquidityCap: 4,
-  chainBonus: [0, 1.0, 0.8],
-  scienceFuture: 0.5,
+  chainBonus: [0, 0.3, 0.25],
+  scienceFuture: 0.3,
   scienceFutureCards: [0, 3, 2, 1],
   denial: 0.35,
   deferStage: 0.8,
   olympiaKeep: 1.5,
+  militaryWeight: 1.6,
 };
 
 let T: BotTuning = BOT_TUNING;
@@ -477,7 +480,7 @@ function militaryGain(ctx: Ctx, index: number, shields: number): number {
     const theirs = shieldsOf(view.players[other]!);
     gain += militaryVs(mine + shields, theirs, ctx) - militaryVs(mine, theirs, ctx);
   }
-  return gain;
+  return gain * T.militaryWeight;
 }
 
 function militaryText(ctx: Ctx, index: number, shields: number): string {
@@ -987,13 +990,14 @@ function chooseDiscardBuild(view: GameState, me: number): BotDecision {
  * 挑最高的；差不多时按座位错开一点，免得每局都一样。
  */
 export const WONDER_RATING: Record<WonderKey, Record<WonderSide, number>> = {
-  giza: { A: 0, B: 0 },
-  rhodes: { A: 0, B: 0 },
-  alexandria: { A: 0, B: 0 },
-  ephesus: { A: 0, B: 0 },
-  babylon: { A: 0, B: 0 },
-  olympia: { A: 0, B: 0 },
-  halicarnassus: { A: 0, B: 0 },
+  // 2026-10-09 全人机自对弈 3000 局（3–7 人、随机 A/B），每块板每面比同局平均高几分
+  giza: { A: 0.2, B: 0.6 },
+  rhodes: { A: -0.6, B: 2.3 },
+  alexandria: { A: -1.4, B: -0.3 },
+  ephesus: { A: -0.6, B: 1.9 },
+  babylon: { A: -1.1, B: -0.5 },
+  olympia: { A: 0.7, B: -0.6 },
+  halicarnassus: { A: -1.2, B: 0.5 },
 };
 
 const WONDER_PITCH: Record<WonderKey, string> = {

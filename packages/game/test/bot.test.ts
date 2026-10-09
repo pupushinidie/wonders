@@ -304,7 +304,7 @@ describe("人机的关键决策", () => {
       age: 1,
       round: 6,
       players: [
-        { wonder: "olympia", built: ["Lumber Yard", "Clay Pool"], coins: 3, hand: ["Baths", "Loom"] },
+        { wonder: "halicarnassus", built: ["Lumber Yard", "Clay Pool"], coins: 3, hand: ["Baths", "Loom"] },
         { wonder: "giza", built: ["Ore Vein"] },
         { wonder: "rhodes", built: ["Stone Pit", "Altar", "Theater", "Pawnshop"], stages: 1 },
       ],
