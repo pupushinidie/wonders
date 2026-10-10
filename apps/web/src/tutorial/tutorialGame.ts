@@ -66,16 +66,16 @@ export const TIPS = {
   timeout: { title: "时间到了", text: "人机替你出了这一轮。连续超时 2 次会转成托管，点「取消托管」就能拿回来。" },
 } as const;
 
-/** 这一步该出哪些小贴士（按优先顺序；只出第一条没看过的）。 */
+/** 这一步该出哪些小贴士（按优先顺序；没看过的前两条合成一条出，只在这一步出）。 */
 export function detectTips(game: GameState, selfId: string): string[] {
   const ids: string[] = [];
-  for (const event of game.events) {
-    if (event.type === "TurnTimedOut" && event.player === selfId) ids.push("timeout");
-    if (event.type === "Revealed" && event.plays.some((entry) => entry.player === selfId && entry.income > 0)) ids.push("sold");
-    if (event.type === "MilitaryResolved") ids.push("military");
-    if (event.type === "AgeStarted" && event.age === 2) ids.push("age-2");
-    if (event.type === "AgeStarted" && event.age === 3) ids.push("age-3");
-  }
+  const events = game.events;
+  // 顺序就是优先级：只在这一步有用的（换时代的传牌方向、超时）排前面，以后还会再遇到的（卖资源、军事）排后面
+  if (events.some((event) => event.type === "TurnTimedOut" && event.player === selfId)) ids.push("timeout");
+  if (events.some((event) => event.type === "AgeStarted" && event.age === 2)) ids.push("age-2");
+  if (events.some((event) => event.type === "AgeStarted" && event.age === 3)) ids.push("age-3");
+  if (events.some((event) => event.type === "MilitaryResolved")) ids.push("military");
+  if (events.some((event) => event.type === "Revealed" && event.plays.some((entry) => entry.player === selfId && entry.income > 0))) ids.push("sold");
   const me = game.players.find((player) => player.id === selfId);
   if (me && game.phase === "play" && !me.submitted && me.hand.length > 0) {
     if (game.round === 6) ids.push("last-round");

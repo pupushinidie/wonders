@@ -198,6 +198,8 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
   }, [selected, shownHint]);
   // 挑弃牌、自选奇迹的弹窗会盖住出牌面板上的「提示」：弹窗开着时另放一个浮在上面的
   const modalHint = canHint && ((discardOpen && discardMine) || (wondersOpen && chooseMine));
+  // 弹窗开着、或者「提示」气泡在的时候，小贴士先收起来（不压在上面）
+  const tipHidden = Boolean(shownHint) || (discardOpen && discardMine) || (wondersOpen && game.phase === "wonders") || openSeat !== null || (finished && !finalHidden);
   const tips = useFirstTimeTips(GAME_ID, game.version, () => detectTips(game, myId), TIPS, mode === "online" && !spectating);
 
   // ---------- 键盘：1–7 选牌，B / W / D 出牌，U 撤回，Esc 取消 ----------
@@ -444,7 +446,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
       {modalHint && (
         <button className={shownHint ? "quiet-button wd-hint-btn wd-hint-float on" : "quiet-button wd-hint-btn wd-hint-float"} type="button" data-tutorial="hint-float" onClick={toggleHint}>提示</button>
       )}
-      {tips.tip && <TipToast tip={tips.tip} onClose={tips.dismiss} onNever={tips.never} />}
+      {tips.tip && !tipHidden && <TipToast tip={tips.tip} onClose={tips.dismiss} onNever={tips.never} />}
     </>
   );
 
