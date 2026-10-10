@@ -1,0 +1,61 @@
+{
+ "scene/night-1.png": {
+  "src": "r1/scenes/scene-night-1-s33.png",
+  "focus": 278,
+  "note": "评审第 1 轮签字"
+ },
+ "scene/night-2.png": {
+  "src": "r1/scenes/scene-night-2-s42.png",
+  "focus": 319,
+  "note": "评审第 1 轮签字"
+ },
+ "scene/day-1.png": {
+  "src": "r1/scenes/scene-day-1-s13.png",
+  "focus": 265,
+  "note": "评审第 1 轮签字"
+ },
+ "scene/day-2.png": {
+  "src": "r1/scenes/scene-day-2-s21.png",
+  "focus": 328,
+  "note": "评审第 1 轮签字"
+ },
+ "wonders/giza-a.png": {
+  "src": "r1/wonders/giza-a-s101.png",
+  "colors": 32,
+  "note": "评审第 1 轮签字",
+  "sky": true
+ },
+ "wonders/giza-b.png": {
+  "src": "r1/wonders/giza-b-s201.png",
+  "colors": 32,
+  "note": "评审第 1 轮签字"
+ },
+ "wonders/alexandria-a.png": {
+  "src": "r1/wonders/alexandria-a-s101.png",
+  "colors": 32,
+  "note": "评审第 1 轮签字",
+  "sky": true
+ },
+ "wonders/alexandria-b.png": {
+  "src": "r1/wonders/alexandria-b-s201.png",
+  "colors": 32,
+  "note": "评审第 1 轮签字"
+ },
+ "wonders/ephesus-a.png": {
+  "src": "r1/wonders/ephesus-a-s103.png",
+  "colors": 32,
+  "note": "评审第 1 轮签字",
+  "sky": true
+ },
+ "wonders/ephesus-b.png": {
+  "src": "r1/wonders/ephesus-b-s202.png",
+  "colors": 32,
+  "note": "评审第 1 轮签字"
+ },
+ "wonders/olympia-a.png": {
+  "src": "r1/wonders/olympia-a-s103.png",
+  "colors": 32,
+  "note": "评审第 1 轮签字",
+  "sky": true
+ }
+}

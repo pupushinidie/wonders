@@ -1,0 +1,160 @@
+{
+ "scene/day-1.png": {
+  "options": [
+   "r1/scenes/scene-day-1-s13.png",
+   "r1/scenes/scene-day-1-s11.png",
+   "r1/scenes/scene-day-1-k43.png"
+  ],
+  "pick": 0,
+  "note": "评审签字：柱廊框住海港，灯塔最靠近正中，手机也露得出来"
+ },
+ "scene/day-2.png": {
+  "options": [
+   "r1/scenes/scene-day-2-s21.png",
+   "r1/scenes/scene-day-2-s22.png",
+   "r1/scenes/scene-day-2-s23.png"
+  ],
+  "pick": 0,
+  "note": "评审签字：栏杆露台 + 长堤灯塔，构图对称，中间平静"
+ },
+ "scene/night-1.png": {
+  "options": [
+   "r1/scenes/scene-night-1-s33.png",
+   "r1/scenes/scene-night-1-s31.png",
+   "r1/scenes/scene-night-1-s32.png"
+  ],
+  "pick": 0,
+  "note": "评审签字：和白天 1 同一种柱廊构图，灯塔靠中，两只火盆"
+ },
+ "scene/night-2.png": {
+  "options": [
+   "r1/scenes/scene-night-2-s42.png",
+   "r1/scenes/scene-night-2-s41.png",
+   "r1/scenes/scene-night-2-s43.png"
+  ],
+  "pick": 0,
+  "note": "评审签字：和白天 2 同构图，月光倒影在中间，左右对称"
+ },
+ "wonders/giza-a.png": {
+  "options": [
+   "r1/wonders/giza-a-s101.png",
+   "r1/wonders/giza-a-s102.png",
+   "r1/wonders/giza-a-s103.png"
+  ],
+  "pick": 0,
+  "note": "评审签字：三座都在，近大远小，×1 最清楚"
+ },
+ "wonders/giza-b.png": {
+  "options": [
+   "r1/wonders/giza-b-s201.png",
+   "r1/wonders/giza-b-s202.png",
+   "r1/wonders/giza-b-s203.png"
+  ],
+  "pick": 0,
+  "note": "评审签字：主体占七成高，黄昏色和 A 面一眼分开"
+ },
+ "wonders/rhodes-a.png": {
+  "options": [
+   "r1/wonders/rhodes-a-s102.png",
+   "r1/wonders/rhodes-a-s101.png",
+   "r1/wonders/rhodes-a-s103.png"
+  ],
+  "pick": 0,
+  "note": "重画中（第 1 批的青绿铜像像自由女神，改画青铜步兵跨港）；这张铜褐色的先暂代"
+ },
+ "wonders/rhodes-b.png": {
+  "options": [
+   "r1/wonders/rhodes-b-s203.png",
+   "r1/wonders/rhodes-b-s201.png"
+  ],
+  "pick": 0,
+  "note": "重画中；这张铜色、人像大，先暂代（s202 脚下有坏图，已去掉）"
+ },
+ "wonders/alexandria-a.png": {
+  "options": [
+   "r1/wonders/alexandria-a-s101.png",
+   "r1/wonders/alexandria-a-s102.png"
+  ],
+  "pick": 0,
+  "note": "评审签字：分层塔身顶上有火，岛和古帆船（s103 有现代汽船，已去掉）"
+ },
+ "wonders/alexandria-b.png": {
+  "options": [
+   "r1/wonders/alexandria-b-s201.png",
+   "r1/wonders/alexandria-b-s203.png"
+  ],
+  "pick": 0,
+  "note": "评审先签这张：顶上有火、古帆船；补画的一张到了再比"
+ },
+ "wonders/ephesus-a.png": {
+  "options": [
+   "r1/wonders/ephesus-a-s103.png",
+   "r1/wonders/ephesus-a-s101.png",
+   "r1/wonders/ephesus-a-s102.png"
+  ],
+  "pick": 0,
+  "note": "评审签字：神庙占画面约 75% 高，双排柱看得出来，×1 下最清楚"
+ },
+ "wonders/ephesus-b.png": {
+  "options": [
+   "r1/wonders/ephesus-b-s202.png",
+   "r1/wonders/ephesus-b-s201.png",
+   "r1/wonders/ephesus-b-s203.png"
+  ],
+  "pick": 0,
+  "note": "评审签字：宽神庙，黄昏，和 A 面分得开"
+ },
+ "wonders/olympia-a.png": {
+  "options": [
+   "r1/wonders/olympia-a-s103.png",
+   "r1/wonders/olympia-a-s101.png",
+   "r1/wonders/olympia-a-s102.png"
+  ],
+  "pick": 0,
+  "note": "评审签字：神殿正面，柱间金色坐像 ×1 也认得出"
+ },
+ "wonders/olympia-b.png": {
+  "options": [
+   "r1/wonders/olympia-b-s203.png",
+   "r1/wonders/olympia-b-s201.png",
+   "r1/wonders/olympia-b-s202.png"
+  ],
+  "pick": 0,
+  "note": "重画中（侧面神庙和以弗所 B 撞脸，改画正面黄昏 + 大坐像）；先暂代"
+ },
+ "wonders/halicarnassus-a.png": {
+  "options": [
+   "r1/wonders/halicarnassus-a-s103.png",
+   "r1/wonders/halicarnassus-a-s102.png"
+  ],
+  "pick": 0,
+  "note": "重画中（第 1 批像普通神庙，s101 背景有宣礼塔已去掉）；先暂代"
+ },
+ "wonders/halicarnassus-b.png": {
+  "options": [
+   "r1/wonders/halicarnassus-b-s202.png",
+   "r1/wonders/halicarnassus-b-s201.png",
+   "r1/wonders/halicarnassus-b-s203.png"
+  ],
+  "pick": 0,
+  "note": "重画中；屋顶骑马剪影较好认，先暂代"
+ },
+ "wonders/babylon-a.png": {
+  "options": [
+   "r1/wonders/babylon-a-s103.png",
+   "r1/wonders/babylon-a-s101.png",
+   "r1/wonders/babylon-a-s102.png"
+  ],
+  "pick": 0,
+  "note": "重画中（第 1 批画成了玛雅丛林金字塔，不合格），这几张只供对比"
+ },
+ "wonders/babylon-b.png": {
+  "options": [
+   "r1/wonders/babylon-b-s202.png",
+   "r1/wonders/babylon-b-s201.png",
+   "r1/wonders/babylon-b-s203.png"
+  ],
+  "pick": 0,
+  "note": "重画中，同上"
+ }
+}

@@ -10,7 +10,12 @@ selection.json：{ "<public/art 下的路径>": { 来源 }, ... }，来源是下
   {"strip": "r1/anim/brazier", "frames": [0,1,2,3,4,5]}   动画帧目录里的帧，横排成帧条
 其余字段：「note」写选它的理由（不参与导出）。
 
-用法：python art/export.py [路径前缀 ...]   导出后自动跑 placeholders.py --check
+  {"src": ..., "sky": true}                              A 面奇迹：和上边连通的天空统一换成 spec 的海港蓝色阶（评审 P2）
+  {"src": ..., "colors": 32}                              量化到 ≤N 色（spec §1：插画 ≤32 色）
+  {"src": ..., "focus": 278}                              场景：灯塔横坐标，写进 scene/focus.json
+
+定稿先导出到 art/out/final/（同文件名同尺寸），换图验收开始时再加 --public 覆盖 apps/web/public/art/。
+用法：python art/export.py [--public] [路径前缀 ...]
 """
 from __future__ import annotations
 
@@ -25,7 +30,8 @@ import codeart
 
 ART = pathlib.Path(__file__).resolve().parent
 ROOT = ART.parent
-OUT = ROOT / "apps/web/public/art"
+OUT = ART / "out" / "final"
+PUBLIC = ROOT / "apps/web/public/art"
 SEL = json.loads((ART / "selection.json").read_text())
 MANIFEST = {it["path"]: it for it in json.loads((ART / "manifest.json").read_text())}
 CAND = ART / "out"
@@ -97,6 +103,47 @@ def card_back(pattern: Image.Image, age: int) -> Image.Image:
     return img
 
 
+SKY_RAMP = [(228, 240, 244), (200, 224, 234), (156, 195, 214), (126, 173, 198)]
+
+
+def unify_sky(img: Image.Image) -> Image.Image:
+    """和上边连通、偏蓝青绿的天空像素，按亮度换成 spec 的天色色阶；云（低饱和、很亮）不动。"""
+    import colorsys
+    from collections import deque
+    img = img.convert("RGB")
+    w, h = img.size
+    px = img.load()
+
+    def skyish(p):
+        r, g, b = (c / 255 for c in p)
+        hh, ll, ss = colorsys.rgb_to_hls(r, g, b)
+        return 0.25 <= hh <= 0.62 and ss > 0.25 and ll > 0.45
+
+    seen = set()
+    q = deque((x, 0) for x in range(w) if skyish(px[x, 0]))
+    seen.update(q)
+    while q:
+        x, y = q.popleft()
+        for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+            if 0 <= nx < w and 0 <= ny < h and (nx, ny) not in seen and skyish(px[nx, ny]):
+                seen.add((nx, ny))
+                q.append((nx, ny))
+    if not seen:
+        return img
+    lums = sorted({sum(px[p]) for p in seen})
+    for x, y in seen:
+        rank = lums.index(sum(px[x, y])) / max(1, len(lums) - 1)
+        px[x, y] = SKY_RAMP[min(3, int((1 - rank) * 4))]
+    return img
+
+
+def quantize(img: Image.Image, n: int) -> Image.Image:
+    colors = img.convert("RGB").getcolors(1 << 16)
+    if colors and len(colors) <= n:
+        return img
+    return img.convert("RGB").quantize(colors=n, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).convert("RGB")
+
+
 def build(path: str, spec: dict) -> Image.Image:
     w, h, frames = spec["w"], spec["h"], spec["frames"]
     if "code" in spec:
@@ -123,7 +170,12 @@ def build(path: str, spec: dict) -> Image.Image:
     if "back" in spec:
         return card_back(img, spec["back"])
     if not spec["transparent"]:
-        return fit(img.convert("RGB"), w, h, False)
+        img = fit(img.convert("RGB"), w, h, False)
+        if spec.get("sky"):
+            img = unify_sky(img)
+        if spec.get("colors"):
+            img = quantize(img, spec["colors"])
+        return img
     img = clean_alpha(img.convert("RGBA"))
     if spec.get("trim", True):
         img = trim(img)
@@ -139,8 +191,13 @@ def build(path: str, spec: dict) -> Image.Image:
     return img
 
 
-def main(prefixes: list[str]) -> int:
+def main(argv: list[str]) -> int:
+    global OUT
+    if "--public" in argv:
+        OUT = PUBLIC
+    prefixes = [a for a in argv if not a.startswith("--")]
     n = 0
+    focus = {}
     for path, src in SEL.items():
         if prefixes and not any(path.startswith(p) for p in prefixes):
             continue
@@ -158,9 +215,17 @@ def main(prefixes: list[str]) -> int:
         target = OUT / path
         target.parent.mkdir(parents=True, exist_ok=True)
         img.save(target, optimize=True)
+        if "focus" in spec:
+            focus[pathlib.Path(path).stem] = spec["focus"]
         n += 1
-    print(f"导出 {n} 个文件")
-    return subprocess.call([sys.executable, str(ART / "placeholders.py"), "--check"])
+    if focus:
+        fpath = OUT / "scene/focus.json"
+        old = json.loads(fpath.read_text()) if fpath.exists() else {}
+        fpath.write_text(json.dumps(old | focus, indent=1) + "\n")
+    print(f"导出 {n} 个文件 → {OUT}")
+    if OUT == PUBLIC:
+        return subprocess.call([sys.executable, str(ART / "simple.py"), "--check"])
+    return 0
 
 
 if __name__ == "__main__":

@@ -113,6 +113,34 @@ def scenes(names: list[str]) -> None:
             print("scenes", target, "ok; spent", round(pixellab.spent_usd(), 4), flush=True)
 
 
+NIGHT_SCENE = {
+    "night-1": SCENE["day-1"].replace("clear sky with a few clouds", "at night under a dark navy starry sky with a full moon, "
+                                      "silver moonlight on the marble and the sea, the lighthouse fire glowing warm orange, two lit "
+                                      "bronze fire braziers with orange flames in the foreground, warm window lights in the town"),
+    "night-2": SCENE["day-2"].replace("clear sky", "at night under a dark navy starry sky with a full moon, silver moonlight "
+                                      "shimmering on the sea, the lighthouse fire glowing warm orange, bronze fire braziers on the "
+                                      "balustrade, warm window lights in the town"),
+}
+
+
+def night_scenes(names: list[str]) -> None:
+    for key, prompt in NIGHT_SCENE.items():
+        if names and key not in names:
+            continue
+        for seed in (31, 32, 33) if key == "night-1" else (41, 42, 43):
+            target = f"scene-{key}-s{seed}"
+            out = OUT / "scenes"
+            if (out / f"{target}.png").exists():
+                continue
+            pixellab.generate_image(target, {
+                "description": f"{prompt}, deep blue and silver palette with warm orange fire accents, 16-bit pixel art, {NO}, wide view",
+                "image_size": {"width": 512, "height": 288},
+                "detail": "highly detailed",
+                "seed": seed,
+            }, out, endpoint="/create-image-pixen")
+            print("scenes", target, "ok; spent", round(pixellab.spent_usd(), 4), flush=True)
+
+
 def scene_nights(sources: list[str]) -> None:
     """白天候选 → 同构图夜景（/edit-image）。"""
     out = OUT / "scenes"
@@ -285,7 +313,7 @@ def decor(names: list[str]) -> None:
                                  "lighting, crisp clean pixels, no people, no text, no letters, no logo"), 384, 192, seed)
 
 
-GROUPS = {"scenes": scenes, "wonders": wonders, "cards": cards, "backs": backs, "small": small, "decor": decor}
+GROUPS = {"nightscenes": night_scenes, "scenes": scenes, "wonders": wonders, "cards": cards, "backs": backs, "small": small, "decor": decor}
 
 if __name__ == "__main__":
     group, *rest = sys.argv[1:]
