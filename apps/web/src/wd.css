@@ -374,9 +374,12 @@
 
 /* 列表项（手机手牌、弃牌堆） */
 .wd-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  grid-template-rows: 24px 24px 24px;
+  column-gap: 6px;
+  row-gap: 0;
   align-items: center;
-  gap: 6px;
   min-width: 0;
   height: 80px;
   padding: 4px 6px 4px 4px;
@@ -390,14 +393,13 @@
   text-align: left;
 }
 button.wd-item { cursor: pointer; }
-.wd-item-pic { position: relative; flex: 0 0 auto; width: 56px; height: 44px; }
+.wd-item-pic { position: relative; grid-row: 1 / 3; grid-column: 1; align-self: start; width: 56px; height: 44px; margin-top: 2px; }
 .wd-item-art { display: block; width: 56px; height: 44px; box-shadow: 0 0 0 1px var(--wd-ink); image-rendering: pixelated; }
 .wd-item-cost { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 2px; max-width: 56px; padding: 1px; background: #ffffff; box-shadow: 1px 1px 0 0 var(--wd-ink); }
-.wd-item-text { display: flex; flex-direction: column; justify-content: center; gap: 1px; min-width: 0; }
-.wd-item-name { overflow: hidden; font-size: 24px; line-height: 24px; white-space: nowrap; }
-.wd-item-eff { display: flex; align-items: center; gap: 2px; height: 24px; overflow: hidden; white-space: nowrap; }
+.wd-item-name { grid-row: 1; grid-column: 2; min-width: 0; overflow: hidden; font-size: 24px; line-height: 24px; white-space: nowrap; }
+.wd-item-eff { grid-row: 3; grid-column: 1 / 3; min-width: 0; display: flex; align-items: center; gap: 2px; height: 24px; overflow: hidden; white-space: nowrap; }
 .wd-item-eff .wd-num { color: var(--wd-ink-text); font-size: 24px; font-weight: 400; line-height: 24px; }
-.wd-item-status, .wd-item-sub { align-self: flex-start; padding: 0 4px; font-size: 24px; line-height: 24px; white-space: nowrap; }
+.wd-item-status, .wd-item-sub { grid-row: 2; grid-column: 2; justify-self: start; padding: 0 4px; font-size: 24px; line-height: 24px; white-space: nowrap; }
 .wd-item-sub { padding: 0; color: #5a6e88; font-size: 12px; }
 .wd-item-status.own { color: #ffffff; background: #1f8a45; }
 .wd-item-status.trade { color: #2a1c06; background: #f0be32; }

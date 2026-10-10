@@ -166,7 +166,7 @@ export function CardFace({ id, n, status, selected = false, submitted = false, o
   );
 }
 
-/** 列表项：左边 56×44 插画（×1，左上角叠成本小点），右边卡名、效果、状态（手机手牌、弃牌堆、详情）。
+/** 列表项：左上 56×44 插画（×1，左上角叠成本小点），右边卡名和状态，最下面一整行是效果（手机手牌、弃牌堆、详情）。
  * 正式插画里没有效果图标，效果和成本都用 DOM 画，不靠插画。 */
 export function CardItem({ id, status, selected = false, submitted = false, onClick, sub, tutorial }: {
   id: CardId;
@@ -191,11 +191,9 @@ export function CardItem({ id, status, selected = false, submitted = false, onCl
           </span>
         )}
       </span>
-      <span className="wd-item-text">
-        <span className="wd-item-name">{shortName(id)}</span>
-        <span className="wd-item-eff"><EffectIcons effect={def.effect} s={1} /></span>
-        {submitted ? <span className="wd-item-status sent">已出</span> : status ? <span className={`wd-item-status ${status.kind}`}>{status.text}</span> : sub ? <span className="wd-item-sub">{sub}</span> : null}
-      </span>
+      <span className="wd-item-name">{shortName(id)}</span>
+      {submitted ? <span className="wd-item-status sent">已出</span> : status ? <span className={`wd-item-status ${status.kind}`}>{status.text}</span> : sub ? <span className="wd-item-sub">{sub}</span> : <span />}
+      <span className="wd-item-eff"><EffectIcons effect={def.effect} s={1} /></span>
     </>
   );
   const title = `${def.zh}：${cardText(id)}`;
