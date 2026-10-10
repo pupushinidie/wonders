@@ -378,7 +378,7 @@
   align-items: center;
   gap: 6px;
   min-width: 0;
-  height: 60px;
+  height: 80px;
   padding: 4px 6px 4px 4px;
   border: 0;
   border-left: 8px solid var(--band);
@@ -390,10 +390,14 @@
   text-align: left;
 }
 button.wd-item { cursor: pointer; }
-.wd-item-art { flex: 0 0 auto; width: 56px; height: 44px; box-shadow: 0 0 0 1px var(--wd-ink); }
-.wd-item-text { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-width: 0; }
-.wd-item-name { overflow: hidden; font-size: 24px; line-height: 26px; white-space: nowrap; }
-.wd-item-status, .wd-item-sub { align-self: flex-start; padding: 0 4px; font-size: 24px; line-height: 26px; white-space: nowrap; }
+.wd-item-pic { position: relative; flex: 0 0 auto; width: 56px; height: 44px; }
+.wd-item-art { display: block; width: 56px; height: 44px; box-shadow: 0 0 0 1px var(--wd-ink); image-rendering: pixelated; }
+.wd-item-cost { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 2px; max-width: 56px; padding: 1px; background: #ffffff; box-shadow: 1px 1px 0 0 var(--wd-ink); }
+.wd-item-text { display: flex; flex-direction: column; justify-content: center; gap: 1px; min-width: 0; }
+.wd-item-name { overflow: hidden; font-size: 24px; line-height: 24px; white-space: nowrap; }
+.wd-item-eff { display: flex; align-items: center; gap: 2px; height: 24px; overflow: hidden; white-space: nowrap; }
+.wd-item-eff .wd-num { color: var(--wd-ink-text); font-size: 24px; font-weight: 400; line-height: 24px; }
+.wd-item-status, .wd-item-sub { align-self: flex-start; padding: 0 4px; font-size: 24px; line-height: 24px; white-space: nowrap; }
 .wd-item-sub { padding: 0; color: #5a6e88; font-size: 12px; }
 .wd-item-status.own { color: #ffffff; background: #1f8a45; }
 .wd-item-status.trade { color: #2a1c06; background: #f0be32; }
@@ -401,7 +405,7 @@ button.wd-item { cursor: pointer; }
 .wd-item-status.no { color: #ffffff; background: #a52a22; }
 .wd-item-status.dup { color: #ffffff; background: #5c5e64; }
 .wd-item-status.sent { color: #ffffff; background: var(--wd-sea); }
-.wd-item.dim .wd-item-art, .wd-item.dim .wd-item-name { filter: brightness(0.55); }
+.wd-item.dim .wd-item-art, .wd-item.dim .wd-item-name, .wd-item.dim .wd-item-eff { filter: brightness(0.55); }
 .wd-item.selected { box-shadow: 0 0 0 2px var(--wd-ink), 0 0 0 5px var(--wd-sea); }
 
 /* ---------- 出牌面板 ---------- */

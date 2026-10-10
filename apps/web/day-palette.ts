@@ -49,5 +49,5 @@ export const palette: DayPalette = {
     "--bad": "#d1303f",
   },
   // 卡面、奇迹板、卡名条、列表项是内容颜色，白天不换（它们的颜色本来就不在表里，这里防止以后加色时被误换）
-  keep: [".wd-card", ".wd-board", ".wd-strip", ".wd-item", ".wd-chip.chain", ".wd-ribbon"],
+  keep: [".wd-card", ".wd-board", ".wd-strip", ".wd-item", ".wd-item-", ".wd-chip.chain", ".wd-ribbon"],
 };
