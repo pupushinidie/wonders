@@ -160,6 +160,49 @@ describe("服务器不会被一个客户端打挂", () => {
     expect((await call(host, "room:access", { spectatorsSeeAll: false, allowSpectators: true })).ok).toBe(true);
   });
 
+  it("I55：先开「观战看手牌」再关「允许观战」，看手牌跟着关掉；开局后重新打开允许观战，没房间码的人从列表观战也看不到手牌", async () => {
+    const host = await connect();
+    const hostName = nick("绕开");
+    const created = await call<LobbyRoomSnapshot>(host, "room:create", { name: hostName, capacity: 3 });
+    expect(created.ok).toBe(true);
+    expect((await call(host, "room:add-bot")).ok).toBe(true);
+    expect((await call(host, "room:add-bot")).ok).toBe(true);
+    expect((await call(host, "room:access", { spectatorsSeeAll: true })).ok).toBe(true);
+    expect((await call(host, "room:access", { allowSpectators: false })).ok).toBe(true);
+    await sleep(20);
+    expect(latest.get(host)!.access).toMatchObject({ allowSpectators: false, spectatorsSeeAll: false });
+    expect((await call(host, "room:start")).ok).toBe(true);
+    // 局中重新打开允许观战：接受，但看手牌还是关着
+    expect((await call(host, "room:access", { allowSpectators: true })).ok).toBe(true);
+    await sleep(20);
+    expect(latest.get(host)!.access).toMatchObject({ allowSpectators: true, spectatorsSeeAll: false });
+    const spy = await connect();
+    const lobby = await call<{ id: string; players: { name: string }[] }[]>(spy, "lobby:get");
+    const listed = lobby.ok ? lobby.data.find((room) => room.players.some((player) => player.name === hostName)) : undefined;
+    expect(listed).toBeDefined();
+    const watched = await call<LobbyRoomSnapshot>(spy, "room:join", { name: nick("小号"), roomId: listed!.id, spectate: true });
+    expect(watched.ok).toBe(true);
+    expect(watched.ok && watched.data.game!.players.every((player) => player.hand.length === 0)).toBe(true);
+    // 局中一次把两个都打开也不行；局中关掉观战（看手牌也跟着关）再打开也打不开看手牌
+    expect((await call(host, "room:access", { allowSpectators: false })).ok).toBe(true);
+    expect((await call(host, "room:access", { allowSpectators: true, spectatorsSeeAll: true })).ok).toBe(false);
+  });
+
+  it("I55：局中「观战看手牌」开着时可以关观战（看手牌一起关），之后重新打开观战，看手牌不会回来", async () => {
+    const host = await connect();
+    expect((await call(host, "room:create", { name: nick("房主"), capacity: 3 })).ok).toBe(true);
+    expect((await call(host, "room:add-bot")).ok).toBe(true);
+    expect((await call(host, "room:add-bot")).ok).toBe(true);
+    expect((await call(host, "room:access", { spectatorsSeeAll: true })).ok).toBe(true);
+    expect((await call(host, "room:start")).ok).toBe(true);
+    expect((await call(host, "room:access", { allowSpectators: false })).ok).toBe(true);
+    await sleep(20);
+    expect(latest.get(host)!.access).toMatchObject({ allowSpectators: false, spectatorsSeeAll: false });
+    expect((await call(host, "room:access", { allowSpectators: true })).ok).toBe(true);
+    await sleep(20);
+    expect(latest.get(host)!.access).toMatchObject({ allowSpectators: true, spectatorsSeeAll: false });
+  });
+
   it("I10：昵称去掉零宽 / 方向控制字符；全是看不见的拒绝；真人不能叫「咕噜……」或带「人机」", async () => {
     const tryName = async (name: string) => {
       const client = await connect();

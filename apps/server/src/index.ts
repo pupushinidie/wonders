@@ -988,10 +988,18 @@ io.on("connection", (socket) => {
       }
       next[key] = value;
     }
-    // 「观战看手牌」只能在等候房间改：局中打开等于让房主用第二个窗口偷看别人的手牌
-    if (next.spectatorsSeeAll !== room.access.spectatorsSeeAll && room.status !== "waiting") {
-      ack({ ok: false, error: "对局开始后不能再改「观战看手牌」，等这局结束回到等候房间再改。" });
-      return;
+    // 关掉「允许观战」时「观战看手牌」也一起关（不然先开看手牌、再关观战，开局后重新打开观战就绕过了开局锁）
+    if (!next.allowSpectators) next.spectatorsSeeAll = false;
+    // 「观战看手牌」只能在等候房间改：局中打开等于让房主用第二个窗口偷看别人的手牌。
+    // 局中按有效值（允许观战 && 观战看手牌）判断：明着改这个开关、或者任何让有效值从关变开的改动都拒
+    if (room.status !== "waiting") {
+      const explicit = typeof settings?.spectatorsSeeAll === "boolean" && settings.spectatorsSeeAll !== room.access.spectatorsSeeAll;
+      const before = room.access.allowSpectators && room.access.spectatorsSeeAll;
+      const after = next.allowSpectators && next.spectatorsSeeAll;
+      if (explicit || (!before && after)) {
+        ack({ ok: false, error: "对局开始后不能再改「观战看手牌」，等这局结束回到等候房间再改。" });
+        return;
+      }
     }
     room.access = next;
     if (!next.allowSpectators && room.spectators.length > 0) {
