@@ -49,17 +49,36 @@ def grade(img: Image.Image, horizon: int | None = None) -> Image.Image:
     img = img.convert("RGB")
     w, h = img.size
     px = img.load()
+    # 天空：先只按「偏蓝青的亮像素」从上边洪水填充；云 = 很亮的连通块，只有整块都在画面上半部、而且贴着天空才算云
+    # （第 1 版把白色建筑、浅色石堤也当成云填成了晚霞色：陵墓、罗德岛的石堤）
     sky = set()
-    q = deque((x, 0) for x in range(w) if is_blue(px[x, 0]) or is_cloud(px[x, 0]))
+    q = deque((x, 0) for x in range(w) if is_blue(px[x, 0]))
     sky.update(q)
     while q:
         x, y = q.popleft()
         for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
             if 0 <= nx < w and 0 <= ny < h and (nx, ny) not in sky:
                 p = px[nx, ny]
-                if is_cloud(p) or (is_blue(p) and hls(p)[1] > 0.55):
+                if is_blue(p) and hls(p)[1] > 0.55:
                     sky.add((nx, ny))
                     q.append((nx, ny))
+    seen = set()
+    for y0 in range(h):
+        for x0 in range(w):
+            if (x0, y0) in seen or (x0, y0) in sky or not is_cloud(px[x0, y0]):
+                continue
+            comp, q = [], deque([(x0, y0)])
+            seen.add((x0, y0))
+            while q:
+                x, y = q.popleft()
+                comp.append((x, y))
+                for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+                    if 0 <= nx < w and 0 <= ny < h and (nx, ny) not in seen and (nx, ny) not in sky and is_cloud(px[nx, ny]):
+                        seen.add((nx, ny))
+                        q.append((nx, ny))
+            touches = any((nx, ny) in sky for x, y in comp for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)))
+            if touches and max(y for _, y in comp) < h * 0.55:
+                sky.update(comp)
     if horizon is None:
         ys = [y for _, y in sky]
         horizon = max(ys) if ys else h // 2

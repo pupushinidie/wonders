@@ -46,14 +46,21 @@ def label(path: str) -> str:
     return f"{GROUP_TITLE.get(path.split('/')[0], '')} · {stem}"
 
 
-def preview(src: str, path: str, i: int) -> str:
-    img = Image.open(CAND / src).convert("RGBA")
+SAFE = ("sky", "colors", "dusk", "rim", "flip", "stamp", "tint", "back", "focus")
+
+
+def preview(opt, path: str, i: int, extra: dict, picked: bool) -> str:
+    """按导出时的处理（黄昏调色、座位色外圈、镜像、数字……）渲染这个候选，再放大。"""
+    import export
+    spec = MANIFEST[path] | {k: v for k, v in extra.items() if picked or k in SAFE}
+    spec |= {"src": opt} if isinstance(opt, str) else opt
+    img = export.build(path, spec).convert("RGBA")
     longest = max(img.width, img.height)
     k = max(1, min(8, 384 // longest)) if longest < 384 else 1
     if path.startswith("scene/"):
         k = 2
     big = img.resize((img.width * k, img.height * k), Image.NEAREST)
-    if big.mode == "RGBA" and MANIFEST.get(path, {}).get("transparent"):
+    if MANIFEST.get(path, {}).get("transparent"):
         bg = Image.new("RGBA", big.size, (34, 40, 52, 255))
         bg.alpha_composite(big)
         big = bg
@@ -63,46 +70,52 @@ def preview(src: str, path: str, i: int) -> str:
     return str(out)
 
 
+def describe(opt) -> str:
+    if isinstance(opt, str):
+        return opt
+    if "code" in opt:
+        return f"代码画 {opt['code']} 第 {opt.get('variant', 1)} 版"
+    if "strip" in opt:
+        return f"PixelLab 动画 {opt['glob'].split('-*')[0]}"
+    return json.dumps(opt, ensure_ascii=False)
+
+
 def main() -> None:
     picks = json.loads((ART / "picks.json").read_text())
-    import sys
-    only = sys.argv[1:]  # 只出这些前缀（比如 scene wonders），不写就全部
-    for slug in CARDS:  # 建筑插画默认 3 个种子
-        path = f"cards/art/{slug}.png"
-        if path not in picks:
-            folder = f"r1/cards/{CARDS[slug]['color']}"
-            opts = [f"{folder}/{slug}-s{s}.png" for s in (301, 302, 303) if (CAND / folder / f"{slug}-s{s}.png").exists()]
-            if opts:
-                picks[path] = {"options": opts, "pick": 0}
     questions = []
-    if only:
-        picks = {p: v for p, v in picks.items() if any(p.startswith(o) for o in only)}
     order = sorted(picks, key=lambda p: (list(MANIFEST).index(p) if p in MANIFEST else 9999, p))
     for path in order:
         entry = picks[path]
+        if len(entry["options"]) < 2:
+            continue  # 只有一种画法的（代码画的小点和抽象图标）不出题
         options = []
-        for i, src in enumerate(entry["options"]):
-            opt = {"value": src, "label": f"候选 {i + 1}", "images": [preview(src, path, i)]}
-            if i == entry.get("pick", 0):
-                opt["recommended"] = True
-                opt["description"] = entry.get("note", "美术推荐")
-            options.append(opt)
+        for i, opt in enumerate(entry["options"]):
+            picked = i == entry["pick"]
+            o = {"value": describe(opt), "label": ("推荐 · " if picked else "") + f"候选 {i + 1}",
+                 "images": [preview(opt, path, i, entry.get("extra", {}), picked)]}
+            if picked:
+                o["recommended"] = True
+                o["description"] = entry.get("note") or "美术挑定"
+            options.append(o)
+        m = MANIFEST[path]
+        size = f"{m['w']}×{m['h']}" + (f"，{m['frames']} 帧横排" if m["frames"] > 1 else "")
         questions.append({
             "id": path.removesuffix(".png").replace("/", "__"),
             "type": "choice",
             "question": label(path),
-            "help": entry.get("help", f"文件 `{path}`，原图 {MANIFEST[path]['w']}×{MANIFEST[path]['h']}，预览已放大。"),
+            "help": f"文件 `{path}`，原图 {size}，预览已放大（透明图垫了深色底）。",
             "options": options,
             "allowOther": True,
             "required": False,
         })
     doc = {
         "id": "gallery",
-        "title": "七大奇迹 · 美术画廊（第 1 轮候选）",
+        "title": "七大奇迹 · 美术画廊（正式美术定稿）",
         "stage": "art",
         "blocking": False,
-        "intro": ("每样素材一题，标「推荐」的是美术评审签字的那张，**不用答也会按推荐上线**。想换哪张随时点；"
-                  "都不满意就选「其他」写备注，会重画。"),
+        "intro": ("每样素材一题，标「推荐」的是美术自查后挑定、已经导出成定稿的那张，**不用答也会按推荐上线**。"
+                  "想换哪张随时点；都不满意就选「其他」写备注，会重画。代码画的小点和几个抽象图标（链环、勾、交易箭头等）只有一种画法，不在这里出题。"
+                  "定稿总览：~/projects/pipeline/games/wonders/assets/art-final-overview-night.png / -day.png"),
         "questions": questions,
     }
     DECISION.write_text(json.dumps(doc, ensure_ascii=False, indent=1))

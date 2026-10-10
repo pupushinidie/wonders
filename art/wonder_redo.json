@@ -1,0 +1,8 @@
+{
+ "babylon": [["r3/wonders/babylon-a-g60-s2111-px-s3101.png", "r3/wonders/babylon-a-g140-s2113-px-s3101.png", "r2/wonders/babylon-a-g60-s2111.png", "r1/wonders/babylon-a-s1102.png"], 0,
+   "第 3 轮：构图引导图 + 细化。宽而矮的四层泥砖台、每层一排拱廊、垂下藤蔓、层顶种树，右边蓝釉砖城墙，前面是河；不再是丛林金字塔"],
+ "rhodes": [["r3/wonders/rhodes-a-g60-s2111-px-s3101.png", "r1/wonders/rhodes-a-s1201.png", "r1/wonders/rhodes-a-s1200.png", "r2/wonders/rhodes-a-g60-s2111.png"], 0,
+   "第 3 轮：青铜本色的希腊重装步兵，戴盔、竖持长矛、持圆盾，两腿跨在港口两侧石堤上，帆船从胯下驶过；没有火炬、没有举手、不是青绿铜锈，不会像自由女神"],
+ "halicarnassus": [["r3/edit/halicarnassus-a-edit.png", "r3/wonders/halicarnassus-a-g100-s2112-px-s3101.png", "r1/wonders/halicarnassus-a-s1302.png", "r1/wonders/halicarnassus-a-s103.png"], 0,
+   "第 3 轮：高台基（带浮雕带、方石砌缝）+ 一圈柱廊 + 五级阶梯金字塔顶 + 顶上马像，竖高的塔形剪影和以弗所/宙斯的三角山墙分得开；台基上像乱写的字的点状纹理已用代码抹掉"]
+}

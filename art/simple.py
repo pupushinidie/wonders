@@ -274,6 +274,9 @@ def check(items: list[dict], final: bool) -> int:
 
 
 def main(argv: list[str]) -> int:
+    global OUT
+    if "--dir" in argv:  # 查别的目录（比如定稿 art/out/final）：python art/simple.py --check --final --dir art/out/final
+        OUT = pathlib.Path(argv[argv.index("--dir") + 1]).resolve()
     items = build_items()
     if "--check" in argv:
         return check(items, "--final" in argv)

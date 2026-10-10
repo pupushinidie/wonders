@@ -1,30 +1,15 @@
 {
- "scene/day-1.png": {
-  "options": [
-   "r1/scenes/scene-day-1-s13.png",
-   "r1/scenes/scene-day-1-s11.png",
-   "r1/scenes/scene-day-1-k43.png"
-  ],
-  "pick": 0,
-  "note": "评审签字：柱廊框住海港，灯塔最靠近正中，手机也露得出来"
- },
- "scene/day-2.png": {
-  "options": [
-   "r1/scenes/scene-day-2-s21.png",
-   "r1/scenes/scene-day-2-s22.png",
-   "r1/scenes/scene-day-2-s23.png"
-  ],
-  "pick": 0,
-  "note": "评审签字：栏杆露台 + 长堤灯塔，构图对称，中间平静"
- },
  "scene/night-1.png": {
   "options": [
    "r1/scenes/scene-night-1-s33.png",
-   "r1/scenes/scene-night-1-s31.png",
-   "r1/scenes/scene-night-1-s32.png"
+   "r1/scenes/scene-night-1-s32.png",
+   "r1/scenes/scene-night-1-s31.png"
   ],
   "pick": 0,
-  "note": "评审签字：和白天 1 同一种柱廊构图，灯塔靠中，两只火盆"
+  "note": "月亮在右上、两只火盆在下角，中间安静，压暗后面板清楚",
+  "extra": {
+   "focus": 278
+  }
  },
  "scene/night-2.png": {
   "options": [
@@ -33,42 +18,59 @@
    "r1/scenes/scene-night-2-s43.png"
   ],
   "pick": 0,
-  "note": "评审签字：和白天 2 同构图，月光倒影在中间，左右对称"
+  "note": "长堤通向灯塔、左右对称，和白天 2 同一视角",
+  "extra": {
+   "focus": 319
+  }
+ },
+ "scene/day-1.png": {
+  "options": [
+   "r1/scenes/scene-day-1-s13.png",
+   "r1/scenes/scene-day-1-s11.png",
+   "r1/scenes/scene-day-1-k43.png"
+  ],
+  "pick": 0,
+  "note": "柱廊框住海港，灯塔最靠近正中，手机也露得出来",
+  "extra": {
+   "focus": 265
+  }
+ },
+ "scene/day-2.png": {
+  "options": [
+   "r1/scenes/scene-day-2-s21.png",
+   "r1/scenes/scene-day-2-s22.png",
+   "r1/scenes/scene-day-2-s23.png"
+  ],
+  "pick": 0,
+  "note": "栏杆露台 + 长堤灯塔，构图对称，中间平静",
+  "extra": {
+   "focus": 328
+  }
  },
  "wonders/giza-a.png": {
   "options": [
    "r1/wonders/giza-a-s101.png",
-   "r1/wonders/giza-a-s102.png",
-   "r1/wonders/giza-a-s103.png"
+   "r1/wonders/giza-a-s103.png",
+   "r1/wonders/giza-a-s102.png"
   ],
   "pick": 0,
-  "note": "评审签字：三座都在，近大远小，×1 最清楚"
+  "note": "三座都在，近大远小，×1 最清楚",
+  "extra": {
+   "sky": true,
+   "colors": 32
+  }
  },
  "wonders/giza-b.png": {
   "options": [
    "r1/wonders/giza-b-s201.png",
-   "r1/wonders/giza-b-s202.png",
+   "r1/wonders/giza-a-s101.png",
    "r1/wonders/giza-b-s203.png"
   ],
   "pick": 0,
-  "note": "评审签字：主体占七成高，黄昏色和 A 面一眼分开"
- },
- "wonders/rhodes-a.png": {
-  "options": [
-   "r1/wonders/rhodes-a-s102.png",
-   "r1/wonders/rhodes-a-s101.png",
-   "r1/wonders/rhodes-a-s103.png"
-  ],
-  "pick": 0,
-  "note": "重画中（第 1 批的青绿铜像像自由女神，改画青铜步兵跨港）；这张铜褐色的先暂代"
- },
- "wonders/rhodes-b.png": {
-  "options": [
-   "r1/wonders/rhodes-b-s203.png",
-   "r1/wonders/rhodes-b-s201.png"
-  ],
-  "pick": 0,
-  "note": "重画中；这张铜色、人像大，先暂代（s202 脚下有坏图，已去掉）"
+  "note": "主体占七成高，黄昏紫影金光，和 A 面一眼分开",
+  "extra": {
+   "colors": 32
+  }
  },
  "wonders/alexandria-a.png": {
   "options": [
@@ -76,15 +78,23 @@
    "r1/wonders/alexandria-a-s102.png"
   ],
   "pick": 0,
-  "note": "评审签字：分层塔身顶上有火，岛和古帆船（s103 有现代汽船，已去掉）"
+  "note": "分层塔身、顶上有火、岛和古帆船（s103 有现代汽船，不列）",
+  "extra": {
+   "sky": true,
+   "colors": 32
+  }
  },
  "wonders/alexandria-b.png": {
   "options": [
    "r1/wonders/alexandria-b-s201.png",
+   "r1/wonders/alexandria-b-s204.png",
    "r1/wonders/alexandria-b-s203.png"
   ],
   "pick": 0,
-  "note": "评审先签这张：顶上有火、古帆船；补画的一张到了再比"
+  "note": "顶上有火、古帆船、黄昏",
+  "extra": {
+   "colors": 32
+  }
  },
  "wonders/ephesus-a.png": {
   "options": [
@@ -93,7 +103,11 @@
    "r1/wonders/ephesus-a-s102.png"
   ],
   "pick": 0,
-  "note": "评审签字：神庙占画面约 75% 高，双排柱看得出来，×1 下最清楚"
+  "note": "神庙占约 75% 高，双排柱看得出来",
+  "extra": {
+   "sky": true,
+   "colors": 32
+  }
  },
  "wonders/ephesus-b.png": {
   "options": [
@@ -102,59 +116,1898 @@
    "r1/wonders/ephesus-b-s203.png"
   ],
   "pick": 0,
-  "note": "评审签字：宽神庙，黄昏，和 A 面分得开"
+  "note": "宽神庙、黄昏，和 A 面分得开",
+  "extra": {
+   "colors": 32
+  }
  },
  "wonders/olympia-a.png": {
   "options": [
    "r1/wonders/olympia-a-s103.png",
-   "r1/wonders/olympia-a-s101.png",
-   "r1/wonders/olympia-a-s102.png"
+   "r1/wonders/olympia-b-s1401.png",
+   "r1/wonders/olympia-a-s101.png"
   ],
   "pick": 0,
-  "note": "评审签字：神殿正面，柱间金色坐像 ×1 也认得出"
+  "note": "神殿正面，柱间金色坐像 ×1 也认得出",
+  "extra": {
+   "sky": true,
+   "colors": 32
+  }
  },
  "wonders/olympia-b.png": {
   "options": [
-   "r1/wonders/olympia-b-s203.png",
-   "r1/wonders/olympia-b-s201.png",
-   "r1/wonders/olympia-b-s202.png"
+   "r1/wonders/olympia-a-s103.png",
+   "r1/wonders/olympia-b-s1401.png",
+   "r1/wonders/olympia-b-s1403.png"
   ],
   "pick": 0,
-  "note": "重画中（侧面神庙和以弗所 B 撞脸，改画正面黄昏 + 大坐像）；先暂代"
- },
- "wonders/halicarnassus-a.png": {
-  "options": [
-   "r1/wonders/halicarnassus-a-s103.png",
-   "r1/wonders/halicarnassus-a-s102.png"
-  ],
-  "pick": 0,
-  "note": "重画中（第 1 批像普通神庙，s101 背景有宣礼塔已去掉）；先暂代"
- },
- "wonders/halicarnassus-b.png": {
-  "options": [
-   "r1/wonders/halicarnassus-b-s202.png",
-   "r1/wonders/halicarnassus-b-s201.png",
-   "r1/wonders/halicarnassus-b-s203.png"
-  ],
-  "pick": 0,
-  "note": "重画中；屋顶骑马剪影较好认，先暂代"
+  "note": "照 A 面同一张正面构图代码调成黄昏（评审要求：正面对称 + 大坐像，和以弗所 B 拉开）",
+  "extra": {
+   "dusk": true,
+   "colors": 32
+  }
  },
  "wonders/babylon-a.png": {
   "options": [
-   "r1/wonders/babylon-a-s103.png",
-   "r1/wonders/babylon-a-s101.png",
-   "r1/wonders/babylon-a-s102.png"
+   "r3/wonders/babylon-a-g60-s2111-px-s3101.png",
+   "r3/wonders/babylon-a-g140-s2113-px-s3101.png",
+   "r2/wonders/babylon-a-g60-s2111.png",
+   "r1/wonders/babylon-a-s1102.png"
   ],
   "pick": 0,
-  "note": "重画中（第 1 批画成了玛雅丛林金字塔，不合格），这几张只供对比"
+  "note": "第 3 轮：构图引导图 + 细化。宽而矮的四层泥砖台、每层一排拱廊、垂下藤蔓、层顶种树，右边蓝釉砖城墙，前面是河；不再是丛林金字塔",
+  "extra": {
+   "colors": 32
+  }
  },
  "wonders/babylon-b.png": {
   "options": [
-   "r1/wonders/babylon-b-s202.png",
-   "r1/wonders/babylon-b-s201.png",
-   "r1/wonders/babylon-b-s203.png"
+   "r3/wonders/babylon-a-g60-s2111-px-s3101.png",
+   "r3/wonders/babylon-a-g140-s2113-px-s3101.png",
+   "r2/wonders/babylon-a-g60-s2111.png",
+   "r1/wonders/babylon-a-s1102.png"
   ],
   "pick": 0,
-  "note": "重画中，同上"
+  "note": "同一张 A 面代码调成黄昏（A/B 同一尊像、同一构图）",
+  "extra": {
+   "dusk": true,
+   "colors": 32
+  }
+ },
+ "wonders/rhodes-a.png": {
+  "options": [
+   "r3/wonders/rhodes-a-g60-s2111-px-s3101.png",
+   "r1/wonders/rhodes-a-s1201.png",
+   "r1/wonders/rhodes-a-s1200.png",
+   "r2/wonders/rhodes-a-g60-s2111.png"
+  ],
+  "pick": 0,
+  "note": "第 3 轮：青铜本色的希腊重装步兵，戴盔、竖持长矛、持圆盾，两腿跨在港口两侧石堤上，帆船从胯下驶过；没有火炬、没有举手、不是青绿铜锈，不会像自由女神",
+  "extra": {
+   "colors": 32
+  }
+ },
+ "wonders/rhodes-b.png": {
+  "options": [
+   "r3/wonders/rhodes-a-g60-s2111-px-s3101.png",
+   "r1/wonders/rhodes-a-s1201.png",
+   "r1/wonders/rhodes-a-s1200.png",
+   "r2/wonders/rhodes-a-g60-s2111.png"
+  ],
+  "pick": 0,
+  "note": "同一张 A 面代码调成黄昏（A/B 同一尊像、同一构图）",
+  "extra": {
+   "dusk": true,
+   "colors": 32
+  }
+ },
+ "wonders/halicarnassus-a.png": {
+  "options": [
+   "r3/edit/halicarnassus-a-edit.png",
+   "r3/wonders/halicarnassus-a-g100-s2112-px-s3101.png",
+   "r1/wonders/halicarnassus-a-s1302.png",
+   "r1/wonders/halicarnassus-a-s103.png"
+  ],
+  "pick": 0,
+  "note": "第 3 轮：高台基（带浮雕带、方石砌缝）+ 一圈柱廊 + 五级阶梯金字塔顶 + 顶上马像，竖高的塔形剪影和以弗所/宙斯的三角山墙分得开；台基上像乱写的字的点状纹理已用代码抹掉",
+  "extra": {
+   "colors": 32
+  }
+ },
+ "wonders/halicarnassus-b.png": {
+  "options": [
+   "r3/edit/halicarnassus-a-edit.png",
+   "r3/wonders/halicarnassus-a-g100-s2112-px-s3101.png",
+   "r1/wonders/halicarnassus-a-s1302.png",
+   "r1/wonders/halicarnassus-a-s103.png"
+  ],
+  "pick": 0,
+  "note": "同一张 A 面代码调成黄昏（A/B 同一尊像、同一构图）",
+  "extra": {
+   "dusk": true,
+   "colors": 32
+  }
+ },
+ "wonders/giza-emblem.png": {
+  "options": [
+   "r1/small/emblem-giza/emblem-giza-9.png",
+   "r1/small/emblem-giza/emblem-giza-17.png",
+   "r1/small/emblem-giza/emblem-giza-40.png"
+  ],
+  "pick": 0,
+  "note": "剪影 32px 下清楚，外圈换成座位色",
+  "extra": {
+   "rim": "#E69F00"
+  }
+ },
+ "wonders/rhodes-emblem.png": {
+  "options": [
+   "r1/small/emblem-rhodes/emblem-rhodes-9.png",
+   "r1/small/emblem-rhodes/emblem-rhodes-24.png",
+   "r1/small/emblem-rhodes/emblem-rhodes-41.png"
+  ],
+  "pick": 0,
+  "note": "剪影 32px 下清楚，外圈换成座位色",
+  "extra": {
+   "rim": "#D55E00"
+  }
+ },
+ "wonders/alexandria-emblem.png": {
+  "options": [
+   "r1/small/emblem-alexandria/emblem-alexandria.png",
+   "r1/small/emblem-alexandria/emblem-alexandria-9.png",
+   "r1/small/emblem-alexandria/emblem-alexandria-27.png"
+  ],
+  "pick": 0,
+  "note": "剪影 32px 下清楚，外圈换成座位色",
+  "extra": {
+   "rim": "#56B4E9"
+  }
+ },
+ "wonders/ephesus-emblem.png": {
+  "options": [
+   "r1/small/emblem-ephesus/emblem-ephesus-9.png",
+   "r1/small/emblem-ephesus/emblem-ephesus-17.png",
+   "r1/small/emblem-ephesus/emblem-ephesus-41.png"
+  ],
+  "pick": 0,
+  "note": "剪影 32px 下清楚，外圈换成座位色",
+  "extra": {
+   "rim": "#F0E442"
+  }
+ },
+ "wonders/babylon-emblem.png": {
+  "options": [
+   "r1/small/emblem-babylon/emblem-babylon-9.png",
+   "r1/small/emblem-babylon/emblem-babylon-17.png",
+   "r1/small/emblem-babylon/emblem-babylon-25.png"
+  ],
+  "pick": 0,
+  "note": "剪影 32px 下清楚，外圈换成座位色",
+  "extra": {
+   "rim": "#009E73"
+  }
+ },
+ "wonders/olympia-emblem.png": {
+  "options": [
+   "r1/small/emblem-olympia/emblem-olympia-9.png",
+   "r1/small/emblem-olympia/emblem-olympia-25.png",
+   "r1/small/emblem-olympia/emblem-olympia-40.png"
+  ],
+  "pick": 0,
+  "note": "剪影 32px 下清楚，外圈换成座位色",
+  "extra": {
+   "rim": "#CC79A7"
+  }
+ },
+ "wonders/halicarnassus-emblem.png": {
+  "options": [
+   "r3/small/emblem-halicarnassus/emblem-halicarnassus-17.png",
+   "r3/small/emblem-halicarnassus/emblem-halicarnassus-1.png",
+   "r3/small/emblem-halicarnassus/emblem-halicarnassus-9.png",
+   "r1/small/emblem-halicarnassus/emblem-halicarnassus-5.png"
+  ],
+  "pick": 0,
+  "note": "第 3 轮重画：高台基 + 阶梯顶 + 顶上马，和以弗所的神庙正面分得开（第 1 批全是神庙正面）",
+  "extra": {
+   "rim": "#0072B2"
+  }
+ },
+ "icons/res-W.png": {
+  "options": [
+   "r1/small/res-W/res-W-8.png",
+   "r1/small/res-W/res-W-9.png",
+   "r1/small/res-W/res-W-24.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/res-C.png": {
+  "options": [
+   "r1/small/res-C/res-C-8.png",
+   "r1/small/res-C/res-C-9.png",
+   "r1/small/res-C/res-C-25.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/res-S.png": {
+  "options": [
+   "r1/small/res-S/res-S-8.png",
+   "r1/small/res-S/res-S-9.png",
+   "r1/small/res-S/res-S-11.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/res-O.png": {
+  "options": [
+   "r1/small/res-O/res-O-8.png",
+   "r1/small/res-O/res-O-9.png",
+   "r1/small/res-O/res-O-40.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/res-G.png": {
+  "options": [
+   "r1/small/res-G/res-G-8.png",
+   "r1/small/res-G/res-G-9.png",
+   "r1/small/res-G/res-G-24.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/res-L.png": {
+  "options": [
+   "r1/small/res-L/res-L-8.png",
+   "r1/small/res-L/res-L-9.png",
+   "r1/small/res-L/res-L-24.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/res-P.png": {
+  "options": [
+   "r1/small/res-P/res-P-8.png",
+   "r1/small/res-P/res-P-9.png",
+   "r1/small/res-P/res-P-42.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/sci-compass.png": {
+  "options": [
+   "r1/small/sci-compass/sci-compass-8.png",
+   "r1/small/sci-compass/sci-compass-9.png",
+   "r1/small/sci-compass/sci-compass-24.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/sci-gear.png": {
+  "options": [
+   "r1/small/sci-gear/sci-gear-8.png",
+   "r1/small/sci-gear/sci-gear-9.png",
+   "r1/small/sci-gear/sci-gear-40.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/sci-tablet.png": {
+  "options": [
+   "r1/small/sci-tablet/sci-tablet-8.png",
+   "r1/small/sci-tablet/sci-tablet-9.png",
+   "r1/small/sci-tablet/sci-tablet-40.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/shield.png": {
+  "options": [
+   "r1/small/shield/shield-8.png",
+   "r1/small/shield/shield-9.png",
+   "r1/small/shield/shield-24.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/coin.png": {
+  "options": [
+   "r1/small/coin/coin-8.png",
+   "r1/small/coin/coin-9.png",
+   "r1/small/coin/coin-40.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/vp.png": {
+  "options": [
+   "r1/small/vp/vp-8.png",
+   "r1/small/vp/vp-9.png",
+   "r1/small/vp/vp-40.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/stage-built.png": {
+  "options": [
+   "r1/small/stage-built/stage-built-8.png",
+   "r1/small/stage-built/stage-built-9.png",
+   "r1/small/stage-built/stage-built-24.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/act-build.png": {
+  "options": [
+   "r1/small/act-build/act-build-9.png",
+   "r1/small/act-build/act-build-12.png",
+   "r1/small/act-build/act-build-27.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/act-wonder.png": {
+  "options": [
+   "r1/small/act-wonder/act-wonder-9.png",
+   "r1/small/act-wonder/act-wonder-11.png",
+   "r1/small/act-wonder/act-wonder-25.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/act-sell.png": {
+  "options": [
+   "r1/small/act-sell/act-sell-13.png",
+   "r1/small/act-sell/act-sell-24.png",
+   "r1/small/act-sell/act-sell-45.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/waiting.png": {
+  "options": [
+   "r1/small/waiting/waiting-9.png",
+   "r1/small/waiting/waiting-10.png",
+   "r1/small/waiting/waiting-24.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/cat-brown.png": {
+  "options": [
+   "r1/small/cat-brown/cat-brown-1.png",
+   "r1/small/cat-brown/cat-brown-5.png",
+   "r1/small/cat-brown/cat-brown-25.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/cat-gray.png": {
+  "options": [
+   "r1/small/cat-gray/cat-gray-9.png",
+   "r1/small/cat-gray/cat-gray-11.png",
+   "r1/small/cat-gray/cat-gray-43.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/cat-blue.png": {
+  "options": [
+   "r1/small/cat-blue/cat-blue-9.png",
+   "r1/small/cat-blue/cat-blue-25.png",
+   "r1/small/cat-blue/cat-blue-41.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/cat-green.png": {
+  "options": [
+   "r1/small/cat-green/cat-green-8.png",
+   "r1/small/cat-green/cat-green-9.png",
+   "r1/small/cat-green/cat-green-40.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/cat-yellow.png": {
+  "options": [
+   "r1/small/cat-yellow/cat-yellow-8.png",
+   "r1/small/cat-yellow/cat-yellow-9.png",
+   "r1/small/cat-yellow/cat-yellow-41.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/cat-red.png": {
+  "options": [
+   "r1/small/cat-red/cat-red-8.png",
+   "r1/small/cat-red/cat-red-9.png",
+   "r1/small/cat-red/cat-red-25.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/cat-purple.png": {
+  "options": [
+   "r1/small/cat-purple/cat-purple-8.png",
+   "r1/small/cat-purple/cat-purple-9.png",
+   "r1/small/cat-purple/cat-purple-25.png"
+  ],
+  "pick": 0,
+  "note": "64 个里挑的：16px 下形状清楚，深浅底都看得清",
+  "extra": {}
+ },
+ "icons/sci-any.png": {
+  "options": [
+   {
+    "code": "sci-any"
+   }
+  ],
+  "pick": 0,
+  "note": "抽象符号，用代码画（和资源图标同一套描边、斜面），比模型出的准",
+  "extra": {}
+ },
+ "icons/chain.png": {
+  "options": [
+   {
+    "code": "chain"
+   }
+  ],
+  "pick": 0,
+  "note": "抽象符号，用代码画（和资源图标同一套描边、斜面），比模型出的准",
+  "extra": {}
+ },
+ "icons/stage-open.png": {
+  "options": [
+   {
+    "code": "stage-open"
+   }
+  ],
+  "pick": 0,
+  "note": "抽象符号，用代码画（和资源图标同一套描边、斜面），比模型出的准",
+  "extra": {}
+ },
+ "icons/trade.png": {
+  "options": [
+   {
+    "code": "trade"
+   }
+  ],
+  "pick": 0,
+  "note": "抽象符号，用代码画（和资源图标同一套描边、斜面），比模型出的准",
+  "extra": {}
+ },
+ "icons/trade-left.png": {
+  "options": [
+   {
+    "code": "trade-left"
+   }
+  ],
+  "pick": 0,
+  "note": "抽象符号，用代码画（和资源图标同一套描边、斜面），比模型出的准",
+  "extra": {}
+ },
+ "icons/eff-any-raw.png": {
+  "options": [
+   {
+    "code": "eff-any-raw"
+   }
+  ],
+  "pick": 0,
+  "note": "抽象符号，用代码画（和资源图标同一套描边、斜面），比模型出的准",
+  "extra": {}
+ },
+ "icons/eff-any-goods.png": {
+  "options": [
+   {
+    "code": "eff-any-goods"
+   }
+  ],
+  "pick": 0,
+  "note": "抽象符号，用代码画（和资源图标同一套描边、斜面），比模型出的准",
+  "extra": {}
+ },
+ "icons/eff-free-build.png": {
+  "options": [
+   {
+    "code": "eff-free-build"
+   }
+  ],
+  "pick": 0,
+  "note": "抽象符号，用代码画（和资源图标同一套描边、斜面），比模型出的准",
+  "extra": {}
+ },
+ "icons/eff-discard-build.png": {
+  "options": [
+   {
+    "code": "eff-discard-build"
+   }
+  ],
+  "pick": 0,
+  "note": "抽象符号，用代码画（和资源图标同一套描边、斜面），比模型出的准",
+  "extra": {}
+ },
+ "icons/eff-seventh.png": {
+  "options": [
+   {
+    "code": "eff-seventh"
+   }
+  ],
+  "pick": 0,
+  "note": "抽象符号，用代码画（和资源图标同一套描边、斜面），比模型出的准",
+  "extra": {}
+ },
+ "icons/eff-copy-guild.png": {
+  "options": [
+   {
+    "code": "eff-copy-guild"
+   }
+  ],
+  "pick": 0,
+  "note": "抽象符号，用代码画（和资源图标同一套描边、斜面），比模型出的准",
+  "extra": {}
+ },
+ "icons/ready.png": {
+  "options": [
+   {
+    "code": "ready"
+   }
+  ],
+  "pick": 0,
+  "note": "抽象符号，用代码画（和资源图标同一套描边、斜面），比模型出的准",
+  "extra": {}
+ },
+ "pips/pip-W.png": {
+  "options": [
+   {
+    "code": "pip-W"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-C.png": {
+  "options": [
+   {
+    "code": "pip-C"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-S.png": {
+  "options": [
+   {
+    "code": "pip-S"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-O.png": {
+  "options": [
+   {
+    "code": "pip-O"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-G.png": {
+  "options": [
+   {
+    "code": "pip-G"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-L.png": {
+  "options": [
+   {
+    "code": "pip-L"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-P.png": {
+  "options": [
+   {
+    "code": "pip-P"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-coin.png": {
+  "options": [
+   {
+    "code": "pip-coin"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-shield.png": {
+  "options": [
+   {
+    "code": "pip-shield"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-vp.png": {
+  "options": [
+   {
+    "code": "pip-vp"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-compass.png": {
+  "options": [
+   {
+    "code": "pip-compass"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-gear.png": {
+  "options": [
+   {
+    "code": "pip-gear"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-tablet.png": {
+  "options": [
+   {
+    "code": "pip-tablet"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "pips/pip-chain.png": {
+  "options": [
+   {
+    "code": "pip-chain"
+   }
+  ],
+  "pick": 0,
+  "note": "代码画（spec §6），和卡面同倍数",
+  "extra": {}
+ },
+ "tokens/war-win1.png": {
+  "options": [
+   "r1/small/token-win/token-win-8.png",
+   "r1/small/token-win/token-win-9.png",
+   "r1/small/token-win/token-win-24.png"
+  ],
+  "pick": 0,
+  "note": "月桂底牌 + 代码画「+1」，铜色区分时代",
+  "extra": {
+   "stamp": "+1",
+   "tint": "bronze"
+  }
+ },
+ "tokens/war-win3.png": {
+  "options": [
+   "r1/small/token-win/token-win-8.png",
+   "r1/small/token-win/token-win-9.png",
+   "r1/small/token-win/token-win-24.png"
+  ],
+  "pick": 0,
+  "note": "月桂底牌 + 代码画「+3」，银色区分时代",
+  "extra": {
+   "stamp": "+3",
+   "tint": "silver"
+  }
+ },
+ "tokens/war-win5.png": {
+  "options": [
+   "r1/small/token-win/token-win-8.png",
+   "r1/small/token-win/token-win-9.png",
+   "r1/small/token-win/token-win-24.png"
+  ],
+  "pick": 0,
+  "note": "月桂底牌 + 代码画「+5」，金色区分时代",
+  "extra": {
+   "stamp": "+5",
+   "tint": "gold"
+  }
+ },
+ "tokens/war-loss.png": {
+  "options": [
+   "r1/small/token-loss/token-loss-8.png",
+   "r1/small/token-loss/token-loss-9.png",
+   "r1/small/token-loss/token-loss-40.png"
+  ],
+  "pick": 0,
+  "note": "裂开的暗红盾 + 代码画「-1」",
+  "extra": {
+   "stamp": "-1"
+  }
+ },
+ "cards/back-age1.png": {
+  "options": [
+   "r1/backs/back-age1-s402.png",
+   "r1/backs/back-age1-s403.png",
+   "r1/backs/back-age1-s401.png"
+  ],
+  "pick": 0,
+  "note": "s402 三张成套：月桂环里的神庙纹样 + 细金边，罗马数字代码画",
+  "extra": {
+   "back": 1
+  }
+ },
+ "cards/back-age2.png": {
+  "options": [
+   "r1/backs/back-age2-s402.png",
+   "r1/backs/back-age2-s403.png",
+   "r1/backs/back-age2-s401.png"
+  ],
+  "pick": 0,
+  "note": "s402 三张成套：月桂环里的神庙纹样 + 细金边，罗马数字代码画",
+  "extra": {
+   "back": 2
+  }
+ },
+ "cards/back-age3.png": {
+  "options": [
+   "r1/backs/back-age3-s402.png",
+   "r1/backs/back-age3-s403.png",
+   "r1/backs/back-age3-s401.png"
+  ],
+  "pick": 0,
+  "note": "s402 三张成套：月桂环里的神庙纹样 + 细金边，罗马数字代码画",
+  "extra": {
+   "back": 3
+  }
+ },
+ "ui/arrow-pass.png": {
+  "options": [
+   {
+    "code": "arrow",
+    "variant": 2
+   },
+   {
+    "code": "arrow",
+    "variant": 1
+   },
+   {
+    "code": "arrow",
+    "variant": 3
+   }
+  ],
+  "pick": 0,
+  "note": "金色箭头在深浅顶栏上都最醒目，4 帧往左挪动循环",
+  "extra": {}
+ },
+ "ui/laurel.png": {
+  "options": [
+   "r1/decor/laurel-s601.png",
+   "r1/decor/laurel-s603.png",
+   "r1/decor/laurel-s602.png"
+  ],
+  "pick": 0,
+  "note": "金绿月桂，结算第一名两侧",
+  "extra": {}
+ },
+ "ui/ribbon.png": {
+  "options": [
+   "r1/decor/ribbon-s602.png",
+   "r1/decor/ribbon-s601.png",
+   "r1/decor/ribbon-s603.png"
+  ],
+  "pick": 0,
+  "note": "卷轴两端的海蓝横幅，中间平静好叠字",
+  "extra": {}
+ },
+ "ui/cover.png": {
+  "options": [
+   "r3/covers/cover-s711.png",
+   "r1/covers/cover-s702.png",
+   "r3/covers/cover-s712.png"
+  ],
+  "pick": 0,
+  "note": "柱廊望海港：灯塔、持矛持盾的青铜巨像、神庙、帆船都在，没有字和人；s702 上下有黑带要裁，尺寸就不够 192 高了",
+  "extra": {}
+ },
+ "fx/pass-trail.png": {
+  "options": [
+   {
+    "code": "fx/pass-trail",
+    "variant": 2
+   },
+   {
+    "code": "fx/pass-trail",
+    "variant": 1
+   },
+   {
+    "code": "fx/pass-trail",
+    "variant": 3
+   }
+  ],
+  "pick": 0,
+  "note": "浅蓝气流线带白头，传牌时最清楚",
+  "extra": {}
+ },
+ "fx/clash.png": {
+  "options": [
+   {
+    "code": "fx/clash",
+    "variant": 2
+   },
+   {
+    "code": "fx/clash",
+    "variant": 1
+   },
+   {
+    "code": "fx/clash",
+    "variant": 3
+   }
+  ],
+  "pick": 0,
+  "note": "金白火星炸开再变红散去",
+  "extra": {}
+ },
+ "fx/token-land.png": {
+  "options": [
+   {
+    "code": "fx/token-land",
+    "variant": 2
+   },
+   {
+    "code": "fx/token-land",
+    "variant": 1
+   },
+   {
+    "code": "fx/token-land",
+    "variant": 3
+   }
+  ],
+  "pick": 0,
+  "note": "沙色尘土 + 小星",
+  "extra": {}
+ },
+ "fx/build-dust.png": {
+  "options": [
+   {
+    "code": "fx/build-dust",
+    "variant": 3
+   },
+   {
+    "code": "fx/build-dust",
+    "variant": 1
+   },
+   {
+    "code": "fx/build-dust",
+    "variant": 2
+   }
+  ],
+  "pick": 0,
+  "note": "石粉团扬起再散开",
+  "extra": {}
+ },
+ "fx/stage-shine.png": {
+  "options": [
+   {
+    "code": "fx/stage-shine",
+    "variant": 2
+   },
+   {
+    "code": "fx/stage-shine",
+    "variant": 1
+   },
+   {
+    "code": "fx/stage-shine",
+    "variant": 3
+   }
+  ],
+  "pick": 0,
+  "note": "几颗小星依次闪（不整片发光）",
+  "extra": {}
+ },
+ "fx/coin-spin.png": {
+  "options": [
+   {
+    "code": "fx/coin-spin",
+    "variant": 1
+   },
+   {
+    "code": "fx/coin-spin",
+    "variant": 2
+   },
+   {
+    "code": "fx/coin-spin",
+    "variant": 3
+   }
+  ],
+  "pick": 0,
+  "note": "金币翻转一圈",
+  "extra": {}
+ },
+ "fx/fireworks.png": {
+  "options": [
+   {
+    "code": "fx/fireworks",
+    "variant": 1
+   },
+   {
+    "code": "fx/fireworks",
+    "variant": 2
+   },
+   {
+    "code": "fx/fireworks",
+    "variant": 3
+   }
+  ],
+  "pick": 0,
+  "note": "金、粉两色烟花，界面错开播",
+  "extra": {}
+ },
+ "fx/brazier.png": {
+  "options": [
+   {
+    "strip": "r3/anim/brazier",
+    "glob": "brazier-s801-*.png",
+    "use": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "down": 4
+   },
+   {
+    "strip": "r3/anim/brazier",
+    "glob": "brazier-s803-*.png",
+    "use": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "down": 4
+   },
+   {
+    "strip": "r3/anim/brazier",
+    "glob": "brazier-s802-*.png",
+    "use": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "down": 4
+   }
+  ],
+  "pick": 0,
+  "note": "PixelLab 动画：火苗起伏 + 火星上飘，首末帧同一张静态图，无缝循环",
+  "extra": {}
+ },
+ "cards/art/lumber_yard.png": {
+  "options": [
+   "r3/cards/brown/lumber_yard-s311.png",
+   "r3/cards/brown/lumber_yard-s312.png",
+   "r3/cards/brown/lumber_yard-s313.png",
+   "r1/cards/brown/lumber_yard-s301.png",
+   "r1/cards/brown/lumber_yard-s302.png",
+   "r1/cards/brown/lumber_yard-s303.png"
+  ],
+  "pick": 0,
+  "note": "橄榄林边的原木垛，一眼是伐木",
+  "extra": {}
+ },
+ "cards/art/stone_pit.png": {
+  "options": [
+   "r3/cards/brown/stone_pit-s311.png",
+   "r3/cards/brown/stone_pit-s312.png",
+   "r3/cards/brown/stone_pit-s313.png",
+   "r1/cards/brown/stone_pit-s301.png",
+   "r1/cards/brown/stone_pit-s302.png",
+   "r1/cards/brown/stone_pit-s303.png"
+  ],
+  "pick": 0,
+  "note": "地面浅坑里切好的白石块",
+  "extra": {}
+ },
+ "cards/art/clay_pool.png": {
+  "options": [
+   "r3/cards/brown/clay_pool-s311.png",
+   "r3/cards/brown/clay_pool-s312.png",
+   "r3/cards/brown/clay_pool-s313.png",
+   "r1/cards/brown/clay_pool-s301.png",
+   "r1/cards/brown/clay_pool-s302.png",
+   "r1/cards/brown/clay_pool-s303.png"
+  ],
+  "pick": 0,
+  "note": "溪边红泥池 + 一排晾晒的泥砖",
+  "extra": {}
+ },
+ "cards/art/ore_vein.png": {
+  "options": [
+   "r3/cards/brown/ore_vein-s311.png",
+   "r3/cards/brown/ore_vein-s312.png",
+   "r3/cards/brown/ore_vein-s313.png",
+   "r1/cards/brown/ore_vein-s301.png",
+   "r1/cards/brown/ore_vein-s302.png",
+   "r1/cards/brown/ore_vein-s303.png"
+  ],
+  "pick": 0,
+  "note": "山洞口木支架，洞前堆着深蓝灰矿石",
+  "extra": {}
+ },
+ "cards/art/tree_farm.png": {
+  "options": [
+   "r3/cards/brown/tree_farm-s311.png",
+   "r3/cards/brown/tree_farm-s312.png",
+   "r3/cards/brown/tree_farm-s313.png",
+   "r1/cards/brown/tree_farm-s301.png",
+   "r1/cards/brown/tree_farm-s302.png",
+   "r1/cards/brown/tree_farm-s303.png"
+  ],
+  "pick": 0,
+  "note": "一排排小树苗，和伐木场区分开",
+  "extra": {}
+ },
+ "cards/art/excavation.png": {
+  "options": [
+   "r3/cards/brown/excavation-s311.png",
+   "r3/cards/brown/excavation-s312.png",
+   "r3/cards/brown/excavation-s313.png",
+   "r1/cards/brown/excavation-s301.png",
+   "r1/cards/brown/excavation-s302.png",
+   "r1/cards/brown/excavation-s303.png"
+  ],
+  "pick": 0,
+  "note": "挖开的红泥坡和石块（石/砖）",
+  "extra": {}
+ },
+ "cards/art/clay_pit.png": {
+  "options": [
+   "r3/cards/brown/clay_pit-s311.png",
+   "r3/cards/brown/clay_pit-s312.png",
+   "r3/cards/brown/clay_pit-s313.png",
+   "r1/cards/brown/clay_pit-s301.png",
+   "r1/cards/brown/clay_pit-s302.png",
+   "r1/cards/brown/clay_pit-s303.png"
+  ],
+  "pick": 0,
+  "note": "红泥坑 + 一筐矿石（砖/矿）",
+  "extra": {}
+ },
+ "cards/art/timber_yard.png": {
+  "options": [
+   "r3/cards/brown/timber_yard-s312.png",
+   "r3/cards/brown/timber_yard-s311.png",
+   "r3/cards/brown/timber_yard-s313.png",
+   "r1/cards/brown/timber_yard-s301.png",
+   "r1/cards/brown/timber_yard-s302.png",
+   "r1/cards/brown/timber_yard-s303.png"
+  ],
+  "pick": 0,
+  "note": "石块堆和木料垛并排（石/木）",
+  "extra": {}
+ },
+ "cards/art/forest_cave.png": {
+  "options": [
+   "r1/cards/brown/forest_cave-s302.png",
+   "r1/cards/brown/forest_cave-s301.png",
+   "r1/cards/brown/forest_cave-s303.png"
+  ],
+  "pick": 0,
+  "note": "林中岩洞，洞口矿石",
+  "extra": {}
+ },
+ "cards/art/mine.png": {
+  "options": [
+   "r3/cards/brown/mine-s322.png",
+   "r3/cards/brown/mine-s311.png",
+   "r3/cards/brown/mine-s312.png",
+   "r3/cards/brown/mine-s313.png",
+   "r3/cards/brown/mine-s321.png",
+   "r3/cards/brown/mine-s323.png",
+   "r1/cards/brown/mine-s301.png",
+   "r1/cards/brown/mine-s302.png",
+   "r1/cards/brown/mine-s303.png"
+  ],
+  "pick": 0,
+  "note": "矿屋前一车深色矿石，木架和碎石",
+  "extra": {}
+ },
+ "cards/art/loom.png": {
+  "options": [
+   "r3/cards/gray/loom-s312.png",
+   "r3/cards/gray/loom-s311.png",
+   "r3/cards/gray/loom-s313.png",
+   "r1/cards/gray/loom-s301.png",
+   "r1/cards/gray/loom-s302.png",
+   "r1/cards/gray/loom-s303.png"
+  ],
+  "pick": 0,
+  "note": "木织机上挂着蓝白条纹布",
+  "extra": {}
+ },
+ "cards/art/glassworks.png": {
+  "options": [
+   "r1/cards/gray/glassworks-s302.png",
+   "r1/cards/gray/glassworks-s301.png",
+   "r1/cards/gray/glassworks-s303.png"
+  ],
+  "pick": 0,
+  "note": "圆顶窑炉透出火光，旁边青蓝玻璃瓶",
+  "extra": {}
+ },
+ "cards/art/press.png": {
+  "options": [
+   "r3/cards/gray/press-s311.png",
+   "r3/cards/gray/press-s312.png",
+   "r3/cards/gray/press-s313.png",
+   "r1/cards/gray/press-s301.png",
+   "r1/cards/gray/press-s302.png",
+   "r1/cards/gray/press-s303.png"
+  ],
+  "pick": 0,
+  "note": "纸莎草压制架和空白纸张，没有字",
+  "extra": {}
+ },
+ "cards/art/pawnshop.png": {
+  "options": [
+   "r3/cards/blue/pawnshop-s312.png",
+   "r3/cards/blue/pawnshop-s311.png",
+   "r3/cards/blue/pawnshop-s313.png",
+   "r1/cards/blue/pawnshop-s301.png",
+   "r1/cards/blue/pawnshop-s302.png",
+   "r1/cards/blue/pawnshop-s303.png"
+  ],
+  "pick": 0,
+  "note": "门口挂秤和陶罐的小石屋",
+  "extra": {}
+ },
+ "cards/art/baths.png": {
+  "options": [
+   "r1/cards/blue/baths-s301.png",
+   "r1/cards/blue/baths-s302.png",
+   "r1/cards/blue/baths-s303.png"
+  ],
+  "pick": 0,
+  "note": "柱子间的露天浴池，水面反光",
+  "extra": {}
+ },
+ "cards/art/altar.png": {
+  "options": [
+   "r3/cards/blue/altar-s312.png",
+   "r3/cards/blue/altar-s311.png",
+   "r3/cards/blue/altar-s313.png",
+   "r1/cards/blue/altar-s301.png",
+   "r1/cards/blue/altar-s302.png",
+   "r1/cards/blue/altar-s303.png"
+  ],
+  "pick": 0,
+  "note": "山顶石祭坛和两根残柱",
+  "extra": {}
+ },
+ "cards/art/theater.png": {
+  "options": [
+   "r3/cards/blue/theater-s312.png",
+   "r3/cards/blue/theater-s311.png",
+   "r3/cards/blue/theater-s313.png",
+   "r1/cards/blue/theater-s301.png",
+   "r1/cards/blue/theater-s302.png",
+   "r1/cards/blue/theater-s303.png"
+  ],
+  "pick": 0,
+  "note": "依山的半圆石阶剧场",
+  "extra": {}
+ },
+ "cards/art/tavern.png": {
+  "options": [
+   "r1/cards/yellow/tavern-s302.png",
+   "r1/cards/yellow/tavern-s301.png",
+   "r1/cards/yellow/tavern-s303.png"
+  ],
+  "pick": 0,
+  "note": "葡萄藤棚下的小酒馆",
+  "extra": {}
+ },
+ "cards/art/east_trading_post.png": {
+  "options": [
+   "r3/cards/yellow/east_trading_post-s312.png",
+   "r3/cards/yellow/east_trading_post-s311.png",
+   "r3/cards/yellow/east_trading_post-s313.png",
+   "r1/cards/yellow/east_trading_post-s301.png",
+   "r1/cards/yellow/east_trading_post-s302.png",
+   "r1/cards/yellow/east_trading_post-s303.png"
+  ],
+  "pick": 0,
+  "note": "货栈和货物，道路伸向右边",
+  "extra": {}
+ },
+ "cards/art/west_trading_post.png": {
+  "options": [
+   "r3/cards/yellow/east_trading_post-s312.png",
+   "r3/cards/yellow/east_trading_post-s311.png",
+   "r3/cards/yellow/east_trading_post-s313.png",
+   "r1/cards/yellow/east_trading_post-s301.png",
+   "r1/cards/yellow/east_trading_post-s302.png",
+   "r1/cards/yellow/east_trading_post-s303.png"
+  ],
+  "pick": 0,
+  "note": "东贸易站左右镜像，道路伸向左边（spec：构图镜像）",
+  "extra": {
+   "flip": true
+  }
+ },
+ "cards/art/marketplace.png": {
+  "options": [
+   "r1/cards/yellow/marketplace-s302.png",
+   "r1/cards/yellow/marketplace-s301.png",
+   "r1/cards/yellow/marketplace-s303.png"
+  ],
+  "pick": 0,
+  "note": "红白条纹布篷的集市摊位",
+  "extra": {}
+ },
+ "cards/art/stockade.png": {
+  "options": [
+   "r1/cards/red/stockade-s301.png",
+   "r1/cards/red/stockade-s302.png",
+   "r1/cards/red/stockade-s303.png"
+  ],
+  "pick": 0,
+  "note": "一圈木桩栅栏围着营房",
+  "extra": {}
+ },
+ "cards/art/barracks.png": {
+  "options": [
+   "r3/cards/red/barracks-s322.png",
+   "r3/cards/red/barracks-s311.png",
+   "r3/cards/red/barracks-s312.png",
+   "r3/cards/red/barracks-s313.png",
+   "r3/cards/red/barracks-s321.png",
+   "r3/cards/red/barracks-s323.png",
+   "r1/cards/red/barracks-s301.png",
+   "r1/cards/red/barracks-s302.png",
+   "r1/cards/red/barracks-s303.png"
+  ],
+  "pick": 0,
+  "note": "木棚营房门口的圆盾和矛架",
+  "extra": {}
+ },
+ "cards/art/guard_tower.png": {
+  "options": [
+   "r3/cards/red/guard_tower-s312.png",
+   "r3/cards/red/guard_tower-s311.png",
+   "r3/cards/red/guard_tower-s313.png",
+   "r1/cards/red/guard_tower-s301.png",
+   "r1/cards/red/guard_tower-s302.png",
+   "r1/cards/red/guard_tower-s303.png"
+  ],
+  "pick": 0,
+  "note": "土砖瞭望塔顶上小平台和三角旗",
+  "extra": {
+   "repaint": [
+    [
+     18,
+     1,
+     "#963946"
+    ],
+    [
+     19,
+     1,
+     "#963946"
+    ],
+    [
+     20,
+     1,
+     "#963946"
+    ]
+   ]
+  }
+ },
+ "cards/art/apothecary.png": {
+  "options": [
+   "r1/cards/green/apothecary-s302.png",
+   "r1/cards/green/apothecary-s301.png",
+   "r1/cards/green/apothecary-s303.png"
+  ],
+  "pick": 0,
+  "note": "晒草药的木架和陶药罐",
+  "extra": {}
+ },
+ "cards/art/workshop.png": {
+  "options": [
+   "r3/cards/green/workshop-s312.png",
+   "r3/cards/green/workshop-s311.png",
+   "r3/cards/green/workshop-s313.png",
+   "r1/cards/green/workshop-s301.png",
+   "r1/cards/green/workshop-s302.png",
+   "r1/cards/green/workshop-s303.png"
+  ],
+  "pick": 0,
+  "note": "木工台和挂在墙上的工具",
+  "extra": {}
+ },
+ "cards/art/scriptorium.png": {
+  "options": [
+   "r3/cards/green/scriptorium-s311.png",
+   "r3/cards/green/scriptorium-s312.png",
+   "r3/cards/green/scriptorium-s313.png",
+   "r1/cards/green/scriptorium-s301.png",
+   "r1/cards/green/scriptorium-s302.png",
+   "r1/cards/green/scriptorium-s303.png"
+  ],
+  "pick": 0,
+  "note": "满墙卷轴和石板的写字间，没有字",
+  "extra": {}
+ },
+ "cards/art/sawmill.png": {
+  "options": [
+   "r1/cards/brown/sawmill-s303.png",
+   "r1/cards/brown/sawmill-s301.png",
+   "r1/cards/brown/sawmill-s302.png"
+  ],
+  "pick": 0,
+  "note": "水车带动的锯木作坊",
+  "extra": {}
+ },
+ "cards/art/quarry.png": {
+  "options": [
+   "r3/cards/brown/quarry-s313.png",
+   "r3/cards/brown/quarry-s311.png",
+   "r3/cards/brown/quarry-s312.png",
+   "r1/cards/brown/quarry-s301.png",
+   "r1/cards/brown/quarry-s302.png",
+   "r1/cards/brown/quarry-s303.png"
+  ],
+  "pick": 0,
+  "note": "阶梯状采石崖 + 木吊杆吊着石块（第 3 轮另一张画成了现代挖掘机，不用）",
+  "extra": {}
+ },
+ "cards/art/brickyard.png": {
+  "options": [
+   "r1/cards/brown/brickyard-s302.png",
+   "r1/cards/brown/brickyard-s301.png",
+   "r1/cards/brown/brickyard-s303.png"
+  ],
+  "pick": 0,
+  "note": "砖窑和成排码好的红砖",
+  "extra": {}
+ },
+ "cards/art/foundry.png": {
+  "options": [
+   "r1/cards/brown/foundry-s302.png",
+   "r1/cards/brown/foundry-s301.png",
+   "r1/cards/brown/foundry-s303.png"
+  ],
+  "pick": 0,
+  "note": "熔炉里发红的火光",
+  "extra": {}
+ },
+ "cards/art/aqueduct.png": {
+  "options": [
+   "r1/cards/blue/aqueduct-s302.png",
+   "r1/cards/blue/aqueduct-s301.png",
+   "r1/cards/blue/aqueduct-s303.png"
+  ],
+  "pick": 0,
+  "note": "多拱石水道桥",
+  "extra": {}
+ },
+ "cards/art/temple.png": {
+  "options": [
+   "r1/cards/blue/temple-s301.png",
+   "r1/cards/blue/temple-s302.png",
+   "r1/cards/blue/temple-s303.png"
+  ],
+  "pick": 0,
+  "note": "正面多立克神庙",
+  "extra": {}
+ },
+ "cards/art/statue.png": {
+  "options": [
+   "r1/cards/blue/statue-s301.png",
+   "r1/cards/blue/statue-s302.png",
+   "r1/cards/blue/statue-s303.png"
+  ],
+  "pick": 0,
+  "note": "高台座上的长袍大理石像，不举火炬",
+  "extra": {}
+ },
+ "cards/art/courthouse.png": {
+  "options": [
+   "r1/cards/blue/courthouse-s302.png",
+   "r1/cards/blue/courthouse-s301.png",
+   "r1/cards/blue/courthouse-s303.png"
+  ],
+  "pick": 0,
+  "note": "高台阶上的柱廊法庭",
+  "extra": {}
+ },
+ "cards/art/forum.png": {
+  "options": [
+   "r1/cards/yellow/forum-s302.png",
+   "r1/cards/yellow/forum-s301.png",
+   "r1/cards/yellow/forum-s303.png"
+  ],
+  "pick": 0,
+  "note": "柱廊围着的广场和喷泉",
+  "extra": {}
+ },
+ "cards/art/caravansery.png": {
+  "options": [
+   "r1/cards/yellow/caravansery-s302.png",
+   "r1/cards/yellow/caravansery-s301.png",
+   "r1/cards/yellow/caravansery-s303.png"
+  ],
+  "pick": 0,
+  "note": "拱门驿站和骆驼",
+  "extra": {}
+ },
+ "cards/art/vineyard.png": {
+  "options": [
+   "r1/cards/yellow/vineyard-s301.png",
+   "r1/cards/yellow/vineyard-s302.png",
+   "r1/cards/yellow/vineyard-s303.png"
+  ],
+  "pick": 0,
+  "note": "山坡上的紫葡萄架",
+  "extra": {}
+ },
+ "cards/art/bazar.png": {
+  "options": [
+   "r1/cards/yellow/bazar-s302.png",
+   "r1/cards/yellow/bazar-s301.png",
+   "r1/cards/yellow/bazar-s303.png"
+  ],
+  "pick": 0,
+  "note": "拱廊下的红篷店铺",
+  "extra": {}
+ },
+ "cards/art/walls.png": {
+  "options": [
+   "r1/cards/red/walls-s303.png",
+   "r1/cards/red/walls-s301.png",
+   "r1/cards/red/walls-s302.png"
+  ],
+  "pick": 0,
+  "note": "带城垛的石墙和城门",
+  "extra": {}
+ },
+ "cards/art/training_ground.png": {
+  "options": [
+   "r3/cards/red/training_ground-s312.png",
+   "r3/cards/red/training_ground-s311.png",
+   "r3/cards/red/training_ground-s313.png",
+   "r1/cards/red/training_ground-s301.png",
+   "r1/cards/red/training_ground-s302.png",
+   "r1/cards/red/training_ground-s303.png"
+  ],
+  "pick": 0,
+  "note": "沙地上的木桩和木靶",
+  "extra": {}
+ },
+ "cards/art/stables.png": {
+  "options": [
+   "r3/cards/red/stables-s311.png",
+   "r3/cards/red/stables-s312.png",
+   "r3/cards/red/stables-s313.png",
+   "r1/cards/red/stables-s301.png",
+   "r1/cards/red/stables-s302.png",
+   "r1/cards/red/stables-s303.png"
+  ],
+  "pick": 0,
+  "note": "马从木马厩里探出头",
+  "extra": {}
+ },
+ "cards/art/archery_range.png": {
+  "options": [
+   "r1/cards/red/archery_range-s303.png",
+   "r1/cards/red/archery_range-s301.png",
+   "r1/cards/red/archery_range-s302.png"
+  ],
+  "pick": 0,
+  "note": "一排插着箭的草靶",
+  "extra": {}
+ },
+ "cards/art/dispensary.png": {
+  "options": [
+   "r1/cards/green/dispensary-s302.png",
+   "r1/cards/green/dispensary-s301.png",
+   "r1/cards/green/dispensary-s303.png"
+  ],
+  "pick": 0,
+  "note": "一格格药瓶的柜子",
+  "extra": {}
+ },
+ "cards/art/laboratory.png": {
+  "options": [
+   "r3/cards/green/laboratory-s312.png",
+   "r3/cards/green/laboratory-s311.png",
+   "r3/cards/green/laboratory-s313.png",
+   "r1/cards/green/laboratory-s301.png",
+   "r1/cards/green/laboratory-s302.png",
+   "r1/cards/green/laboratory-s303.png"
+  ],
+  "pick": 0,
+  "note": "铜蒸馏器和玻璃器皿",
+  "extra": {}
+ },
+ "cards/art/library.png": {
+  "options": [
+   "r1/cards/green/library-s302.png",
+   "r1/cards/green/library-s301.png",
+   "r1/cards/green/library-s303.png"
+  ],
+  "pick": 0,
+  "note": "整面墙的卷轴格架",
+  "extra": {}
+ },
+ "cards/art/school.png": {
+  "options": [
+   "r1/cards/green/school-s301.png",
+   "r1/cards/green/school-s302.png",
+   "r1/cards/green/school-s303.png"
+  ],
+  "pick": 0,
+  "note": "柱廊下的学堂",
+  "extra": {}
+ },
+ "cards/art/pantheon.png": {
+  "options": [
+   "r1/cards/blue/pantheon-s302.png",
+   "r1/cards/blue/pantheon-s301.png",
+   "r1/cards/blue/pantheon-s303.png"
+  ],
+  "pick": 0,
+  "note": "圆顶大殿 + 正面巨柱",
+  "extra": {}
+ },
+ "cards/art/gardens.png": {
+  "options": [
+   "r1/cards/blue/gardens-s302.png",
+   "r1/cards/blue/gardens-s301.png",
+   "r1/cards/blue/gardens-s303.png"
+  ],
+  "pick": 0,
+  "note": "柏树、台阶花园和喷泉",
+  "extra": {}
+ },
+ "cards/art/town_hall.png": {
+  "options": [
+   "r1/cards/blue/town_hall-s302.png",
+   "r1/cards/blue/town_hall-s301.png",
+   "r1/cards/blue/town_hall-s303.png"
+  ],
+  "pick": 0,
+  "note": "宏伟的柱廊大厅",
+  "extra": {}
+ },
+ "cards/art/palace.png": {
+  "options": [
+   "r1/cards/blue/palace-s302.png",
+   "r1/cards/blue/palace-s301.png",
+   "r1/cards/blue/palace-s303.png"
+  ],
+  "pick": 0,
+  "note": "金顶白大理石宫殿",
+  "extra": {}
+ },
+ "cards/art/senate.png": {
+  "options": [
+   "r1/cards/blue/senate-s301.png",
+   "r1/cards/blue/senate-s302.png",
+   "r1/cards/blue/senate-s303.png"
+  ],
+  "pick": 0,
+  "note": "半圆形议事厅外观",
+  "extra": {}
+ },
+ "cards/art/haven.png": {
+  "options": [
+   "r3/cards/yellow/haven-s322.png",
+   "r3/cards/yellow/haven-s321.png",
+   "r3/cards/yellow/haven-s323.png",
+   "r1/cards/yellow/haven-s301.png",
+   "r1/cards/yellow/haven-s302.png",
+   "r1/cards/yellow/haven-s303.png"
+  ],
+  "pick": 0,
+  "note": "大理石码头停着方帆古帆船、柱廊仓库和陶罐（第 1 批的船像现代汽船）",
+  "extra": {}
+ },
+ "cards/art/lighthouse.png": {
+  "options": [
+   "r3/cards/yellow/lighthouse-s311.png",
+   "r3/cards/yellow/lighthouse-s312.png",
+   "r3/cards/yellow/lighthouse-s313.png",
+   "r1/cards/yellow/lighthouse-s301.png",
+   "r1/cards/yellow/lighthouse-s302.png",
+   "r1/cards/yellow/lighthouse-s303.png"
+  ],
+  "pick": 0,
+  "note": "矮的单层石灯塔顶上火盆，和亚历山大灯塔分得开（第 1 批是条纹现代灯塔）",
+  "extra": {}
+ },
+ "cards/art/chamber_of_commerce.png": {
+  "options": [
+   "r1/cards/yellow/chamber_of_commerce-s302.png",
+   "r1/cards/yellow/chamber_of_commerce-s301.png",
+   "r1/cards/yellow/chamber_of_commerce-s303.png"
+  ],
+  "pick": 0,
+  "note": "大理石厅里的钱柜",
+  "extra": {}
+ },
+ "cards/art/arena.png": {
+  "options": [
+   "r1/cards/yellow/arena-s303.png",
+   "r1/cards/yellow/arena-s301.png",
+   "r1/cards/yellow/arena-s302.png"
+  ],
+  "pick": 0,
+  "note": "长跑道和看台的运动场",
+  "extra": {}
+ },
+ "cards/art/fortifications.png": {
+  "options": [
+   "r3/cards/red/fortifications-s312.png",
+   "r3/cards/red/fortifications-s311.png",
+   "r3/cards/red/fortifications-s313.png",
+   "r1/cards/red/fortifications-s301.png",
+   "r1/cards/red/fortifications-s302.png",
+   "r1/cards/red/fortifications-s303.png"
+  ],
+  "pick": 0,
+  "note": "两座方塔夹着带城门的厚墙（第 1 批像教堂）",
+  "extra": {}
+ },
+ "cards/art/circus.png": {
+  "options": [
+   "r3/cards/red/circus-s311.png",
+   "r3/cards/red/circus-s312.png",
+   "r3/cards/red/circus-s313.png",
+   "r1/cards/red/circus-s301.png",
+   "r1/cards/red/circus-s302.png",
+   "r1/cards/red/circus-s303.png"
+  ],
+  "pick": 0,
+  "note": "多层拱券的椭圆斗兽场外观",
+  "extra": {}
+ },
+ "cards/art/arsenal.png": {
+  "options": [
+   "r3/cards/red/arsenal-s321.png",
+   "r3/cards/red/arsenal-s311.png",
+   "r3/cards/red/arsenal-s312.png",
+   "r3/cards/red/arsenal-s313.png",
+   "r3/cards/red/arsenal-s322.png",
+   "r3/cards/red/arsenal-s323.png",
+   "r1/cards/red/arsenal-s301.png",
+   "r1/cards/red/arsenal-s302.png",
+   "r1/cards/red/arsenal-s303.png"
+  ],
+  "pick": 0,
+  "note": "整面墙挂满圆盾、前面立着长矛（第 1 批是普通神庙）",
+  "extra": {}
+ },
+ "cards/art/siege_workshop.png": {
+  "options": [
+   "r3/cards/red/siege_workshop-s312.png",
+   "r3/cards/red/siege_workshop-s311.png",
+   "r3/cards/red/siege_workshop-s313.png",
+   "r1/cards/red/siege_workshop-s301.png",
+   "r1/cards/red/siege_workshop-s302.png",
+   "r1/cards/red/siege_workshop-s303.png"
+  ],
+  "pick": 0,
+  "note": "木制投石机（第 1 批有大炮，年代错）",
+  "extra": {}
+ },
+ "cards/art/lodge.png": {
+  "options": [
+   "r3/cards/green/lodge-s312.png",
+   "r3/cards/green/lodge-s311.png",
+   "r3/cards/green/lodge-s313.png",
+   "r1/cards/green/lodge-s301.png",
+   "r1/cards/green/lodge-s302.png",
+   "r1/cards/green/lodge-s303.png"
+  ],
+  "pick": 0,
+  "note": "墙上星象图、烛光书桌",
+  "extra": {}
+ },
+ "cards/art/observatory.png": {
+  "options": [
+   "r1/cards/green/observatory-s302.png",
+   "r1/cards/green/observatory-s301.png",
+   "r1/cards/green/observatory-s303.png"
+  ],
+  "pick": 0,
+  "note": "圆顶石塔",
+  "extra": {}
+ },
+ "cards/art/university.png": {
+  "options": [
+   "r1/cards/green/university-s302.png",
+   "r1/cards/green/university-s301.png",
+   "r1/cards/green/university-s303.png"
+  ],
+  "pick": 0,
+  "note": "屋顶立着雕像的学院大殿（s301 屋顶有十字，不用）",
+  "extra": {}
+ },
+ "cards/art/academy.png": {
+  "options": [
+   "r1/cards/green/academy-s303.png",
+   "r1/cards/green/academy-s301.png",
+   "r1/cards/green/academy-s302.png"
+  ],
+  "pick": 0,
+  "note": "橄榄树间的柱廊学园",
+  "extra": {}
+ },
+ "cards/art/study.png": {
+  "options": [
+   "r1/cards/green/study-s302.png",
+   "r1/cards/green/study-s301.png",
+   "r1/cards/green/study-s303.png"
+  ],
+  "pick": 0,
+  "note": "室内书桌和卷轴",
+  "extra": {}
+ },
+ "cards/art/workers_guild.png": {
+  "options": [
+   "r1/cards/purple/workers_guild-s303.png",
+   "r1/cards/purple/workers_guild-s301.png",
+   "r1/cards/purple/workers_guild-s302.png"
+  ],
+  "pick": 0,
+  "note": "紫帷幔会馆门前木材石料",
+  "extra": {}
+ },
+ "cards/art/craftsmens_guild.png": {
+  "options": [
+   "r1/cards/purple/craftsmens_guild-s302.png",
+   "r1/cards/purple/craftsmens_guild-s301.png",
+   "r1/cards/purple/craftsmens_guild-s303.png"
+  ],
+  "pick": 0,
+  "note": "紫帷幔会馆里陈列器物",
+  "extra": {}
+ },
+ "cards/art/traders_guild.png": {
+  "options": [
+   "r1/cards/purple/traders_guild-s301.png",
+   "r1/cards/purple/traders_guild-s302.png",
+   "r1/cards/purple/traders_guild-s303.png"
+  ],
+  "pick": 0,
+  "note": "码头边的紫帷幔会馆",
+  "extra": {}
+ },
+ "cards/art/philosophers_guild.png": {
+  "options": [
+   "r1/cards/purple/philosophers_guild-s303.png",
+   "r1/cards/purple/philosophers_guild-s301.png",
+   "r1/cards/purple/philosophers_guild-s302.png"
+  ],
+  "pick": 0,
+  "note": "柱廊会馆里的石桌",
+  "extra": {}
+ },
+ "cards/art/spies_guild.png": {
+  "options": [
+   "r1/cards/purple/spies_guild-s302.png",
+   "r1/cards/purple/spies_guild-s301.png",
+   "r1/cards/purple/spies_guild-s303.png"
+  ],
+  "pick": 0,
+  "note": "暗门半掩的紫帘",
+  "extra": {}
+ },
+ "cards/art/strategists_guild.png": {
+  "options": [
+   "r1/cards/purple/strategists_guild-s302.png",
+   "r1/cards/purple/strategists_guild-s301.png",
+   "r1/cards/purple/strategists_guild-s303.png"
+  ],
+  "pick": 0,
+  "note": "会馆里的沙盘桌",
+  "extra": {}
+ },
+ "cards/art/shipowners_guild.png": {
+  "options": [
+   "r1/cards/purple/shipowners_guild-s301.png",
+   "r1/cards/purple/shipowners_guild-s302.png",
+   "r1/cards/purple/shipowners_guild-s303.png"
+  ],
+  "pick": 0,
+  "note": "会馆旁停着船",
+  "extra": {}
+ },
+ "cards/art/scientists_guild.png": {
+  "options": [
+   "r1/cards/purple/scientists_guild-s302.png",
+   "r1/cards/purple/scientists_guild-s301.png",
+   "r1/cards/purple/scientists_guild-s303.png"
+  ],
+  "pick": 0,
+  "note": "会馆里的天球仪",
+  "extra": {}
+ },
+ "cards/art/magistrates_guild.png": {
+  "options": [
+   "r1/cards/purple/magistrates_guild-s303.png",
+   "r1/cards/purple/magistrates_guild-s301.png",
+   "r1/cards/purple/magistrates_guild-s302.png"
+  ],
+  "pick": 0,
+  "note": "紫帷幔会馆里的高台石座（s302 台上像十字架，不用）",
+  "extra": {}
+ },
+ "cards/art/builders_guild.png": {
+  "options": [
+   "r1/cards/purple/builders_guild-s301.png",
+   "r1/cards/purple/builders_guild-s302.png",
+   "r1/cards/purple/builders_guild-s303.png"
+  ],
+  "pick": 0,
+  "note": "脚手架和吊架",
+  "extra": {}
  }
 }

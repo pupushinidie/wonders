@@ -13,8 +13,12 @@ import simple_draw as sd
 
 ART = pathlib.Path(__file__).resolve().parent
 ROOT = ART.parent
+import sys
 PUB = ROOT / "apps/web/public/art"
 OUT = ART / "out" / "mock"
+if "--final" in sys.argv:  # 用定稿 art/out/final 摆：python art/mock_table.py --final → art/out/mock-final/
+    PUB = ART / "out" / "final"
+    OUT = ART / "out" / "mock-final"
 CARDS = {c["name"].lower().replace(" ", "_"): c for c in json.loads((ROOT / "data/cards.json").read_text())}
 WONDERS = {w["key"]: w for w in json.loads((ROOT / "data/wonders.json").read_text())}
 
