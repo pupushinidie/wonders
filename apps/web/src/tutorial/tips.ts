@@ -6,6 +6,14 @@ import { useEffect, useRef, useState } from "react";
 import type { Tip } from "./Coach.js";
 import { markTipSeen, seenTips, setTipsOff, tipsOff } from "./storage.js";
 
+const TIP_MS = 12_000;
+/** 当前这条贴士的「重新计时」（同一时间只有一条贴士）。 */
+let holdCurrent: (() => void) | null = null;
+/** 贴士被点开时调用：从现在起再留 12 秒。 */
+export function holdTip() {
+  holdCurrent?.();
+}
+
 export function useFirstTimeTips(
   game: string,
   /** 局面版本号：每走一步加一，只在它变化时检查。 */
@@ -37,8 +45,17 @@ export function useFirstTimeTips(
 
   useEffect(() => {
     if (!tip) return;
-    const timer = window.setTimeout(() => setTip(null), 12_000);
-    return () => window.clearTimeout(timer);
+    let timer = window.setTimeout(() => setTip(null), TIP_MS);
+    // 手机上点开缩成一行的贴士：从点开时起重新计时，免得刚展开就收走
+    const restart = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setTip(null), TIP_MS);
+    };
+    holdCurrent = restart;
+    return () => {
+      window.clearTimeout(timer);
+      if (holdCurrent === restart) holdCurrent = null;
+    };
   }, [tip?.id]);
 
   return {

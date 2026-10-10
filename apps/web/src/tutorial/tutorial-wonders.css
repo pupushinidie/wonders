@@ -28,3 +28,15 @@
 
 /* 挑弃牌、自选奇迹弹窗开着时，「提示」浮在弹窗上面（出牌面板上的被遮罩盖住了） */
 .app-shell .wd-hint-float { position: fixed; z-index: 1004; right: 16px; bottom: 16px; margin: 0; background: var(--panel); }
+
+/* 手机牌桌：小贴士缩成一行，贴在顶栏和其他玩家条下面（轮次、倒计时、其他玩家一直看得见），点一下展开看全文。
+   位置由 Coach.tsx 按 --tut-toast-after 里最靠下的元素算（3 人局没有其他玩家条就贴顶栏），算不出来时用 top: 44px。 */
+.wd-screen.mobile .tut-toast { --tut-toast-after: .wd-topbar, .wd-mothers; top: 44px; align-items: center; gap: 8px; width: calc(100vw - 16px); padding: 4px 8px; cursor: pointer; }
+.wd-screen.mobile .tut-toast img { width: 24px; height: 24px; }
+.wd-screen.mobile .tut-toast p { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
+.wd-screen.mobile .tut-toast-actions { display: flex; align-items: center; gap: 8px; }
+.wd-screen.mobile .tut-toast .tut-link { display: none; }
+.wd-screen.mobile .tut-toast.open { align-items: flex-start; }
+.wd-screen.mobile .tut-toast.open p { display: block; -webkit-line-clamp: unset; }
+.wd-screen.mobile .tut-toast.open .tut-toast-actions { flex-direction: column; align-items: flex-end; }
+.wd-screen.mobile .tut-toast.open .tut-link { display: inline; }

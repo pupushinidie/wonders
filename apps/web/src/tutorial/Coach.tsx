@@ -5,8 +5,9 @@
  * 要高亮的元素在游戏界面上加 data-tutorial="名字"（锚点），这里按名字去找，所以界面怎么排都不用改这一层。
  * 必须渲染在 .app-shell 里面（要用那里定义的颜色变量和像素描边粗细 --px）。
  */
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { ARROW, GULU, GULU_ICON, GULU_SPARKLES, type GuluFace } from "./gulu.js";
+import { holdTip } from "./tips.js";
 import "./tutorial.css";
 
 export const anchorSelector = (anchor: string) => `[data-tutorial="${anchor}"]`;
@@ -244,8 +245,40 @@ export interface Tip {
 
 /** 真实对局里「第一次遇到」的小贴士：顶上一条，不挡操作。 */
 export function TipToast({ tip, onClose, onNever }: { tip: Tip; onClose: () => void; onNever: () => void }) {
+  // 窄屏上贴士可以缩成一行（看各游戏的样式，比如七大奇迹手机牌桌），点一下展开；展开后从这时起再留 12 秒。
+  // 没写缩行样式的游戏（和所有桌面版）加了 open 类也没有任何变化。
+  const [open, setOpen] = useState(false);
+  useEffect(() => setOpen(false), [tip.id]);
+  // 游戏可以用 CSS 变量 --tut-toast-after 写一组选择器，贴士就贴在其中最靠下的那个元素下面（七大奇迹手机：顶栏、其他玩家条）。
+  // 没写这个变量的游戏和桌面版不受影响，照旧用 tutorial.css 里的位置。
+  const box = useRef<HTMLDivElement>(null);
+  const [top, setTop] = useState<number | null>(null);
+  useLayoutEffect(() => {
+    const el = box.current;
+    if (!el) return;
+    const place = () => {
+      const selector = getComputedStyle(el).getPropertyValue("--tut-toast-after").trim();
+      let bottom = -1;
+      if (selector) {
+        try {
+          for (const anchor of document.querySelectorAll(selector)) bottom = Math.max(bottom, anchor.getBoundingClientRect().bottom);
+        } catch {
+          bottom = -1;
+        }
+      }
+      setTop(bottom >= 0 ? Math.round(Math.max(0, bottom) + 4) : null);
+    };
+    place();
+    window.addEventListener("resize", place);
+    return () => window.removeEventListener("resize", place);
+  }, [tip.id]);
+  const expand = () => {
+    if (open) return;
+    setOpen(true);
+    holdTip();
+  };
   return (
-    <div className="tut-toast" role="status">
+    <div ref={box} className={open ? "tut-toast open" : "tut-toast"} role="status" onClick={expand} {...(top === null ? {} : { style: { top } })}>
       <img src={GULU_ICON} alt="" />
       <p><b>{tip.title}</b>{tip.text}</p>
       <div className="tut-toast-actions">
