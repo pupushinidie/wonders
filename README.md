@@ -1,6 +1,6 @@
 # 七大奇迹
 
-3–7 人同时轮抽、建城池和奇迹的桌游，网页联机版。规则按 `~/Desktop/游戏规则/七大奇迹.md` 和补充勘误 `七大奇迹-补充.md` 实现（**以补充文件为准**，勘误 E1–E17 全部按官方第一版更正）；美术和规则说明文字都是自己的。
+3–7 人同时轮抽、建城池和奇迹的桌游，网页联机版。规则按 `~/Desktop/游戏规则/七大奇迹.md` 和补充勘误 `七大奇迹-补充.md` 实现（**以补充文件为准**，勘误 E1–E17 全部按官方第一版更正）；美术和规则说明文字都是自己的。美术是 PixelLab 正式美术（`art/out/final` 覆盖到 `apps/web/public/art`，简洁版原图留在 `art/simple/`，`python art/simple.py --check --final` 查清单）；卡面上的成本、效果、卡名都由界面用 DOM 画，插画里没有字和效果图标。
 
 线上地址（上线后）：<https://gulugagame.com/wonders/>（付费网关后面，要登录）
 
@@ -46,7 +46,7 @@ BASE_PATH=/wonders/ npm run build
 | `packages/game/src/city.ts` | 城池推导：产出、折扣、盾牌、科技符号、邻居 |
 | `packages/game/src/redact.ts` | 隐藏信息 `redactGameForViewer` |
 | `packages/game/src/scenes.ts` | 预览局面工厂（对外接口） |
-| `packages/game/src/bot.ts` | 人机（现在是占位：保底动作；人机阶段换成正式策略） |
+| `packages/game/src/bot.ts` | 人机（正式策略「普通」，调强弱的参数在 BOT_TUNING） |
 | `apps/server` | Socket.IO 房间服务器（建房、重连、踢人、解散、再来一局、聊天、语音、观战、人机、托管、挤登录、管理员解散），同时出牌的计时 |
 | `apps/web` | 网页。牌桌现在是**调试牌桌**（`src/GameBoard.tsx`：把状态列出来，每个合法行动一个按钮），正式界面由界面阶段做 |
 | `scripts/test-bot.mjs` | 陪玩机器人 |
