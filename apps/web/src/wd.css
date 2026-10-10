@@ -584,18 +584,22 @@ button.wd-item { cursor: pointer; }
 }
 
 /* 规则 */
-.app-shell .gm-panel.wd-rules { width: min(900px, 100%); max-height: calc(100dvh - 32px); overflow: auto; }
-.wd-rules-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 18px; }
-.wd-rules-grid section { display: flex; flex-direction: column; gap: 6px; }
-.app-shell .wd-rules h3 { margin: 0; color: var(--gold); font-size: 24px; font-weight: 400; }
-.app-shell .wd-rules p, .app-shell .wd-rules li { margin: 0; color: var(--text); font-size: 12px; line-height: 1.7; }
+/* 规则弹窗：标题、正文、底栏三段；正文按列自动排（各节不拆开），放不下时只滚正文，「知道了」一直在底栏 */
+.app-shell .gm-panel.wd-rules { width: min(900px, 100%); max-height: calc(100dvh - 32px); overflow: hidden; display: flex; flex-direction: column; padding-block: 16px; }
+.app-shell .gm-panel.wd-rules > h2 { margin-bottom: 6px; }
+.wd-rules-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.wd-rules-grid { columns: 2; column-gap: 18px; }
+.wd-rules-grid section { display: flex; flex-direction: column; gap: 4px; break-inside: avoid; margin-bottom: 8px; }
+.app-shell .wd-rules h3 { margin: 0; color: var(--gold); font-size: 24px; font-weight: 400; line-height: 1.25; }
+.app-shell .wd-rules p, .app-shell .wd-rules li { margin: 0; color: var(--text); font-size: 12px; line-height: 1.5; }
 .app-shell .wd-rules ul { margin: 0; padding-left: 18px; }
 .app-shell .wd-rules :is(p, li) > b { color: var(--gold); font-weight: 400; }
-@media (min-width: 1200px) { .app-shell .gm-panel.wd-rules { width: min(1180px, 100%); } .wd-rules-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 960px) { .app-shell .gm-panel.wd-rules { width: min(1180px, 100%); } .wd-rules-grid { columns: 3; } }
+.wd-rules-foot { flex: none; display: flex; justify-content: flex-end; padding-top: 8px; }
 .wd-rules-pics { display: flex; align-items: flex-end; gap: 10px; }
 .wd-rules-pics > p { flex: 1 1 auto; min-width: 0; }
 .wd-rules-pics:not(:has(p)) { flex-wrap: wrap; }
-.app-shell .wd-rules .primary-button { width: auto; margin: 12px 0 0; padding: 0 24px; font-size: 24px; }
+.app-shell .wd-rules .primary-button { width: auto; margin: 0; padding: 0 24px; font-size: 24px; }
 
 /* ---------- 手机 ---------- */
 .wd-screen.mobile { display: block; height: auto; min-height: 100dvh; overflow: visible; overflow-x: clip; }
@@ -670,7 +674,7 @@ button.wd-item { cursor: pointer; }
   .wd-choose-list { flex-direction: row; flex-wrap: wrap; }
   .wd-choose-list button { min-width: 0; font-size: 12px; }
   .wd-choose-list button small { display: none; }
-  .wd-rules-grid { grid-template-columns: 1fr; }
+  .wd-rules-grid { columns: 1; }
   .wd-final-table { font-size: 24px; border-spacing: 0 2px; }
   .wd-final-table th { padding: 0; font-size: 12px; white-space: nowrap; }
   .wd-final-table th small { display: none; }

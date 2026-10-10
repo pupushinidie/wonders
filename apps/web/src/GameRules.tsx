@@ -21,6 +21,7 @@ export default function GameRules({ className = "quiet-button" }: { className?: 
         <div className="gm-modal-backdrop" onClick={() => setOpen(false)}>
           <section className="gm-panel wd-rules" role="dialog" aria-modal="true" aria-labelledby="wd-rules-title" onClick={(event) => event.stopPropagation()}>
             <h2 id="wd-rules-title">七大奇迹怎么玩</h2>
+            <div className="wd-rules-body">
             <div className="wd-rules-grid">
               <section>
                 <h3>目标</h3>
@@ -56,16 +57,7 @@ export default function GameRules({ className = "quiet-button" }: { className?: 
                 <p>打完把剩下的牌传给邻居：时代 I、III 传<b>左</b>，时代 II 传<b>右</b>（顶栏的箭头）。第 6 轮剩下那张作废，不给钱。</p>
               </section>
               <section>
-                <h3>奇迹</h3>
-                <WonderBoard wonder="giza" side="A" stages={1} n={1} />
-                <p>从左到右一层层建，每层付板上的成本；垫下去的牌没有效果，别人也看不到。左上角是开局就有的资源。右下角写着 A 面还是 B 面。</p>
-                <ul>
-                  <li><b>巴比伦第 7 张</b>（巴比伦 B 面第 2 层）：每个时代第 6 轮，大家打完以后你还能把剩下那张也打出去（建造、建奇迹或弃掉换钱都行），别人等你这一步。</li>
-                  <li><b>哈利卡纳苏斯挑弃牌</b>：建成带这个能力的那层后，这一轮结束时从弃牌堆挑一张免费建（弃牌堆只有你看得到，同名的不能建）。限时 20 秒，也可以放弃。</li>
-                </ul>
-              </section>
-              <section>
-                <h3>军事：时代结束跟两个邻居比盾</h3>
+                <h3>军事：时代末跟邻居比盾</h3>
                 <div className="wd-rules-pics">
                   {[1, 3, 5, -1].map((value) => <img key={value} src={art.token(value)} alt={String(value)} width={32} height={32} />)}
                 </div>
@@ -76,11 +68,23 @@ export default function GameRules({ className = "quiet-button" }: { className?: 
                 <p><Icon name="sci-compass" s={1} /><Icon name="sci-gear" s={1} /><Icon name="sci-tablet" s={1} /> 每种符号张数的平方相加，三种各凑齐一张再加 7 分。时代 III 的紫卡（行会）多半按邻居城里的卡计分。金币每 3 枚 1 分。</p>
               </section>
               <section>
+                <h3>奇迹</h3>
+                <WonderBoard wonder="giza" side="A" stages={1} n={1} />
+                <p>从左到右一层层建，每层付板上的成本；垫下去的牌没有效果，别人也看不到。左上角是开局就有的资源。右下角写着 A 面还是 B 面。</p>
+                <ul>
+                  <li><b>巴比伦第 7 张</b>（巴比伦 B 面第 2 层）：每个时代第 6 轮，大家打完以后你还能把剩下那张也打出去（建造、建奇迹或弃掉换钱都行），别人等你这一步。</li>
+                  <li><b>哈利卡纳苏斯挑弃牌</b>：建成带这个能力的那层后，这一轮结束时从弃牌堆挑一张免费建（弃牌堆只有你看得到，同名的不能建）。限时 20 秒，也可以放弃。</li>
+                </ul>
+              </section>
+              <section>
                 <h3>本站</h3>
                 <p>每轮 60 秒（巴比伦第 7 张、哈利卡纳苏斯挑弃牌 20 秒），超时由人机替你出；连续超时 2 次转托管，掉线时人机代打，用原昵称回来能接上。键盘：1–7 选牌，B 建造、W 建奇迹、D 弃掉、U 撤回。</p>
               </section>
             </div>
-            <button className="primary-button" type="button" onClick={() => setOpen(false)}>知道了</button>
+            </div>
+            <div className="wd-rules-foot">
+              <button className="primary-button" type="button" onClick={() => setOpen(false)}>知道了</button>
+            </div>
           </section>
         </div>
       )}
