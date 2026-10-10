@@ -32,7 +32,7 @@ import { boardH, useLayout } from "./layout.js";
 import { ColorCounts, LastPlay, MobileNeighbor, NeighborPanel, OtherCard, OtherTag, ScienceCounts, StatLine, type SeatInfo } from "./Players.js";
 import { GameRoomMenu, SpectateBar } from "./RoomExtras.js";
 import { socket } from "./socket.js";
-import { describeEvent, ROMAN, seatVar } from "./text.js";
+import { describeEvent, ROMAN, seatVar, WONDER_SHORT } from "./text.js";
 import type { Theme } from "./theme.js";
 import { PlayerBoard } from "./Wonder.js";
 
@@ -500,7 +500,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
           <button type="button" className="wd-panel wd-mme wd-seat" style={seatVar(me.wonder) as CSSProperties} onClick={() => setOpenSeat(me.id)} data-tutorial="my-board">
             <PlayerBoard player={me} n={1} {...shineProp(me.id)} />
             <span className="wd-mme-side">
-              {me.wonder && <span className="wd-mme-name">{wonderDef(me.wonder).zh} · {me.side} 面 · {me.stages}/{wonderStages(me.wonder, me.side).length} 层</span>}
+              {me.wonder && <span className="wd-mme-name" title={wonderDef(me.wonder).zh}>{WONDER_SHORT[me.wonder]} · {me.side}面 · {me.stages}/{wonderStages(me.wonder, me.side).length}层</span>}
               <StatLine seat={mine} items={["coin", "shield", "vp"]} tutorial="my-stats" />
               <span data-tutorial="my-city"><ColorCounts player={me} big /></span>
             </span>

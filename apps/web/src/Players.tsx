@@ -200,8 +200,10 @@ export function NeighborPanel({ seat, me, side, game, wonderN, passTo, onOpen, s
         <div className="wd-nb-sub"><span>卖给你</span><small>每份几金</small></div>
         <SellList me={me} neighbor={player} side={side} s={sellIcons(player) > 6 ? 1 : 2} />
       </div>
-      <ColorCounts player={player} />
-      <ScienceCounts player={player} />
+      <div className="wd-nb-tail">
+        <ColorCounts player={player} />
+        <ScienceCounts player={player} />
+      </div>
     </section>
   );
 }

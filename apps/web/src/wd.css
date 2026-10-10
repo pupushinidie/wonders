@@ -906,3 +906,18 @@ p.wd-seeall { margin: 0; white-space: normal; }
   .app-shell:is(.wd-home, .wd-room) .topbar-right { gap: 6px; }
   .app-shell.wd-home .center-link { padding-left: 8px; border-left: var(--px) solid var(--rim); }
 }
+
+/* ---------- 首发验收第 2 轮复验 ---------- */
+/* 邻居面板：子项不许被压扁（I22）；宽面板把颜色计数和科技放一行省高度 */
+.wd-neighbor > * { flex-shrink: 0; }
+.wd-nb-tail { display: flex; flex-direction: column; gap: 6px; }
+.wd-table.nb-wide .wd-neighbor .wd-nb-tail { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; }
+/* 手机其他玩家小签（I51/I1）：上一行徽记 + 分数，下一行标签 / 名字，出牌状态是右上角的小角标 */
+.wd-tagcard { position: relative; display: grid; grid-template-columns: 32px minmax(0, 1fr); grid-template-rows: 32px 16px; align-items: center; justify-content: stretch; gap: 0 4px; height: auto; min-height: 56px; padding: 3px 4px 3px 8px; }
+.wd-tagcard .wd-emblem { grid-row: 1; grid-column: 1; }
+.wd-tagcard-main { display: contents; }
+.wd-tagcard-vp { grid-row: 1; grid-column: 2; }
+.wd-tagcard-name { grid-row: 2; grid-column: 1 / -1; }
+.wd-tagcard .wd-ready { position: absolute; top: 15px; left: 22px; padding: 1px; background: var(--wd-panel); box-shadow: 0 0 0 1px var(--edge); }
+/* 手机自己奇迹那一行（I53）：短名，放不下就换行，不省略 */
+.wd-mme-name { white-space: normal; }
