@@ -88,6 +88,17 @@ export function City({ player, capacity, fresh, tutorial, style }: {
   );
 }
 
+/** 奇迹每一层写成一行字：成本 → 效果（已建的打勾）。 */
+export function StageList({ wonder, side, built }: { wonder: WonderKey; side: WonderSide; built: number }) {
+  return (
+    <ol className="wd-stage-list">
+      {wonderStages(wonder, side).map((stage, index) => (
+        <li key={index} className={index < built ? "built" : ""}><b>第 {index + 1} 层{index < built ? " ✓" : ""}</b> {resCount(stage.cost)} → {stage.effects.map(effectText).join("，")}</li>
+      ))}
+    </ol>
+  );
+}
+
 /** 七项分数（军事、金币、奇迹、文明、科技、商业、行会）。 */
 export const SCORE_ITEMS = [
   { key: "military", label: "军事", icon: "cat-red" },
@@ -139,7 +150,10 @@ export function PlayerDialog({ seat, game, onClose }: { seat: SeatInfo; game: Ga
       tutorial="player-dialog"
     >
       <div className="wd-pd-top">
-        <PlayerBoard player={player} n={big ? 2 : 1} detail />
+        <div className="wd-pd-board">
+          <PlayerBoard player={player} n={big ? 2 : 1} />
+          {player.wonder && <StageList wonder={player.wonder} side={player.side} built={player.stages} />}
+        </div>
         <div className="wd-pd-info">
           <StatLine seat={seat} />
           <div className="wd-pd-line"><em>产出</em><Production player={player} /></div>
@@ -209,18 +223,15 @@ export function ChooseWonderDialog({ game, me, members, nameOf, onCommand, onClo
               ))}
             </div>
             <WonderBoard wonder={pick} side={showSide} stages={0} n={1} />
-            <ol className="wd-stage-list">
-              {wonderStages(pick, showSide).map((stage, index) => (
-                <li key={index}><b>第 {index + 1} 层</b> {resCount(stage.cost)} → {stage.effects.map(effectText).join("，")}</li>
-              ))}
-            </ol>
+            <StageList wonder={pick} side={showSide} built={0} />
             {mine && <button type="button" className="primary-button" disabled={busy || Boolean(taken)} onClick={() => choose(showSide)}>{taken ? "已被挑走" : `选 ${showSide} 面`}</button>}
           </div>
         ) : (
         <div className="wd-choose-sides">
           {(["A", "B"] as const).map((side) => (
             <div key={side} className="wd-choose-side">
-              <WonderBoard wonder={pick} side={side} stages={0} n={big ? 2 : 1} detail />
+              <WonderBoard wonder={pick} side={side} stages={0} n={big ? 2 : 1} />
+              <StageList wonder={pick} side={side} built={0} />
               {mine && <button type="button" className="primary-button" disabled={busy || Boolean(taken)} onClick={() => choose(side)}>{taken ? "已被挑走" : `选 ${side} 面`}</button>}
             </div>
           ))}
@@ -266,6 +277,7 @@ export function DiscardDialog({ game, me, onCommand, onClose, busy }: {
             key={`${id}-${index}`}
             id={id}
             selected={pick === id}
+            tutorial={`discard-card-${id}`}
             {...(buildable.has(id) ? { onClick: () => setPick(id) } : { status: { kind: "dup" as const, text: "已有同名" } })}
             sub={`时代 ${"I".repeat(card(id).age)}`}
           />

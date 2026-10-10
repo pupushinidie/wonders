@@ -93,6 +93,23 @@ const SCENES: Record<string, Scene> = {
   final7b: { note: "终局 7 人、B 面", game: () => finishedFull("B"), room: { viewer: "p5" } },
   offline: { note: "对手离线（人机代打）", game: () => scene("midgame", { players: 5, age: 1, round: 2 }), room: { offline: ["p3"], turnRemainingMs: 44000 } },
   auto: { note: "我托管中", game: () => scene("midgame", { players: 5, age: 2, round: 2 }), room: { auto: ["p1"], turnRemainingMs: 44000 } },
+  buyThree: {
+    note: "一块付款要向右邻买 3 份（商会：砖砖纸），7 人局窄面板",
+    game: () => buildScene({
+      age: 3,
+      round: 3,
+      players: [
+        { wonder: "alexandria", coins: 9, built: ["Lumber Yard", "Stone Pit"], hand: ["Chamber of Commerce", "Pantheon", "Gardens", "Senate", "Arena"] },
+        { wonder: "olympia", built: ["Ore Vein"] },
+        { wonder: "giza" },
+        { wonder: "rhodes" },
+        { wonder: "ephesus" },
+        { wonder: "babylon" },
+        { wonder: "halicarnassus", built: ["Brickyard", "Press@1"] },
+      ],
+    }),
+    room: { turnRemainingMs: 40000 },
+  },
   bots: { note: "有人机的桌子", game: () => scene("midgame", { players: 6, age: 1, round: 4 }), room: { bots: ["p2", "p4", "p6"], turnRemainingMs: 44000 } },
   timeout: { note: "我超时了，人机替我出（加 anim=1 看提示）", game: () => scene("midgame", { players: 4, age: 1, round: 3 }), room: { timedOut: "p1", turnRemainingMs: 6000 } },
   lowTime: { note: "倒计时只剩 8 秒", game: () => scene("midgame", { players: 4, age: 2, round: 5 }), room: { turnRemainingMs: 8000 } },

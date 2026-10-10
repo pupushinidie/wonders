@@ -64,3 +64,15 @@ export function sceneIndex(code: string): 1 | 2 {
 export function sceneScale(width: number, height: number): number {
   return Math.max(1, Math.ceil(Math.max(width / 512, height / 288)));
 }
+
+/** 场景里灯塔的横坐标（原图像素，scene/focus.json）：手机竖屏只露中间一竖条，按它把灯塔摆到屏幕正中。 */
+let focusCache: Record<string, number> | null = null;
+let focusLoading: Promise<Record<string, number>> | null = null;
+export function loadSceneFocus(): Promise<Record<string, number>> {
+  if (focusCache) return Promise.resolve(focusCache);
+  focusLoading ??= fetch(artUrl("scene/focus.json"))
+    .then((response) => (response.ok ? response.json() : {}))
+    .catch(() => ({}))
+    .then((data: Record<string, number>) => (focusCache = data));
+  return focusLoading;
+}

@@ -19,7 +19,7 @@ import {
   type PlayAction,
 } from "@wonders/game";
 import { ActionPanel, commandFor, whyText } from "./ActionPanel.js";
-import { art, sceneIndex, sceneScale } from "./art.js";
+import { art, loadSceneFocus, sceneIndex, sceneScale } from "./art.js";
 import { buildStatus, CardFace, CardItem, type CardStatus } from "./Card.js";
 import { ChooseWonderDialog, City, DiscardDialog, PlayerDialog, Production } from "./Dialogs.js";
 import { FinalDialog } from "./FinalDialog.js";
@@ -290,6 +290,9 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
 
   const sceneN = sceneIndex(room.code || "WONDER");
   const scale = sceneScale(layout.width, layout.height);
+  const [focus, setFocus] = useState<Record<string, number>>({});
+  useEffect(() => { void loadSceneFocus().then(setFocus); }, []);
+  const focusX = focus[`${theme}-${sceneN}`];
   const tableStyle = {
     "--scene": `url(${art.scene(theme, sceneN)})`,
     "--scene-size": `${512 * scale}px ${288 * scale}px`,
@@ -301,6 +304,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
     "--strip-h": `${layout.stripH}px`,
     "--strip-font": `${layout.stripFont}px`,
     "--act-w": `${layout.actW}px`,
+    ...(layout.mobile && focusX !== undefined ? { "--scene-x": `${Math.round(layout.width / 2 - focusX * scale)}px` } : {}),
   } as CSSProperties;
 
   const submittedCount = game.players.filter((player) => player.submitted).length;

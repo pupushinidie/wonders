@@ -420,7 +420,7 @@ button.wd-item { cursor: pointer; }
 .wd-act-pay { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 4px; min-width: 0; }
 .wd-stage-no { flex: 0 0 auto; color: var(--muted); }
 .wd-act-why { flex: 1 1 100%; color: #ff8a80; font-size: 12px; line-height: 16px; }
-.wd-chip { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 2px; height: 26px; padding: 0 4px; box-sizing: border-box; color: var(--text); font-size: 24px; line-height: 1; white-space: nowrap; }
+.wd-chip { display: inline-flex; flex: 0 1 auto; flex-wrap: wrap; align-items: center; gap: 2px; max-width: 100%; min-height: 26px; padding: 1px 4px; box-sizing: border-box; color: var(--text); font-size: 24px; line-height: 1; white-space: nowrap; }
 .wd-chip i { font-style: normal; }
 .wd-chip .lbl { margin-right: 2px; color: var(--muted); font-size: 12px; }
 .wd-chip .wd-icon { width: 16px; height: 16px; }
@@ -617,7 +617,7 @@ button.wd-item { cursor: pointer; }
   min-height: calc(100dvh - 40px);
   padding: 6px 8px 12px;
   box-sizing: border-box;
-  background: linear-gradient(var(--veil), var(--veil)), var(--scene) center top / var(--scene-size) no-repeat, #1b2935;
+  background: linear-gradient(var(--veil), var(--veil)), var(--scene) var(--scene-x, center) top / var(--scene-size) no-repeat, #1b2935;
 }
 .wd-mothers { display: flex; gap: 6px; }
 .wd-tagcard { display: flex; flex: 1 1 0; align-items: center; justify-content: space-between; gap: 2px; min-width: 0; height: 48px; padding: 2px 4px; border: 0; color: var(--text); background: var(--wd-panel); box-shadow: 0 0 0 var(--px) var(--edge); font: inherit; cursor: pointer; }
@@ -876,6 +876,9 @@ p.wd-seeall { margin: 0; white-space: normal; }
 .wd-side-tabs button.on { color: #2a1c06; background: var(--gold); }
 .wd-stage-list { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; font-size: 12px; line-height: 1.5; }
 .wd-stage-list li { padding: 4px 6px; background: var(--panel-2); }
+.wd-stage-list li.built { box-shadow: inset 3px 0 0 0 var(--gold); }
+.wd-pd-board { display: flex; flex-direction: column; gap: 6px; }
+.wd-choose-side .wd-stage-list, .wd-pd-board .wd-stage-list { width: 100%; max-width: 400px; }
 .wd-stage-list b { color: var(--gold); font-weight: 400; }
 /* 首页：在线牌桌放左栏占满剩下的高度，封面挪到右栏表单下面（I36） */
 .wd-home-rooms { display: flex; min-height: 0; flex-direction: column; }
