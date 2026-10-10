@@ -1,0 +1,11 @@
+{
+ "act-build": [9, 12, 27], "act-sell": [13, 24, 45], "act-wonder": [9, 11, 25], "brazier": [9, 25, 41],
+ "cat-blue": [9, 25, 41], "cat-brown": [1, 5, 25], "cat-gray": [9, 11, 43], "cat-green": [8, 9, 40],
+ "cat-purple": [8, 9, 25], "cat-red": [8, 9, 25], "cat-yellow": [8, 9, 41], "coin": [8, 9, 40],
+ "emblem-alexandria": [0, 9, 27], "emblem-babylon": [9, 17, 25], "emblem-ephesus": [9, 17, 41], "emblem-giza": [9, 17, 40],
+ "emblem-halicarnassus": [5, 9, 13], "emblem-olympia": [9, 25, 40], "emblem-rhodes": [9, 24, 41],
+ "res-C": [8, 9, 25], "res-G": [8, 9, 24], "res-L": [8, 9, 24], "res-O": [8, 9, 40], "res-P": [8, 9, 42],
+ "res-S": [8, 9, 11], "res-W": [8, 9, 24], "sci-compass": [8, 9, 24], "sci-gear": [8, 9, 40], "sci-tablet": [8, 9, 40],
+ "shield": [8, 9, 24], "stage-built": [8, 9, 24], "token-loss": [8, 9, 40], "token-win": [8, 9, 24], "vp": [8, 9, 40],
+ "waiting": [9, 10, 24]
+}

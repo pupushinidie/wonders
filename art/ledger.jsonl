@@ -358,3 +358,5 @@
 {"time": "2026-10-09 23:35:50", "name": "cover-s701", "endpoint": "/create-image-pixflux", "usage": {"type": "usd", "usd": 0.007979571633868747}, "seconds": 37.1}
 {"time": "2026-10-09 23:36:20", "name": "cover-s702", "endpoint": "/create-image-pixflux", "usage": {"type": "usd", "usd": 0.007556092818578084}, "seconds": 29.8}
 {"time": "2026-10-09 23:36:44", "name": "cover-s703", "endpoint": "/create-image-pixflux", "usage": {"type": "usd", "usd": 0.006940905306074354}, "seconds": 24.3}
+{"time": "2026-10-09 23:43:03", "name": "babylon-a-g300-s2101", "endpoint": "/create-image-pixflux", "usage": {"type": "usd", "usd": 0.00663036330540975}, "seconds": 33.2}
+{"time": "2026-10-09 23:43:23", "name": "babylon-a-g300-s2102", "endpoint": "/create-image-pixflux", "usage": {"type": "usd", "usd": 0.006486104091008504}, "seconds": 20.4}
