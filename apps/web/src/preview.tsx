@@ -109,6 +109,8 @@ const SCENES: Record<string, Scene> = {
     }),
     room: { bots: ["p2", "p3"], turnRemainingMs: 60000 },
   },
+  hintDiscard: { note: "只有我和人机：哈利卡纳苏斯挑弃牌时浮在弹窗上的「提示」", game: () => scene("halicarnassus"), room: { bots: ["p2", "p3", "p4"] } },
+  hintChoose: { note: "只有我和人机：自选奇迹时浮在弹窗上的「提示」", game: () => scene("chooseWonders"), room: { viewer: "p3", bots: ["p1", "p2", "p4"] } },
   tutorialShowcase: {
     note: "教程讲终局计分用的「一局打完的样子」（科技 3/2/1 = 21、工人行会 7 分）",
     game: () => createShowcaseGame("你"),
