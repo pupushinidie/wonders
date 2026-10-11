@@ -217,3 +217,9 @@ const room = previewRoom(scene("fullCities", { side: "B" }), { offline: ["p3"], 
 - 键盘：1–7 选牌，B 建造、W 建奇迹、D 弃掉，U 撤回，Esc 取消。
 - **预览页**：`npm run dev` 后打开 `http://localhost:5189/preview.html`（列出全部场景），`?s=<场景>&viewer=p2&anim=1&click=<选择器>|<选择器>`。不连服务器，规则引擎在浏览器里跑，渲染真正的 GameBoard，牌桌上的操作直接本地 apply。场景在 `src/preview.tsx` 的 `SCENES`，教程、验收可以往里加，不要删别人的。生产构建只打包 index.html。
 - 教程锚点 `data-tutorial`：见 `~/projects/pipeline/games/wonders/handoff/ui.md`。
+
+## 声音
+
+还没有背景音乐（`App.tsx` 用 `NO_BGM`，房间和教程里照样有 ♪ 面板调音效、语音；手机牌桌上 ♪ 在「菜单」里）。声音库是共用的 `apps/web/src/gm-sound.tsx`（各仓库同一份，不要单独改）。
+
+动作音效在 `apps/web/src/game-sfx.ts`，按引擎每一步的 `events` 决定响什么：交牌是一张牌扣在桌上、撤回是拿回手里；亮牌一声揭晓，接着自己这一手（响亮）和别人的（减半，每种用法只响一次）——建造是牌拍在桌上（买了资源加一声硬币），**建奇迹阶段**是石块落定 + 一段上行的号角（招牌），弃牌换钱是三声硬币；传牌是一阵牌擦过桌面（往左传音调往上、往右往下）；时代结束的军事冲突是两声战鼓，自己赢了加得分、输了加下滑；新时代发牌 + 开场；巴比伦第 7 张、哈利卡纳苏斯免费建（加 sparkle）、时代末烧牌、自选奇迹（落子）也有声音。轮到你（新一轮要出牌、轮到你挑奇迹 / 第 7 张 / 弃牌堆）、超时被代打、终局输赢、最后 5 秒倒计时用共用提示音。观战都算别人的；第一次拿到局面、一下跳了好几步时不出声。点选手牌是 select（取消是往下的一声，不能出牌时是 deny），换付款方案是 select；有人进出、开局、收到聊天、服务器报错也有提示音（`App.tsx` 的 `useRoomSfx`、`sfx.error`）。

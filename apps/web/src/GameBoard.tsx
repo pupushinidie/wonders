@@ -4,6 +4,8 @@
  * 尺寸见 layout.ts；所有像素图整数倍显示。动画只看 game.version 变没变。
  */
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useGameSfx } from "./game-sfx.js";
+import { sfx, useSfxCountdown } from "./gm-sound.js";
 import {
   card,
   CARD_COLORS,
@@ -130,7 +132,8 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
   useEffect(() => setSelected(null), [handKey, game.phase, me.submitted]);
   useEffect(() => setChoice({ build: 0, wonder: 0 }), [selected, game.version]);
   const select = (id: CardId | null) => {
-    if (!canAct && id) return;
+    if (!canAct && id) return sfx.deny();
+    sfx.select(id !== null && id !== selected);
     setSelected(id === selected ? null : id);
   };
   const playSelected = (action: PlayAction) => {
@@ -224,6 +227,9 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
 
   // 页面在后台时，轮到自己出牌就在标题上提醒
   const needMe = canAct || discardMine || (game.phase === "wonders" && game.players[game.chooseOrder[game.chooser] ?? -1]?.id === selfId);
+  // 动作音效（亮牌、建造、建奇迹、传牌、军事冲突……）和自己行动的最后 5 秒倒计时
+  useGameSfx(game, selfId);
+  useSfxCountdown(needMe && !autoPlaying, secondsLeft);
   useEffect(() => {
     const base = "七大奇迹 · 在线对战";
     const update = () => { document.title = needMe && document.hidden ? `【轮到你】${base}` : base; };
@@ -394,7 +400,8 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
         {compactBar ? (
           <span className="wd-menu">
             <button className="quiet-button" type="button" data-tutorial="menu" aria-expanded={menu} onClick={() => { setMenu(!menu); setDrawer(false); }}>菜单</button>
-            {menu && <div className="wd-menu-pop" role="menu">{menuItems}</div>}
+            {/* 收起时也挂着（hidden）：♪ 在里面，查声音按钮的脚本能找到它 */}
+            <div className="wd-menu-pop" role="menu" hidden={!menu}>{menuItems}</div>
           </span>
         ) : menuItems}
         {connection}
@@ -477,7 +484,7 @@ function GameBoard({ room, busy, error, notice, brand, connection, themeToggle, 
   });
   const enterFrom = lastPass ? (lastPass.value.direction === "left" ? "right" : "left") : game.direction === "left" ? "right" : "left";
   const handBox = (
-    <div className={`wd-hand ${passCount > 0 ? `enter-${enterFrom}` : ""}`} key={`hand-${passCount}`} data-tutorial="hand" style={{ "--n": layout.handN, "--card-gap": `${layout.cardGap}px` } as CSSProperties}>
+    <div className={`wd-hand ${passCount > 0 ? `enter-${enterFrom}` : ""}`} key={`hand-${passCount}`} data-tutorial="hand" data-sfx="none" style={{ "--n": layout.handN, "--card-gap": `${layout.cardGap}px` } as CSSProperties}>
       {handCards}
     </div>
   );

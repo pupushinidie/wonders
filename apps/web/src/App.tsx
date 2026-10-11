@@ -9,7 +9,7 @@ import RoomChat from "./RoomChat.js";
 import { roomRole, RoomSettingsPanel, SeatSwitch } from "./RoomExtras.js";
 import { socket } from "./socket.js";
 import { ThemeToggle, useTheme } from "./theme.js";
-import { NO_BGM, SoundToggle, useBgm } from "./gm-sound.js";
+import { NO_BGM, SoundToggle, sfx, useBgm, useRoomSfx } from "./gm-sound.js";
 import { useVoice } from "./voice.js";
 import { TutorialInvite } from "./tutorial/Invite.js";
 import { readTutorial } from "./tutorial/storage.js";
@@ -58,6 +58,13 @@ function App() {
   const [tutorialOpen, setTutorialOpen] = useState(() => new URLSearchParams(window.location.search).has("tutorial"));
   // 声音：进了房间（等候房间、对局、观战）和新手教程里顶栏有 ♪ 面板（音效、语音音量）；这款还没有背景音乐。
   useBgm(room || tutorialOpen ? NO_BGM : null);
+  // 房间里的提示音：有人进出、开局、收到聊天
+  useRoomSfx(room ? {
+    members: room.members.length + room.spectators.length,
+    playing: room.status === "playing",
+    chatCount: room.chat.length,
+    lastChatMine: room.chat.at(-1)?.senderId === socket.id,
+  } : null);
 
   function closeTutorial() {
     setTutorialOpen(false);
@@ -94,7 +101,10 @@ function App() {
     };
     const handleDisconnect = () => setConnected(false);
     const handleRoomUpdate = (snapshot: LobbyRoomSnapshot) => setRoom(snapshot);
-    const handleRoomError = (message: string) => setError(message);
+    const handleRoomError = (message: string) => {
+      sfx.error();
+      setError(message);
+    };
     const handleLobbyUpdate = (rooms: PublicRoomSummary[]) => setLobbyRooms(rooms);
     const handleRoomClosed = ({ reason }: { reason: string }) => {
       setRoom(null);
@@ -211,6 +221,7 @@ function App() {
     socket.emit("game:command", command, (response) => {
       setBusy(false);
       if (!response.ok) {
+        sfx.error();
         setError(response.error);
         return;
       }

@@ -169,7 +169,7 @@ function ActionRow({ action, label, info, cost, bank, game, meIndex, choice, onC
       <span className="wd-act-total" title={ok ? paymentText(option!) : info.reason ?? ""}>
         {ok ? (total > 0 ? <span className="wd-act-sum"><b>{total}</b><small>金</small></span> : <b className="free">免费</b>) : <em>{shortReason(info)}</em>}
         {options.length > 1 && (
-          <button type="button" className="wd-switch" aria-label="下一种付款方案（换一种买法）" title="换一种买法：比如改向另一边邻居买" onClick={() => onChoice((at + 1) % options.length)}>
+          <button type="button" className="wd-switch" data-sfx="select" aria-label="下一种付款方案（换一种买法）" title="换一种买法：比如改向另一边邻居买" onClick={() => onChoice((at + 1) % options.length)}>
             换买法 {at + 1}/{options.length}
           </button>
         )}
