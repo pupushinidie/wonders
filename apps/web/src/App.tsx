@@ -9,6 +9,7 @@ import RoomChat from "./RoomChat.js";
 import { roomRole, RoomSettingsPanel, SeatSwitch } from "./RoomExtras.js";
 import { socket } from "./socket.js";
 import { ThemeToggle, useTheme } from "./theme.js";
+import { NO_BGM, SoundToggle, useBgm } from "./gm-sound.js";
 import { useVoice } from "./voice.js";
 import { TutorialInvite } from "./tutorial/Invite.js";
 import { readTutorial } from "./tutorial/storage.js";
@@ -42,7 +43,7 @@ function App() {
   const [confirmAction, confirmDialog] = useConfirm();
   // 白天 / 夜间画面：首页、等候房间、牌桌共用，顶栏按钮随时切换；和游戏中心、其他游戏共用同一个选择。
   const [theme, toggleTheme] = useTheme();
-  const themeToggle = <ThemeToggle theme={theme} onToggle={toggleTheme} />;
+  const themeToggle = <><ThemeToggle theme={theme} onToggle={toggleTheme} /><SoundToggle /></>;
   const [roomCode, setRoomCode] = useState("");
   const [room, setRoom] = useState<LobbyRoomSnapshot | null>(null);
   const [connected, setConnected] = useState(socket.connected);
@@ -55,6 +56,8 @@ function App() {
   const voice = useVoice(room);
   // 新手教程：首页或等候房间点进来（地址带 ?tutorial 时直接打开，游戏中心可以直接链过来）
   const [tutorialOpen, setTutorialOpen] = useState(() => new URLSearchParams(window.location.search).has("tutorial"));
+  // 声音：进了房间（等候房间、对局、观战）和新手教程里顶栏有 ♪ 面板（音效、语音音量）；这款还没有背景音乐。
+  useBgm(room || tutorialOpen ? NO_BGM : null);
 
   function closeTutorial() {
     setTutorialOpen(false);
