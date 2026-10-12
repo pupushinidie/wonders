@@ -14,3 +14,7 @@
 /* 白天：不能点的按钮褪成半透明灰，不要比能点的更显眼（I52） */
 :root[data-theme="day"] .app-shell :is(.primary-button, .quiet-button, .room-chat-send, .voice-button, .admin-bar-button):disabled,
 :root[data-theme="day"] .app-shell :is(.room-setting, .online-room-join, .online-room-watch):disabled:not(.on) { filter: grayscale(1); opacity: 0.45; }
+
+/* 全屏背景：白天版罩色变浅 */
+:root[data-theme="day"] .wd-backdrop { background: #dfe9f2; }
+:root[data-theme="day"] .wd-backdrop-veil { background: #ffffff; opacity: 0.25; }

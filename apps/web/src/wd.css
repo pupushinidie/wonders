@@ -523,7 +523,20 @@ button.wd-item { cursor: pointer; }
 .app-shell .wd-chat .room-chat-list { flex: 1 1 auto; height: auto; min-height: 80px; }
 
 /* ---------- 弹窗 ---------- */
-.app-shell .wd-backdrop { padding: 16px; }
+/* ---------- 全屏背景：首页、等候房间的场景铺满窗口 ---------- */
+.wd-backdrop { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: #1b2935; }
+.wd-backdrop-art {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100vw, calc(100vh * 16 / 9));
+  height: max(100vh, calc(100vw * 9 / 16));
+  transform: translate(-50%, -50%);
+  background-size: 100% 100%;
+  image-rendering: pixelated;
+}
+.wd-backdrop-veil { position: absolute; inset: 0; background: #0b141c; opacity: 0.4; }
+.app-shell.wd-home > :not(.wd-backdrop):not(.gm-modal-backdrop), .app-shell.wd-room > :not(.wd-backdrop):not(.gm-modal-backdrop) { position: relative; z-index: 1; }
 .app-shell .gm-panel.wd-dialog { display: flex; flex-direction: column; width: min(760px, 100%); max-height: calc(100dvh - 32px); padding: 14px 18px; box-sizing: border-box; }
 .app-shell .gm-panel.wd-dialog.wide { width: min(1180px, 100%); }
 .wd-dialog-head { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }

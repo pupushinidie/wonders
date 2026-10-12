@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
 import { CAPACITY_OPTIONS, type Capacity, type GameCommand, type GameOptions, type LobbyRoomSnapshot, type PublicRoomSummary } from "@wonders/game";
-import { art } from "./art.js";
+import { art, sceneIndex } from "./art.js";
 import { useConfirm } from "./confirm.js";
 import GameBoard from "./GameBoard.js";
 import GameRules from "./GameRules.js";
@@ -303,6 +303,7 @@ function App() {
   if (room) {
     return (
       <main className="app-shell wd-room">
+        <WdBackdrop src={art.scene(theme, sceneIndex(room.code))} />
         <header className="topbar">
           <Brand />
           <div className="topbar-right">
@@ -340,6 +341,7 @@ function App() {
 
   return (
     <main className="app-shell wd-home">
+      <WdBackdrop src={art.scene(theme, 1)} />
       <header className="topbar">
         <Brand />
         <div className="topbar-right">
@@ -468,6 +470,16 @@ function App() {
         </div>
       </section>
     </main>
+  );
+}
+
+/** 全屏背景：把对局场景铺满窗口（16:9 居中裁切），上面盖一层罩色让面板更突出。首页和等候房间放在 <main> 的第一个子元素。 */
+function WdBackdrop({ src }: { src: string }) {
+  return (
+    <div className="wd-backdrop" aria-hidden="true">
+      <div className="wd-backdrop-art" style={{ backgroundImage: `url(${src})` }} />
+      <div className="wd-backdrop-veil" />
+    </div>
   );
 }
 
