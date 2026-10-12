@@ -945,3 +945,7 @@ p.wd-seeall { margin: 0; white-space: normal; }
 .wd-tagcard .wd-ready { position: absolute; top: 15px; left: 22px; padding: 1px; background: var(--wd-panel); box-shadow: 0 0 0 1px var(--edge); }
 /* 手机自己奇迹那一行（I53）：短名，放不下就换行，不省略 */
 .wd-mme-name { white-space: normal; }
+
+/* 全屏背景上的标题/简介、等候房标题垫面板，让文字在图上清楚（参照遥远之地） */
+.app-shell .welcome-copy { padding: 16px 20px 20px; background: var(--panel); box-shadow: 0 0 0 var(--px) var(--edge); }
+.app-shell .room-heading { padding: 12px 16px; background: var(--panel); box-shadow: 0 0 0 var(--px) var(--edge); }
